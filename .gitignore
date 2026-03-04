@@ -7,3 +7,8 @@ Thumbs.db
 *.swp
 *.swo
 .aios-reference.md
+
+# Large binaries / third-party
+framework/plugins/marketplaces/
+claude-mem
+bun.lock
