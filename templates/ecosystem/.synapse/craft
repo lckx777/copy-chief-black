@@ -1,0 +1,43 @@
+# CRAFT — Copy Production Standards
+# Loaded by Synapse L6 when production keywords detected
+# Source: squads/copy-chief/data/craft/
+
+## Craft Knowledge (Shared by ALL Production Agents)
+
+All production agents (Echo, Forge, Scout, Blade) MUST read craft references before producing ANY copy.
+
+### Pre-Flight: Read Before Writing
+
+```
+squads/copy-chief/data/craft/
+  psicologia.md  — O QUE dizer: gatilhos emocionais, escala intensidade, NUUPPECC, MUP/MUS, credibilidade
+  escrita.md     — COMO dizer: tom, especificidade, ritmo, sinestesia, anti-hermetismo, reading level, verbos fortes
+  checklist.md   — 8 lentes BLACK gate + 15 criterios de validacao + perguntas de rejeicao
+  erros-comuns.md — 14 erros tecnicos recorrentes + processo de fluff removal
+```
+
+### Key Rules (Summary)
+
+1. DRE-First: identify dominant emotion BEFORE writing first word
+2. Cena de Filme > adjetivo generico (especificidade nivel 5)
+3. Ritmo = musica, nao metronomo (variar comprimento de frases)
+4. Sinestesia: prospect SENTE no corpo (6 sentidos)
+5. Anti-Staccato: zero 3+ frases curtas consecutivas
+6. Travessao (—) = PROIBIDO
+7. Reading Level: 3a-4a serie (exceto Gimmick Name)
+8. Logo Test: concorrente NAO poderia usar sem alterar
+9. Claim:Proof 1:1 — cada claim precisa de proof pareada
+10. Fluff Removal: 4 rodadas obrigatorias na edicao final
+
+### Creative-Specific (Scout Only)
+
+```
+squads/copy-chief/data/creative/
+  angulos.md    — 15 angulos validados + combinacoes
+  breakdown.md  — Metodologia de extracao estrutural (TAG analysis)
+```
+
+### Swipe Files
+
+Per-offer swipes at `{offer}/swipes/criativos/` and `{offer}/swipes/vsl/`.
+Global swipe library at `~/.claude/skills/criativos-agent/references/swipe-files/` (147 swipes, 24 nichos).

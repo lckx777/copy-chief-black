@@ -1,0 +1,231 @@
+# Workflow Loop Schema (v1.0)
+# Sprint S28.1 — Squad-per-Workflow Loops
+# Defines the structure for produce→validate→correct loops per deliverable type
+# Created: 2026-03-02
+
+schema_version: "1.0"
+description: >
+  A workflow loop encodes the automated produce→validate→correct cycle for one
+  deliverable type. The executor reads this schema and drives the persona squad
+  through each unit until stop_criteria are met or max_iterations is exhausted.
+
+# ═══════════════════════════════════════════
+# LOOP (root document)
+# ═══════════════════════════════════════════
+
+loop:
+  name:
+    type: string
+    required: true
+    description: "Human-readable loop name"
+    example: "VSL Production Loop"
+
+  deliverable_type:
+    type: enum
+    required: true
+    values:
+      - vsl
+      - lp
+      - creative
+      - email
+    description: "Deliverable category — controls which units and paths are used"
+
+  persona:
+    type: string
+    required: true
+    description: "Handle of the primary producing persona"
+    known_values:
+      - "@vsl"      # Echo
+      - "@lp"       # Forge
+      - "@creative" # Scout
+      - "@producer" # Blade
+    example: "@vsl"
+
+  validator_persona:
+    type: string
+    required: false
+    default: "@critic"
+    description: "Handle of the validating persona (always Hawk by default)"
+
+  output_dir:
+    type: string
+    required: true
+    description: "Relative path inside offer directory for outputs"
+    example: "production/vsl/drafts"
+
+  # ─── UNITS ───────────────────────────────────────────────────────────────
+  units:
+    type: array
+    required: true
+    min_length: 1
+    description: "Ordered list of units (chapters, blocks, variations) to produce"
+    items:
+      name:
+        type: string
+        required: true
+        description: "Unit identifier — used as filename stem"
+        example: "lead"
+
+      order:
+        type: integer
+        required: true
+        description: "1-based execution order"
+        example: 1
+
+      label:
+        type: string
+        required: false
+        description: "Display label for reports and progress output"
+        example: "Lead / Hook"
+
+      emotional_entry:
+        type: string
+        required: false
+        description: "Reader's emotional state at the start of this unit"
+        example: "Curiosidade"
+
+      emotional_exit:
+        type: string
+        required: false
+        description: "Target emotional state at the end of this unit"
+        example: "Reconhecimento + Medo"
+
+      dre_level:
+        type: string
+        required: false
+        description: "DRE escalation level for this unit (1-5 or range)"
+        example: "2-3"
+
+      critical:
+        type: boolean
+        required: false
+        default: false
+        description: "If true, this unit may receive extra iterations via overrides config"
+
+  # ─── STOP CRITERIA ────────────────────────────────────────────────────────
+  stop_criteria:
+    min_score:
+      type: number
+      required: true
+      default: 8
+      description: "Minimum quality score to consider a unit PASSED"
+      example: 8
+
+    max_iterations:
+      type: integer
+      required: true
+      default: 3
+      description: "Maximum produce→validate→correct cycles before escalating"
+      example: 3
+
+    human_stop:
+      type: boolean
+      required: false
+      default: true
+      description: "If true, a human can interrupt the loop at any unit boundary"
+
+  # ─── VALIDATION TOOLS ─────────────────────────────────────────────────────
+  validation_tools:
+    per_unit:
+      type: array
+      required: true
+      items: string
+      description: "MCP tools to run on each unit after production"
+      example:
+        - blind_critic
+
+    full_deliverable:
+      type: array
+      required: false
+      items: string
+      description: "MCP tools run once on the assembled full deliverable"
+      example:
+        - emotional_stress_test
+
+  # ─── CORRECTION STRATEGY ──────────────────────────────────────────────────
+  correction_strategy:
+    type: enum
+    required: true
+    values:
+      - targeted   # Correct only the failing dimension(s) — preserves passing content
+      - rewrite    # Discard draft and produce from scratch
+    default: targeted
+    description: >
+      How to respond when per-unit validation fails.
+      'targeted' is preferred — see debugging-hypothesis.md § Regra 2.
+
+  # ─── EXECUTION REPORT ─────────────────────────────────────────────────────
+  execution_report:
+    description: "Shape of the JSON/YAML output produced by the executor"
+    fields:
+      loop: string           # Loop name
+      offer: string          # Offer slug
+      started_at: string     # ISO timestamp
+      completed_at: string   # ISO timestamp
+      status:
+        type: enum
+        values: [completed, escalated, dry_run, partial]
+      units:
+        type: array
+        items:
+          name: string
+          order: integer
+          iterations: integer
+          scores:            # score per iteration (array of objects)
+            - iteration: integer
+              blind_critic: number
+              emotional_stress_test: number
+              quality_score: number
+          final_score: number
+          status:
+            type: enum
+            values: [passed, failed, escalated, skipped, dry_run]
+      full_deliverable_score:
+        type: number
+        description: "EST score on assembled full deliverable (if applicable)"
+      summary:
+        passed: integer
+        failed: integer
+        escalated: integer
+        avg_score: number
+
+# ═══════════════════════════════════════════
+# UNIT STATUS VALUES
+# ═══════════════════════════════════════════
+
+unit_status:
+  passed:
+    description: "Unit met min_score threshold within max_iterations"
+  failed:
+    description: "Unit did not meet threshold after max_iterations — needs human review"
+  escalated:
+    description: "Circuit breaker triggered — escalated to human"
+  skipped:
+    description: "Unit was intentionally skipped via --unit flag"
+  dry_run:
+    description: "Simulated run — no production or validation actually occurred"
+
+# ═══════════════════════════════════════════
+# KNOWN LOOP IDS (for executor --loop flag)
+# ═══════════════════════════════════════════
+
+known_loops:
+  - id: vsl
+    file: "scripts/workflow-loops/vsl-loop.ts"
+    units: 8
+    persona: "@vsl"
+
+  - id: lp
+    file: "scripts/workflow-loops/lp-loop.ts"
+    units: 14
+    persona: "@lp"
+
+  - id: creative
+    file: "scripts/workflow-loops/creative-loop.ts"
+    units: "5+ per platform"
+    persona: "@creative"
+
+  - id: email
+    file: "scripts/workflow-loops/email-loop.ts"
+    units: 7
+    persona: "@producer"

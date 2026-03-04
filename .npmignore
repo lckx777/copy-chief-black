@@ -1,0 +1,20 @@
+# Dev files
+tsconfig.*.json
+.eslintrc*
+.prettierrc*
+*.test.js
+__tests__/
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

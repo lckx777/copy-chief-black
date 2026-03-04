@@ -1,0 +1,360 @@
+# Memory Tiers Schema v1.0
+# Three-Tier Memory Architecture for Copy Chief BLACK
+# Sprint: S41 — Three-Tier Memory Architecture
+# Created: 2026-03-02
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "Memory Tiers"
+description: "Schema for the three-tier memory system: Procedural, Episodic, Narrative"
+version: "1.0.0"
+
+# ─── Tier 1: PROCEDURAL ───────────────────────────────────────────────────────
+# Static persona prompts, rules, techniques.
+# Always loaded. Never changes between sessions.
+# Sources: agent templates, rules/*.md, expert DNA, offer context
+# Storage: ~/.claude/memory/procedural/ (compiled, not raw)
+
+procedural:
+  description: |
+    Static memory that defines HOW each persona operates.
+    Compiled from: agent template + relevant rules + expert DNA + offer context.
+    Loaded at: session start, always.
+    Invalidated by: version changes in source rules.
+
+  entry:
+    type: object
+    required:
+      - persona
+      - compiled_at
+      - version_hash
+      - prompt_blocks
+    properties:
+      persona:
+        type: string
+        enum: [helix, vox, atlas, blade, hawk, scout, forge, echo, cipher, sentinel]
+        description: "Persona this procedural memory belongs to"
+
+      offer:
+        type: string
+        description: "Offer context (optional — null means generic/cross-offer)"
+
+      phase:
+        type: string
+        enum: [research, briefing, production, review, delivery, generic]
+        default: generic
+
+      deliverable_type:
+        type: string
+        enum: [vsl, landing-page, creatives, emails, mup-mus, research-synthesis, generic]
+        default: generic
+
+      compiled_at:
+        type: string
+        format: date-time
+
+      version_hash:
+        type: string
+        description: "Hash of source files used in compilation (for cache invalidation)"
+
+      token_estimate:
+        type: integer
+        description: "Estimated token count of the compiled prompt"
+
+      prompt_blocks:
+        type: array
+        description: "Ordered list of prompt blocks that form the full context"
+        items:
+          type: object
+          required: [block_type, source, content]
+          properties:
+            block_type:
+              type: string
+              enum: [persona_core, rules, expert_dna, offer_context, constraints, tools]
+            source:
+              type: string
+              description: "File path that was the source of this block"
+            content:
+              type: string
+              description: "The compiled content of this block"
+            tokens:
+              type: integer
+
+# ─── Tier 2: EPISODIC ─────────────────────────────────────────────────────────
+# Learnings per deliverable/subtask.
+# What worked, what failed, scores achieved.
+# Storage: ~/.claude/memory/episodic/{offer}.yaml
+
+episodic:
+  description: |
+    Per-deliverable learnings from execution.
+    Records what worked, what failed, and achieved scores.
+    Indexed by: offer + deliverable + date.
+    Loaded when: executing same deliverable type for same offer (or similar offer/nicho).
+    Persists: indefinitely (newest entries weighted higher).
+
+  file_structure:
+    path_pattern: "~/.claude/memory/episodic/{offer_slug}.yaml"
+    example: "~/.claude/memory/episodic/florayla.yaml"
+
+  file_schema:
+    type: object
+    required: [offer, nicho, entries]
+    properties:
+      offer:
+        type: string
+        description: "Offer name slug (e.g., florayla)"
+      nicho:
+        type: string
+        description: "Niche (e.g., saude, concursos, relacionamento)"
+      entries:
+        type: array
+        items:
+          $ref: "#/episodic/entry"
+
+  entry:
+    type: object
+    required:
+      - id
+      - date
+      - deliverable
+      - persona
+      - learning
+    properties:
+      id:
+        type: string
+        description: "UUID-style identifier (date-seq format)"
+        example: "2026-03-02-001"
+
+      date:
+        type: string
+        format: date
+        description: "Date the learning was recorded"
+
+      deliverable:
+        type: string
+        description: "What was being produced"
+        examples:
+          - "vsl-chapter-1"
+          - "lp-block-hero"
+          - "criativo-reel-001"
+          - "mup-candidate-selection"
+          - "email-welcome"
+
+      deliverable_type:
+        type: string
+        enum: [vsl, landing-page, creatives, emails, mup-mus, briefing, research, generic]
+
+      persona:
+        type: string
+        enum: [helix, vox, atlas, blade, hawk, scout, forge, echo, cipher, sentinel]
+
+      outcome:
+        type: string
+        enum: [success, failure, partial]
+        description: "Whether the deliverable reached threshold"
+
+      learning:
+        type: string
+        description: "The specific, actionable learning in plain language"
+        example: "DRE vergonha escalada nivel 4 gerou blind_critic 8.5. Usar cena de vestiario."
+
+      score:
+        type: number
+        description: "Score achieved (blind_critic, EST, black_validation, etc.)"
+        minimum: 0
+        maximum: 10
+
+      score_type:
+        type: string
+        enum: [blind_critic, emotional_stress_test, black_validation, apex_score, manual]
+
+      iterations_needed:
+        type: integer
+        description: "How many iterations were needed to reach threshold"
+        minimum: 1
+
+      what_worked:
+        type: string
+        description: "Specific technique, angle, or element that drove the score up"
+
+      what_failed:
+        type: string
+        description: "What was tried and did not work"
+
+      tags:
+        type: array
+        items:
+          type: string
+        description: "Searchable tags for retrieval"
+        examples:
+          - ["dre-vergonha", "vsl", "escalada-nivel-4"]
+          - ["mup-paradigm-shift", "cristais", "mecanismo-unico"]
+          - ["avatar-mulher-45-70", "constipacao"]
+
+      expert_used:
+        type: string
+        description: "Expert archetype applied (if any)"
+        example: "Makepeace"
+
+      voc_sources:
+        type: array
+        items:
+          type: string
+        description: "VOC platforms that informed this deliverable"
+        examples:
+          - ["youtube", "reddit"]
+
+# ─── Tier 3: NARRATIVE ────────────────────────────────────────────────────────
+# High-level strategy per offer / phase.
+# Cross-session, lifelong. Survives /compact and new sessions.
+# Storage: ~/.claude/memory/narrative/{offer}.yaml
+
+narrative:
+  description: |
+    Cross-session strategic memory for each offer.
+    Records MUP evolution, DRE insights, avatar shifts, positioning pivots.
+    Indexed by: offer + phase.
+    Loaded when: starting any task related to an offer.
+    Auto-consolidated: after each phase completes.
+
+  file_structure:
+    path_pattern: "~/.claude/memory/narrative/{offer_slug}.yaml"
+    example: "~/.claude/memory/narrative/florayla.yaml"
+
+  file_schema:
+    type: object
+    required: [offer, nicho, created_at, updated_at, insights]
+    properties:
+      offer:
+        type: string
+      nicho:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      current_phase:
+        type: string
+        enum: [research, briefing, production, review, delivery, completed]
+      insights:
+        type: array
+        items:
+          $ref: "#/narrative/insight"
+
+  insight:
+    type: object
+    required:
+      - id
+      - date
+      - phase
+      - insight
+      - confidence
+    properties:
+      id:
+        type: string
+        example: "2026-03-02-001"
+
+      date:
+        type: string
+        format: date
+
+      phase:
+        type: string
+        enum: [research, briefing, production, review, delivery, cross-phase]
+        description: "Phase where this insight was formed"
+
+      category:
+        type: string
+        enum:
+          - mup-evolution       # Changes/validations to the MUP
+          - mus-evolution       # Changes/validations to the MUS
+          - dre-insight         # Discoveries about the dominant emotion
+          - avatar-shift        # Changes to avatar understanding
+          - positioning-pivot   # Strategic positioning changes
+          - mechanism-discovery # New mechanism understanding
+          - voc-pattern         # VOC language patterns discovered
+          - competitor-gap      # Competitor gaps identified
+          - production-strategy # How to produce copy for this offer
+          - delivery-learning   # What worked at delivery
+        description: "Type of strategic insight"
+
+      insight:
+        type: string
+        description: "The strategic insight in plain language (1-3 sentences)"
+        example: "MUP 'Cristais de Otolitos' validado com 23 VOC quotes. Avatar ja tem essa hipotese ('nao e o ouvido'). Paradigm shift forte."
+
+      confidence:
+        type: string
+        enum: [ALTA, MEDIA, BAIXA]
+        description: "Confidence level per epistemic protocol"
+
+      evidence:
+        type: string
+        description: "What evidence supports this insight"
+        example: "23 VOC quotes YouTube + blind_critic 8.7 + consensus 3-model agreement"
+
+      source_files:
+        type: array
+        items:
+          type: string
+        description: "Files that contain the evidence"
+
+      supersedes:
+        type: string
+        description: "ID of a previous insight this replaces (evolution tracking)"
+
+      tags:
+        type: array
+        items:
+          type: string
+
+# ─── Retrieval Context ────────────────────────────────────────────────────────
+# What gets assembled for each mode
+
+retrieval:
+  modes:
+    planning:
+      description: "When starting a new task or deciding what to do next"
+      tiers_included: [narrative, procedural]
+      max_tokens: 3000
+      priority: "narrative first (offer strategy), then procedural (how to execute)"
+
+    execution:
+      description: "When actively producing a deliverable"
+      tiers_included: [episodic, procedural]
+      max_tokens: 3000
+      priority: "episodic first (what worked before), then procedural (core rules)"
+
+    review:
+      description: "When validating a deliverable"
+      tiers_included: [procedural, episodic]
+      max_tokens: 2000
+      priority: "procedural first (thresholds/criteria), then episodic (past failures)"
+
+    always:
+      description: "Base context loaded regardless of mode"
+      tiers_included: [procedural]
+      max_tokens: 1500
+      priority: "persona core + active constraints"
+
+# ─── Storage Conventions ──────────────────────────────────────────────────────
+
+storage:
+  base_dir: "~/.claude/memory/"
+  procedural_dir: "~/.claude/memory/procedural/"
+  episodic_dir: "~/.claude/memory/episodic/"
+  narrative_dir: "~/.claude/memory/narrative/"
+
+  file_naming:
+    procedural: "{persona}-{offer|generic}-{phase}.json"
+    episodic: "{offer_slug}.yaml"
+    narrative: "{offer_slug}.yaml"
+
+  cross_offer_learning:
+    description: |
+      Episodic entries are searchable across offers by nicho + tags.
+      This enables learning transfer: if vergonha-DRE pattern worked for
+      florayla (saude), it informs neuvelys (saude) production.
+    nicho_index: "~/.claude/memory/episodic/_index.yaml"

@@ -1,0 +1,36 @@
+# Copy Chief BLACK — Star Commands (Synapse L7)
+
+## *helix
+Activate HELIX briefing mode.
+Load: helix domain, mecanismo domain, quality-gates domain.
+Agent: Atlas (@briefer).
+Context: 10-phase HELIX system, MUP/MUS definition, consensus validation.
+
+## *validate
+Activate quality gate validation mode.
+Load: quality-gates domain, tool-matrix domain.
+Agent: Hawk (@critic) + Sentinel (@gatekeeper).
+Context: blind_critic, emotional_stress_test, black_validation, Logo Test.
+
+## *produce
+Activate production mode.
+Load: dre domain, anti-homog domain, quality-gates domain.
+Agent: Echo (@vsl), Forge (@lp), Scout (@creative), Blade (@producer).
+Context: DRE escalation, anti-homogenization, copy in files.
+
+## *research
+Activate research mode.
+Load: tool-matrix domain.
+Agent: Vox (@researcher) + Cipher (@miner).
+Context: VOC extraction, viral-first, Apify priority, Ads Library Spy.
+
+## *status
+Show ecosystem status.
+Load: quality-gates domain.
+Context: All offers, gate statuses, next actions.
+
+## *queue
+Show dispatch queue status for the active offer.
+Load: DispatchQueueManager.formatSummary(offerPath).
+Context: Counts per status, pending agents list, failed agents with reasons and retryable flag.
+Action: Retryable failures (timeout, partial output, overflow) can be auto-retried via retryFailed(). Non-retryable failures (missing artifacts, gate block, validation failed) require user escalation.

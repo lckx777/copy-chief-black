@@ -1,0 +1,70 @@
+# Dossier Schema — S36.1
+# Knowledge base entries organized by entity type.
+# Dossiers are APPEND-ONLY: facts are added, never overwritten.
+# Contradictions are flagged for human review, never auto-resolved.
+#
+# Sprint: S36 — Hybrid Dossier System
+# Created: 2026-03-02
+
+dossier:
+  id: string               # slug (e.g., "dr-klaus-richter")
+  type: "person" | "company" | "niche" | "mechanism" | "concept"
+  canonical_name: string   # normalized name
+  aliases: string[]        # alternative names / spellings
+  created_at: string       # ISO date (YYYY-MM-DD)
+  updated_at: string       # ISO date (YYYY-MM-DD)
+  niches: string[]         # applicable niches (for cross-niche dossiers)
+
+  facts:                   # list of facts (append-only — never delete)
+    - text: string         # the fact in plain language
+      source: string       # where it came from (file path, URL, etc.)
+      confidence: "high" | "medium" | "low"
+      added_at: string     # ISO date (YYYY-MM-DD)
+      tags: string[]       # categorization tags (e.g., ["expertise", "role"])
+
+  relationships:           # connections to other dossiers
+    - target_id: string    # id of the related dossier
+      type: string         # "works_at" | "uses" | "part_of" | "competes_with" | "created_by" | "related_to"
+      note: string         # context for this relationship
+
+  contradictions:          # flagged conflicting facts — NOT auto-resolved
+    - fact_a: string       # first conflicting fact (verbatim text)
+      fact_b: string       # second conflicting fact (verbatim text)
+      flagged_at: string   # ISO date
+      resolved: boolean    # false until human manually marks resolved
+
+# ─── Type Definitions ─────────────────────────────────────────────────────────
+
+# person:
+#   Real individuals (experts, researchers, practitioners).
+#   Examples: Dr. Klaus Richter, Rafael Mendes
+#
+# company:
+#   Organizations, businesses, institutions.
+#   Examples: Ursao Digital, Charité Berlin, EMA
+#
+# niche:
+#   Market verticals / content categories.
+#   Examples: saude, concursos, relacionamento
+#
+# mechanism:
+#   Named mechanisms, MUPs, MUSes, frameworks, methods.
+#   Examples: Cristais de Otolitos, Morte das Celulas de Lubrificacao
+#
+# concept:
+#   Domain concepts, copywriting frameworks, psychological constructs.
+#   Examples: DRE, Sexy Cause, Gimmick Name, Paradigm Shift
+
+# ─── Confidence Levels ────────────────────────────────────────────────────────
+
+# high:   Directly stated in official source (CONTEXT.md, research summary, published study)
+# medium: Inferred from context or single source
+# low:    Hypothesis / unclear sourcing
+
+# ─── Fact Tags ────────────────────────────────────────────────────────────────
+
+# Persons: role, expertise, credential, affiliation, publication, quote
+# Companies: product, market, funding, size, location
+# Niches: avatar, dre, trend, compliance, competitor
+# Mechanisms: mup, mus, ingredient, proof, name-component
+# Concepts: definition, application, threshold, anti-pattern

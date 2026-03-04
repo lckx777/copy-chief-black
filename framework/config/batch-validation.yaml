@@ -1,0 +1,59 @@
+# Batch Validation Engine Config — S46
+# Part of AIOS Upgrade Plan v4.0 § S46
+# Enables parallel validation of multiple deliverable units (VSL chapters, LP blocks, etc.)
+# Created: 2026-03-01
+
+version: "1.0"
+name: batch-validation
+
+batch_validator:
+  max_parallel_jobs: 6
+  subagent_type: general-purpose
+  timeout_per_item_seconds: 120
+
+  aggregation:
+    outlier_threshold: 1.5  # stdev — items this far from mean flagged as outliers
+    report_format: yaml     # yaml | json | md
+
+  integration:
+    auto_batch_on_production: true
+    min_items_to_trigger: 3  # below this, validate sequentially (not worth batching)
+
+# ═══════════════════════════════════════════
+# THRESHOLDS (mirrors quality.thresholds in framework-config.yaml)
+# ═══════════════════════════════════════════
+
+thresholds:
+  blind_critic_min: 8.0
+  emotional_stress_test_min: 8.0
+  black_validation_min: 8.0
+
+# ═══════════════════════════════════════════
+# DELIVERABLE TYPE DEFINITIONS
+# ═══════════════════════════════════════════
+# Defines which production subdirectory to scan and how many units to expect.
+
+types:
+  vsl:
+    path: "production/{offer}/vsl/"
+    expected_units: 8
+    unit_label: "capitulo"
+    metrics: [blind_critic, emotional_stress_test]
+
+  lp:
+    path: "production/{offer}/landing-page/blocks/"
+    expected_units: 14
+    unit_label: "bloco"
+    metrics: [blind_critic]
+
+  creatives:
+    path: "production/{offer}/creatives/"
+    expected_units: 5
+    unit_label: "criativo"
+    metrics: [blind_critic, emotional_stress_test]
+
+  emails:
+    path: "production/{offer}/emails/"
+    expected_units: 7
+    unit_label: "email"
+    metrics: [blind_critic]

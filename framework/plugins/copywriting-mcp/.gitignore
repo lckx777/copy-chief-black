@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Database (regenerável)
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Lock files (podem ser regenerados)
+bun.lock
+
+# OS files
+.DS_Store

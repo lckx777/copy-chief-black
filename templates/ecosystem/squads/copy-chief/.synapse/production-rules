@@ -1,0 +1,8 @@
+# Squad Production Rules
+# Injected by L5 when production keywords detected
+
+Copy output MUST go to files in production/{type}/ — never to terminal.
+Every deliverable requires: blind_critic >= 8 + emotional_stress_test genericidade >= 8.
+Final delivery requires black_validation >= 8/10.
+Pre-flight: read squads/copy-chief/data/craft/ before producing any copy.
+VSL chapters via write_chapter MCP tool. LP blocks via direct Write.

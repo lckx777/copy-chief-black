@@ -1,0 +1,248 @@
+# HELIX Briefing Pipeline — DAG Definition
+# Sprint S40.2 — DAG Pipeline Engine
+# Schema: ~/.claude/schemas/pipeline-dag.schema.yaml
+# Created: 2026-03-01
+
+id: helix-pipeline
+name: "HELIX Briefing Pipeline"
+version: "1.0"
+description: "10-phase strategic briefing pipeline from research gate to production gate. Each phase builds on the previous, with human validation gates at MUP and MUS definition."
+
+nodes:
+  # ═══════════════════════════════════════════
+  # ENTRY GATE
+  # ═══════════════════════════════════════════
+  - id: research-gate
+    label: "Research Gate"
+    type: gate
+    persona: "@gatekeeper"
+    tools:
+      - validate_gate
+    status: pending
+    threshold: 70
+    description: "Validates research phase is complete: 4 summaries + synthesis.md with confidence >= 70%"
+    deliverable: "research/synthesis.md"
+
+  # ═══════════════════════════════════════════
+  # HELIX PHASES 1-4 (Avatar & Context)
+  # ═══════════════════════════════════════════
+  - id: fase-01
+    label: "Fase 01 — Análise de Inputs"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+    status: pending
+    description: "Analyze all inputs: product, market, existing materials, objectives"
+    deliverable: "briefings/phases/fase-01-inputs.md"
+
+  - id: fase-02
+    label: "Fase 02 — Definição de Avatar"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+      - voc_search
+    status: pending
+    description: "Define primary avatar from VOC data: demographics, psychographics, pain points"
+    deliverable: "briefings/phases/fase-02-avatar.md"
+
+  - id: fase-03
+    label: "Fase 03 — Definição de DRE"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+    status: pending
+    description: "Identify the Dominant Resident Emotion (DRE) and its escalation levels (1-5)"
+    deliverable: "briefings/phases/fase-03-dre.md"
+
+  - id: fase-04
+    label: "Fase 04 — Nível de Consciência"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+    status: pending
+    description: "Define avatar's awareness level (Unaware → Problem → Solution → Product → Most Aware)"
+    deliverable: "briefings/phases/fase-04-consciencia.md"
+
+  # ═══════════════════════════════════════════
+  # HELIX PHASE 5 — MUP (Critical)
+  # ═══════════════════════════════════════════
+  - id: fase-05
+    label: "Fase 05 — Problema/Vilão/MUP"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+      - consensus
+      - blind_critic
+      - emotional_stress_test
+      - voc_search
+    status: pending
+    description: "Define Unique Problem Mechanism (MUP): Sexy Cause, paradigm shift, villain. Requires Conclave + multi-model validation."
+    deliverable: "briefings/phases/fase-05-problema-vilao-mup.md"
+
+  - id: mup-gate
+    label: "MUP Validation Gate"
+    type: gate
+    persona: "@gatekeeper"
+    tools:
+      - blind_critic
+      - consensus
+    status: pending
+    threshold: 8
+    human_gate: true
+    description: "MUP Statement must pass: consensus (multi-model) + blind_critic >= 8. Human approval required before advancing."
+
+  # ═══════════════════════════════════════════
+  # HELIX PHASE 6 — MUS (Critical)
+  # ═══════════════════════════════════════════
+  - id: fase-06
+    label: "Fase 06 — Solução/MUS"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+      - blind_critic
+      - emotional_stress_test
+      - voc_search
+    status: pending
+    description: "Define Unique Solution Mechanism (MUS): Gimmick Name, Origin Story, Authority Hook, Ingredient Hero"
+    deliverable: "briefings/phases/fase-06-solucao-mus.md"
+
+  - id: mecanismo-gate
+    label: "Mecanismo Único Gate"
+    type: gate
+    persona: "@gatekeeper"
+    tools:
+      - blind_critic
+      - emotional_stress_test
+    status: pending
+    threshold: 8
+    human_gate: true
+    description: "MUS blind_critic >= 8 AND MUP+MUS emotional_stress_test genericidade >= 8. mecanismo-unico.yaml state must be VALIDATED. Human approval required."
+    deliverable: "mecanismo-unico.yaml"
+
+  # ═══════════════════════════════════════════
+  # HELIX PHASES 7-10 (Offer Structure)
+  # ═══════════════════════════════════════════
+  - id: fase-07
+    label: "Fase 07 — Estrutura da Oferta"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+    status: pending
+    description: "Define offer structure: positioning, pricing, guarantees, bonuses, urgency"
+    deliverable: "briefings/phases/fase-07-oferta.md"
+
+  - id: fase-08
+    label: "Fase 08 — Stack de Valor"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+    status: pending
+    description: "Build value stack: each component of the offer with perceived value quantified"
+    deliverable: "briefings/phases/fase-08-valor.md"
+
+  - id: fase-09
+    label: "Fase 09 — Garantia e Urgência"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+    status: pending
+    description: "Define guarantee structure, scarcity/urgency mechanisms, and risk reversal"
+    deliverable: "briefings/phases/fase-09-garantia.md"
+
+  - id: fase-10
+    label: "Fase 10 — Consolidação"
+    type: task
+    persona: "@briefer"
+    tools:
+      - get_phase_context
+      - validate_gate
+    status: pending
+    description: "Consolidate all 10 phases into helix-complete.md. One Belief statement. Key angles for production."
+    deliverable: "briefings/helix-complete.md"
+
+  # ═══════════════════════════════════════════
+  # EXIT GATE
+  # ═══════════════════════════════════════════
+  - id: briefing-gate
+    label: "Briefing Gate"
+    type: gate
+    persona: "@gatekeeper"
+    tools:
+      - validate_gate
+    status: pending
+    threshold: 70
+    description: "Validates briefing is complete: all 10 phases exist + mecanismo-unico.yaml in VALIDATED or APPROVED state"
+
+edges:
+  # Research gate → Phase 1
+  - from: research-gate
+    to: fase-01
+    type: gates
+    condition: "status == 'completed'"
+
+  # Linear phase progression 1→2→3→4
+  - from: fase-01
+    to: fase-02
+    type: requires
+
+  - from: fase-02
+    to: fase-03
+    type: requires
+
+  - from: fase-03
+    to: fase-04
+    type: requires
+
+  # Phase 4 → Phase 5 (MUP)
+  - from: fase-04
+    to: fase-05
+    type: requires
+
+  # Phase 5 → MUP Gate
+  - from: fase-05
+    to: mup-gate
+    type: produces
+
+  # MUP Gate → Phase 6 (MUS)
+  - from: mup-gate
+    to: fase-06
+    type: gates
+    condition: "status == 'completed' && human_approved == true"
+
+  # Phase 6 → Mecanismo Gate
+  - from: fase-06
+    to: mecanismo-gate
+    type: produces
+
+  # Mecanismo Gate → Phase 7
+  - from: mecanismo-gate
+    to: fase-07
+    type: gates
+    condition: "status == 'completed' && mecanismo_state in ['VALIDATED', 'APPROVED']"
+
+  # Linear progression 7→8→9→10
+  - from: fase-07
+    to: fase-08
+    type: requires
+
+  - from: fase-08
+    to: fase-09
+    type: requires
+
+  - from: fase-09
+    to: fase-10
+    type: requires
+
+  # Phase 10 → Briefing Gate
+  - from: fase-10
+    to: briefing-gate
+    type: produces

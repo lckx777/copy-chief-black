@@ -1,0 +1,211 @@
+# Agent Capability Matrix (U-12)
+# Maps each agent to allowed/blocked tools.
+# Read by tool-matrix-enforcer.ts to warn on out-of-capability usage.
+#
+# @atom U-12
+# @version 1.0.0
+
+helix:
+  tier: 1
+  allowed:
+    - "*"
+  blocked: []
+  notes: "Orchestrator — full access"
+
+vox:
+  tier: 2
+  allowed:
+    - firecrawl_scrape
+    - firecrawl_search
+    - firecrawl_crawl
+    - firecrawl_agent
+    - call-actor
+    - search-actors
+    - get-actor-output
+    - get-dataset-items
+    - browser_navigate
+    - browser_snapshot
+    - browser_click
+    - voc_search
+    - semantic_memory_search
+  blocked:
+    - blind_critic
+    - emotional_stress_test
+    - black_validation
+    - write_chapter
+    - create_mecanismo
+  notes: "Researcher — web tools, no production tools"
+
+cipher:
+  tier: 3
+  allowed:
+    - get_meta_ads
+    - get_meta_platform_id
+    - analyze_ad_video
+    - analyze_ad_videos_batch
+    - firecrawl_scrape
+    - firecrawl_search
+    - call-actor
+    - search-actors
+    - get-actor-output
+    - get-dataset-items
+  blocked:
+    - blind_critic
+    - emotional_stress_test
+    - black_validation
+    - write_chapter
+    - create_mecanismo
+  notes: "Miner — ad library + scraping, no production tools"
+
+atlas:
+  tier: 2
+  allowed:
+    - get_phase_context
+    - voc_search
+    - semantic_memory_search
+    - create_mecanismo
+    - validate_mecanismo
+    - consensus
+    - thinkdeep
+  blocked:
+    - blind_critic
+    - emotional_stress_test
+    - black_validation
+    - write_chapter
+  notes: "Briefer — mecanismo tools, no copy validation"
+
+echo:
+  tier: 2
+  allowed:
+    - write_chapter
+    - get_phase_context
+    - voc_search
+    - semantic_memory_search
+    - blind_critic
+    - emotional_stress_test
+    - layered_review
+  blocked:
+    - create_mecanismo
+    - validate_mecanismo
+    - get_meta_ads
+  notes: "VSL Director — writing + self-validation tools"
+
+forge:
+  tier: 3
+  allowed:
+    - write_chapter
+    - get_phase_context
+    - voc_search
+    - semantic_memory_search
+    - blind_critic
+    - layered_review
+  blocked:
+    - create_mecanismo
+    - validate_mecanismo
+    - get_meta_ads
+    - analyze_ad_video
+  notes: "LP Specialist — writing tools, no research tools"
+
+scout:
+  tier: 3
+  allowed:
+    - write_chapter
+    - get_phase_context
+    - voc_search
+    - semantic_memory_search
+    - blind_critic
+    - layered_review
+    - get_meta_ads
+    - analyze_ad_video
+  blocked:
+    - create_mecanismo
+    - validate_mecanismo
+  notes: "Creative — writing + ad analysis tools"
+
+blade:
+  tier: 3
+  allowed:
+    - write_chapter
+    - get_phase_context
+    - voc_search
+    - semantic_memory_search
+    - blind_critic
+    - layered_review
+  blocked:
+    - create_mecanismo
+    - validate_mecanismo
+    - get_meta_ads
+    - analyze_ad_video
+  notes: "Producer — writing tools only"
+
+hawk:
+  tier: 2
+  allowed:
+    - blind_critic
+    - emotional_stress_test
+    - black_validation
+    - layered_review
+    - get_phase_context
+    - voc_search
+    - semantic_memory_search
+    - validate_gate
+  blocked:
+    - write_chapter
+    - create_mecanismo
+  notes: "Critic — validation tools, no production tools"
+
+sentinel:
+  tier: 2
+  allowed:
+    - validate_gate
+    - blind_critic
+    - emotional_stress_test
+    - black_validation
+    - get_phase_context
+  blocked:
+    - write_chapter
+    - create_mecanismo
+    - firecrawl_scrape
+  notes: "Gatekeeper — gate tools only"
+
+ops:
+  tier: 1
+  allowed:
+    - "*"
+  blocked: []
+  notes: "Ops — full access including destructive git ops"
+
+strategist:
+  tier: 1
+  allowed:
+    - firecrawl_scrape
+    - firecrawl_search
+    - firecrawl_agent
+    - get_meta_ads
+    - get_meta_platform_id
+    - analyze_ad_video
+    - analyze_ad_videos_batch
+    - call-actor
+    - search-actors
+    - consensus
+    - thinkdeep
+    - challenge
+  blocked:
+    - write_chapter
+    - blind_critic
+    - emotional_stress_test
+  notes: "Strategist — research + analysis, no copy production"
+
+reflection:
+  tier: 2
+  allowed:
+    - semantic_memory_search
+    - voc_search
+    - get_phase_context
+  blocked:
+    - write_chapter
+    - blind_critic
+    - emotional_stress_test
+    - black_validation
+    - create_mecanismo
+  notes: "Reflection — memory analysis only"

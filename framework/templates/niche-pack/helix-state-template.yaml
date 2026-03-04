@@ -1,0 +1,107 @@
+# HELIX State - {{OFFER_NAME}}
+# Schema: ~/.claude/schemas/helix-state.schema.yaml
+# Criado automaticamente via create-niche-pack
+
+offer_path: "{{OFFER_PATH}}"
+created_at: "{{TIMESTAMP}}"
+updated_at: "{{TIMESTAMP}}"
+
+# State Machine
+workflow_phase: "idle"  # idle | research | briefing | production | delivered
+
+# Gates (fonte de verdade para transicoes)
+gates:
+  research:
+    passed: false
+    passed_at: null
+    confidence: null
+  briefing:
+    passed: false
+    passed_at: null
+    phases_completed: 0
+  production:
+    passed: false
+    passed_at: null
+    black_validation_score: null
+
+# HELIX Phases (1-10)
+helix_phases:
+  phase_1:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context"]
+    tools_missing: ["get_phase_context"]
+    file_path: null
+  phase_2:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context"]
+    tools_missing: ["get_phase_context"]
+    file_path: null
+  phase_3:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context", "voc_search"]
+    tools_missing: ["get_phase_context", "voc_search"]
+    file_path: null
+  phase_4:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context", "voc_search"]
+    tools_missing: ["get_phase_context", "voc_search"]
+    file_path: null
+  phase_5:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context", "voc_search", "consensus", "blind_critic"]
+    tools_missing: ["get_phase_context", "voc_search", "consensus", "blind_critic"]
+    file_path: null
+  phase_6:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context", "blind_critic", "emotional_stress_test"]
+    tools_missing: ["get_phase_context", "blind_critic", "emotional_stress_test"]
+    file_path: null
+  phase_7:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context"]
+    tools_missing: ["get_phase_context"]
+    file_path: null
+  phase_8:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context"]
+    tools_missing: ["get_phase_context"]
+    file_path: null
+  phase_9:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context"]
+    tools_missing: ["get_phase_context"]
+    file_path: null
+  phase_10:
+    status: "not_started"
+    tools_used: []
+    tools_required: ["get_phase_context", "validate_gate"]
+    tools_missing: ["get_phase_context", "validate_gate"]
+    file_path: null
+
+# Mecanismo Unico
+mecanismo:
+  state: "UNDEFINED"
+  mup_validated: false
+  mus_validated: false
+  consensus_score: null
+  blind_critic_mup_score: null
+  blind_critic_mus_score: null
+  emotional_stress_test_score: null
+
+# Historico de validacoes
+validation_history: []
+
+# Metadata
+metadata:
+  version: "1.0.0"
+  last_session_id: null
+  total_sessions: 0

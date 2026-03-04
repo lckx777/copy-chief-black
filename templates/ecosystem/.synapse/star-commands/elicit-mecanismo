@@ -1,0 +1,11 @@
+*elicit-mecanismo — Mecanismo Elicitation (U-37)
+
+Guided 7-question divergent-convergent flow for MUP/MUS discovery.
+Questions cover: root cause, paradigm shift, solution, gimmick, authority.
+
+Usage: *elicit-mecanismo <offer-path>
+
+Output: {offer}/mecanismo-unico.yaml with DRAFT state.
+
+Module: ~/.claude/.aios-core/copy-chief/workflow/elicitation-engine.js
+Set: mecanismo (7 questions)

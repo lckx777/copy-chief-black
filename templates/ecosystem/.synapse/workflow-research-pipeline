@@ -1,0 +1,7 @@
+# Workflow: Research Pipeline — L3 Rules
+# Injected when session.active_workflow.id === "research-pipeline"
+
+Phase order: VOC extraction -> Avatar profiling -> Competitor analysis -> Synthesis
+Required tools before gate: firecrawl_agent + voc_search
+Recommended: fb_ad_library.get_meta_ads + analyze_ad_video
+Output to research/. Gate: validate_gate(research)

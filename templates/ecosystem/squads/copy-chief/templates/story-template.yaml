@@ -1,0 +1,29 @@
+# Story Template — Copy Chief BLACK
+# U-23: Story-Driven Production
+#
+# A story is the production contract for a given phase.
+# No copy is produced without an open story.
+#
+# Location: {offer}/.aios/story.yaml
+# Created by: story-manager.js createStory()
+
+status: open                # open | closed
+phase: production           # research | briefing | production | review
+created_at: ""              # ISO 8601 timestamp (auto-set)
+
+# Each criterion must be satisfied before the story can be closed.
+# Criteria with expected_outputs are auto-checked (file existence).
+# Criteria without expected_outputs require explicit completion.
+acceptance_criteria:
+  - id: "example-phase-agent"
+    description: "agent echo produces production/vsl/vsl-draft.md"
+    phase_id: "production"
+    agent_id: "echo"
+    expected_outputs:
+      - "production/vsl/vsl-draft.md"
+
+# Populated automatically as criteria are met.
+completed_criteria: []
+
+# Set when story is closed (status: closed).
+# closed_at: ""

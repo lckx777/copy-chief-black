@@ -1,0 +1,139 @@
+# Copy Chief BLACK — Core Config (AIOS Fork)
+# Forked from: aios-core v2.1.0
+# Adapted for: Direct Response copywriting
+
+project:
+  type: COPY_CHIEF_BLACK
+  version: 10.0.0
+  forkedFrom: aios-core-v2.1.0
+
+user_profile: advanced
+
+# Agent Registry (10 personas)
+agents:
+  helix:
+    role: orchestrator
+    handle: "@chief"
+    file: agents/helix.md
+    model: opus
+  vox:
+    role: researcher
+    handle: "@researcher"
+    file: agents/vox.md
+    model: sonnet
+  cipher:
+    role: miner
+    handle: "@miner"
+    file: agents/cipher.md
+    model: sonnet
+  atlas:
+    role: briefer
+    handle: "@briefer"
+    file: agents/atlas.md
+    model: opus
+  echo:
+    role: vsl
+    handle: "@vsl"
+    file: agents/echo.md
+    model: opus
+  forge:
+    role: lp
+    handle: "@lp"
+    file: agents/forge.md
+    model: sonnet
+  scout:
+    role: creative
+    handle: "@creative"
+    file: agents/scout.md
+    model: sonnet
+  blade:
+    role: producer
+    handle: "@producer"
+    file: agents/blade.md
+    model: sonnet
+  hawk:
+    role: critic
+    handle: "@critic"
+    file: agents/hawk.md
+    model: sonnet
+  sentinel:
+    role: gatekeeper
+    handle: "@gatekeeper"
+    file: agents/sentinel.md
+    model: sonnet
+
+# Quality Gate Thresholds
+quality_gates:
+  research:
+    mandatory_tools: [firecrawl_agent, voc_search]
+    recommended_tools: [fb_ad_library.get_meta_ads, fb_ad_library.analyze_ad_video]
+    thresholds:
+      synthesis_confidence: 70
+      summaries_required: 4
+  briefing:
+    mandatory_tools: [get_phase_context]
+    recommended_tools: [consensus, thinkdeep]
+    thresholds:
+      helix_phases: 10
+      mecanismo_state: [VALIDATED, APPROVED]
+  production:
+    mandatory_tools: [blind_critic, emotional_stress_test]
+    recommended_tools: [layered_review, write_chapter]
+    thresholds:
+      blind_critic: 8
+      emotional_stress_test: 8
+  delivery:
+    mandatory_tools: [black_validation]
+    thresholds:
+      black_validation: 8
+
+# Offer Detection
+offer_detection:
+  patterns:
+    - "{niche}/{offer}/CONTEXT.md"
+    - "{niche}/{offer}/helix-state.yaml"
+    - "{niche}/{offer}/mecanismo-unico.yaml"
+  active_offers:
+    - path: saude/florayla
+      status: production
+    - path: saude/neuvelys
+      status: research
+    - path: relacionamento/quimica-amarracao
+      status: research
+
+# MCP Stack
+mcp:
+  enabled: true
+  configLocation: .claude/mcp.json
+  required_servers:
+    - copywriting
+    - fb_ad_library
+    - firecrawl
+    - zen
+    - apify
+    - playwright
+
+# Synapse
+synapse:
+  enabled: true
+  domainsPath: .synapse/domains
+  manifestPath: .synapse/manifest
+
+# Paths
+paths:
+  agents: ~/.claude/agents
+  agentMemory: ~/.claude/agent-memory
+  squad: squads/copy-chief
+  templates: ~/.claude/templates
+  reference: squads/copy-chief/data
+  offers: ["saude/", "relacionamento/", "concursos/"]
+
+# Model Routing
+model_routing:
+  research: sonnet
+  briefing_strategy: opus
+  production_leads: opus
+  production_body: sonnet
+  validation: sonnet
+  formatting: haiku
+  etl: haiku

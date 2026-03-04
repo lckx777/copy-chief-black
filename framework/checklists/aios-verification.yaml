@@ -1,0 +1,226 @@
+# AIOS Integration — Verificacao Final V1-V20
+# Updated: 2026-02-25T03:49:26.713Z
+
+name: "AIOS Integration — Verificacao Final V1-V20"
+created: "2026-02-25"
+status: completed
+
+items:
+  - id: V1
+    description: "Dashboard v2 npm run build sem erros"
+    type: bash
+    command: "cd /Users/lucapimenta/.claude/dashboard-v2 && npm run build 2>&1 | tail -30"
+    success_pattern: "Route .app."
+    timeout_ms: 60000
+    status: pass
+    result: "▲ Next.js 15.5.12\n\n   Creating an optimized production build ...\n ✓ Compiled successfully in 2.2s\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static p"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:08.499Z"
+    duration_ms: 11467
+
+  - id: V11
+    description: "dashboard-metrics.ts compila sem erros"
+    type: bash
+    command: "bun build /Users/lucapimenta/.claude/hooks/dashboard-metrics.ts --outdir /tmp/checklist-test-build --target node 2>&1 && echo BUILD_OK"
+    success_pattern: "BUILD_OK"
+    timeout_ms: 15000
+    status: pass
+    result: "Bundled 1 module in 14ms\n\n  dashboard-metrics.js  3.47 KB  (entry point)\n\nBUILD_OK"
+    attempts: 1
+
+  - id: V2
+    description: "Backend GET /health retorna OK"
+    type: bash
+    command: "curl -sf http://localhost:4001/health 2>/dev/null | python3 -c 'import sys,json; d=json.load(sys.stdin); print(\"PASS\" if d.get(\"status\")==\"ok\" else \"FAIL\")' 2>/dev/null || echo 'FAIL_NO_SERVER'"
+    success_pattern: "^PASS$"
+    timeout_ms: 10000
+    status: pass
+    result: "PASS"
+    attempts: 1
+
+  - id: V13
+    description: "GET /helix/quimica-amarracao retorna JSON com phases"
+    type: bash
+    command: "curl -sf http://localhost:4001/helix/quimica-amarracao 2>/dev/null | python3 -c 'import sys,json; d=json.load(sys.stdin); print(\"PASS\" if \"phases\" in d else \"FAIL\")' 2>/dev/null || echo 'FAIL_NO_SERVER'"
+    success_pattern: "^PASS$"
+    timeout_ms: 10000
+    depends_on: [V2]
+    status: pass
+    result: "PASS"
+    attempts: 1
+
+  - id: V14
+    description: "GET /squad retorna 20+ experts"
+    type: bash
+    command: "curl -sf http://localhost:4001/squad 2>/dev/null | python3 -c 'import sys,json; d=json.load(sys.stdin); n=len(d); print(f\"PASS ({n} experts)\" if n>=20 else f\"FAIL ({n} experts)\")' 2>/dev/null || echo 'FAIL_NO_SERVER'"
+    success_pattern: "^PASS"
+    timeout_ms: 10000
+    depends_on: [V2]
+    status: pass
+    result: "PASS (24 experts)"
+    attempts: 1
+
+  - id: V15
+    description: "GET /offers inclui RMBC scores"
+    type: bash
+    command: "curl -sf http://localhost:4001/offers 2>/dev/null | python3 -c 'import sys,json; offers=json.load(sys.stdin); has_rmbc=any(o.get(\"rmbc\") for o in offers); print(\"PASS\" if has_rmbc else \"FAIL: no rmbc\")' 2>/dev/null || echo 'FAIL_NO_SERVER'"
+    success_pattern: "^PASS"
+    timeout_ms: 10000
+    depends_on: [V2]
+    status: pass
+    result: "PASS"
+    attempts: 1
+
+  - id: V3
+    description: "Monitor page exists and builds"
+    type: bash
+    command: "test -f /Users/lucapimenta/.claude/dashboard-v2/src/app/monitor/page.tsx && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    depends_on: [V1]
+    status: pass
+    result: "PASS"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:10.513Z"
+    duration_ms: 8
+
+  - id: V4
+    description: "Kanban page + OfferCard + KanbanColumn exist"
+    type: bash
+    command: "test -f /Users/lucapimenta/.claude/dashboard-v2/src/app/kanban/page.tsx && test -f /Users/lucapimenta/.claude/dashboard-v2/src/components/kanban/OfferCard.tsx && test -f /Users/lucapimenta/.claude/dashboard-v2/src/components/kanban/KanbanColumn.tsx && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    depends_on: [V1]
+    status: pass
+    result: "PASS"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:12.526Z"
+    duration_ms: 9
+
+  - id: V5
+    description: "HELIX page + HELIXPipelinePanel + PhaseDetail exist"
+    type: bash
+    command: "test -f /Users/lucapimenta/.claude/dashboard-v2/src/app/helix/page.tsx && test -f /Users/lucapimenta/.claude/dashboard-v2/src/components/helix/HELIXPipelinePanel.tsx && test -f /Users/lucapimenta/.claude/dashboard-v2/src/components/helix/PhaseDetail.tsx && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    depends_on: [V1]
+    status: pass
+    result: "PASS"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:14.539Z"
+    duration_ms: 9
+
+  - id: V6
+    description: "Squad page + ExpertCard + SquadGrid exist"
+    type: bash
+    command: "test -f /Users/lucapimenta/.claude/dashboard-v2/src/app/squad/page.tsx && test -f /Users/lucapimenta/.claude/dashboard-v2/src/components/squad/ExpertCard.tsx && test -f /Users/lucapimenta/.claude/dashboard-v2/src/components/squad/SquadGrid.tsx && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    depends_on: [V1]
+    status: pass
+    result: "PASS"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:16.553Z"
+    duration_ms: 10
+
+  - id: V7
+    description: "Insights page + Sparkline + MetricsSummary exist"
+    type: bash
+    command: "test -f /Users/lucapimenta/.claude/dashboard-v2/src/app/insights/page.tsx && test -f /Users/lucapimenta/.claude/dashboard-v2/src/components/insights/Sparkline.tsx && test -f /Users/lucapimenta/.claude/dashboard-v2/src/components/insights/MetricsSummary.tsx && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    depends_on: [V1]
+    status: pass
+    result: "PASS"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:18.565Z"
+    duration_ms: 8
+
+  - id: V8
+    description: "OfferCard includes mecanismo widget (RMBC reference)"
+    type: bash
+    command: "grep -qE 'rmbc|mecanismo|RMBC' /Users/lucapimenta/.claude/dashboard-v2/src/components/kanban/OfferCard.tsx && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    depends_on: [V1]
+    status: pass
+    result: "PASS"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:20.579Z"
+    duration_ms: 10
+
+  - id: V9
+    description: "Sidebar navigation has 5 links"
+    type: bash
+    command: "grep -cE 'href|to=' /Users/lucapimenta/.claude/dashboard-v2/src/components/layout/Sidebar.tsx 2>/dev/null | python3 -c 'import sys; n=int(sys.stdin.read().strip()); print(f\"PASS ({n} links)\" if n>=5 else f\"FAIL ({n} links)\")'"
+    success_pattern: "^PASS"
+    depends_on: [V1]
+    status: pass
+    result: "PASS (9 links)"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:22.653Z"
+    duration_ms: 69
+
+  - id: V10
+    description: "StatusBar shows offer + phase + connection"
+    type: bash
+    command: "grep -cE 'offer|phase|connect' /Users/lucapimenta/.claude/dashboard-v2/src/components/layout/StatusBar.tsx 2>/dev/null | python3 -c 'import sys; n=int(sys.stdin.read().strip()); print(f\"PASS ({n} refs)\" if n>=3 else f\"FAIL ({n} refs)\")'"
+    success_pattern: "^PASS"
+    depends_on: [V1]
+    status: pass
+    result: "PASS (4 refs)"
+    attempts: 1
+    completed_at: "2026-02-25T03:49:24.710Z"
+    duration_ms: 52
+
+  - id: V12
+    description: "dashboard-metrics.ts has POST logic for score extraction"
+    type: bash
+    command: "grep -qE 'POST|fetch.*metrics' /Users/lucapimenta/.claude/hooks/dashboard-metrics.ts && grep -q 'score' /Users/lucapimenta/.claude/hooks/dashboard-metrics.ts && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    depends_on: [V11]
+    status: pass
+    result: "PASS"
+    attempts: 1
+
+  - id: V16
+    description: "chefe-de-copy.ts has component routing map"
+    type: bash
+    command: "grep -qE 'COMPONENT.*ROUTING|component.*expert|triggers.*[Ss]ugarman' /Users/lucapimenta/.claude/scripts/chefe-de-copy.ts 2>/dev/null && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    timeout_ms: 10000
+    status: pass
+    result: "PASS"
+    attempts: 1
+
+  - id: V18
+    description: "funnel-reverse.ts compila e aceita --dry-run"
+    type: bash
+    command: "bun run /Users/lucapimenta/.claude/scripts/funnel-reverse.ts --help 2>&1 | head -5; echo '---'; bun build /Users/lucapimenta/.claude/scripts/funnel-reverse.ts --outdir /tmp/checklist-test-build --target node 2>&1 && echo BUILD_OK"
+    success_pattern: "BUILD_OK"
+    timeout_ms: 15000
+    status: pass
+    result: "[1m[36m╔══════════════════════════════════════════╗[0m\n[1m[36m║   Funnel Reverse-Engineering v1.0        ║[0m\n[1m[36m╚══════════════════════════════════════════╝[0m\n\n---\nBundled 1 module"
+    attempts: 1
+
+  - id: V20
+    description: "create-offer.md includes Expert Coverage Check"
+    type: bash
+    command: "grep -q 'Coverage Calculation' /Users/lucapimenta/.claude/commands/create-offer.md && grep -q 'clone-expert' /Users/lucapimenta/.claude/commands/create-offer.md && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    status: pass
+    result: "PASS"
+    attempts: 1
+
+  - id: V17
+    description: "debate.md supports 3+ experts and scoring"
+    type: bash
+    command: "grep -qE 'expert3|scoring|framework' /Users/lucapimenta/.claude/commands/debate.md && echo PASS || echo FAIL"
+    success_pattern: "^PASS$"
+    status: pass
+    result: "PASS"
+    attempts: 1
+
+  - id: V19
+    description: "diagnose-offer.md has 5 diagnostic checks"
+    type: bash
+    command: "grep -c 'Check [0-9]' /Users/lucapimenta/.claude/commands/diagnose-offer.md 2>/dev/null | python3 -c 'import sys; n=int(sys.stdin.read().strip()); print(f\"PASS ({n} checks)\" if n>=5 else f\"FAIL ({n} checks)\")'"
+    success_pattern: "^PASS"
+    status: pass
+    result: "PASS (5 checks)"
+    attempts: 1
+

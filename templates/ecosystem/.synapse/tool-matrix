@@ -1,0 +1,50 @@
+# Tool Matrix — Required Tools per Phase
+
+## Cardinal Rule
+"Se a ferramenta existe e e relevante, o sistema FORCA seu uso."
+
+## Research Phase
+| Tool | Required | When |
+|------|----------|------|
+| firecrawl_agent | YES | Autonomous data collection |
+| voc_search | YES | Validate hypotheses |
+| fb_ad_library.get_meta_ads | YES | Discover competitors |
+| fb_ad_library.analyze_ad_video | YES | TOP 5 video analysis |
+| playwright | FALLBACK | Sites blocking scraping |
+
+## Briefing Phase
+| Tool | Required | When |
+|------|----------|------|
+| get_phase_context | YES | Start of each phase |
+| voc_search | YES | Validate with VOC |
+| consensus (zen) | YES | Validate TOP 3 MUPs |
+| thinkdeep (zen) | RECOMMENDED | Complex decisions |
+
+## Production Phase
+| Tool | Required | When |
+|------|----------|------|
+| write_chapter | YES (VSL) | Each VSL chapter |
+| blind_critic | YES | After any copy |
+| emotional_stress_test | YES | After any copy |
+| layered_review | YES | 3-layer refinement |
+| black_validation | YES | Before delivery |
+
+## Review Phase
+| Tool | Required | When |
+|------|----------|------|
+| black_validation | YES | Final gate |
+| consensus (zen) | RECOMMENDED | Multi-model validation |
+
+## Subagent Rule
+For ANY task needing MCP → use general-purpose subagent type.
+Custom types (researcher, copywriter, etc) are prompt templates only.
+
+## Model Routing
+| Task | Model |
+|------|-------|
+| Research/VOC | sonnet |
+| Briefing/Strategy | opus |
+| Production (leads) | opus |
+| Production (body) | sonnet |
+| Validation | sonnet |
+| Formatting/ETL | haiku |

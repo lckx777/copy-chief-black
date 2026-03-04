@@ -1,0 +1,14 @@
+# Squad Routing Rules
+# Injected by L5 when routing keywords detected
+
+Route tasks to the correct persona based on task type:
+- Research/VOC/avatar/competitors -> Vox (@researcher) model:sonnet
+- Ads spy/scale score/patterns -> Cipher (@miner) model:sonnet
+- Briefing/HELIX/MUP/MUS -> Atlas (@briefer) model:opus
+- VSL/leads production -> Echo (@vsl) model:opus
+- Landing page production -> Forge (@lp) model:sonnet
+- Creative/ads production -> Scout (@creative) model:sonnet
+- Email/generic production -> Blade (@producer) model:sonnet
+- Validation/review/scores -> Hawk (@critic) model:sonnet
+All subagents MUST use subagent_type: "general-purpose" for MCP access.
+Agent instructions at ~/.claude/agents/{name}.md — read before executing.

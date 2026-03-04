@@ -1,0 +1,699 @@
+# Entity Registry - Auto-generated
+# Run: bash ~/.claude/scripts/generate-registry.sh
+generated_at: "2026-03-01T19:13:30Z"
+
+summary:
+  hooks: 73
+  hooks_lib: 24
+  skills: 11
+  rules: 30
+  templates: 47
+  commands: 25
+  offers: 12
+  workers: 5
+  copy_squad: 25
+  total: 252
+
+entities:
+  hooks:
+    - name: "active-offer-detector.ts"
+      type: "SessionStart"
+      size: 8503
+    - name: "agent-output-capture.ts"
+      type: "Unknown"
+      size: 11634
+    - name: "auto-activate.ts"
+      type: "Unknown"
+      size: 11903
+    - name: "clickup-deliverable-sync.ts"
+      type: "PostToolUse"
+      size: 4757
+    - name: "clickup-gate-sync.ts"
+      type: "PostToolUse"
+      size: 5291
+    - name: "clickup-time-tracking.ts"
+      type: "Unknown"
+      size: 5358
+    - name: "context-tracker.ts"
+      type: "PostToolUse"
+      size: 3195
+    - name: "copy-attribution.ts"
+      type: "PostToolUse"
+      size: 1837
+    - name: "copy-version-backup.ts"
+      type: "PreToolUse"
+      size: 996
+    - name: "curation.ts"
+      type: "PreCompact"
+      size: 2503
+    - name: "dashboard-emit-start.ts"
+      type: "PreToolUse"
+      size: 956
+    - name: "dashboard-emit.ts"
+      type: "PostToolUse"
+      size: 8603
+    - name: "dashboard-metrics.ts"
+      type: "PostToolUse"
+      size: 5164
+    - name: "discovery-before-create.ts"
+      type: "PreToolUse"
+      size: 8664
+    - name: "doc-rot-detector.ts"
+      type: "PostToolUse"
+      size: 30772
+    - name: "doc-rot-guardian.ts"
+      type: "Unknown"
+      size: 4396
+    - name: "error-handler.ts"
+      type: "PostToolUseFailure"
+      size: 2372
+    - name: "etl-voc-post.ts"
+      type: "PostToolUse"
+      size: 2334
+    - name: "gate-tracker.ts"
+      type: "PostToolUse"
+      size: 8460
+    - name: "gotcha-capture.ts"
+      type: "PostToolUse"
+      size: 8912
+    - name: "gotcha-inject.ts"
+      type: "SessionStart"
+      size: 4663
+    - name: "ids-register.ts"
+      type: "PostToolUse"
+      size: 2925
+    - name: "journey-log.ts"
+      type: "PostToolUse"
+      size: 10632
+    - name: "mecanismo-validation.ts"
+      type: "PreToolUse"
+      size: 6908
+    - name: "meta-prompt-reminder.ts"
+      type: "PostToolUse"
+      size: 5391
+    - name: "pattern-capture.ts"
+      type: "PostToolUse"
+      size: 13250
+    - name: "pattern-suggest-proactive.ts"
+      type: "PreToolUse"
+      size: 9610
+    - name: "pattern-suggest.ts"
+      type: "SessionStart"
+      size: 6819
+    - name: "persona-greeting.ts"
+      type: "SessionStart"
+      size: 11507
+    - name: "persuasion-flow-check.ts"
+      type: "PostToolUse"
+      size: 11251
+    - name: "phase-advance-gate.ts"
+      type: "PreToolUse"
+      size: 13963
+    - name: "phase-gate.ts"
+      type: "PreToolUse"
+      size: 5601
+    - name: "post-gate-auto-advance.ts"
+      type: "PostToolUse"
+      size: 7315
+    - name: "post-mcp-mecanismo-update.ts"
+      type: "PostToolUse"
+      size: 7676
+    - name: "post-production-validate.ts"
+      type: "PostToolUse"
+      size: 7857
+    - name: "post-tool-use.ts"
+      type: "PostToolUse"
+      size: 5694
+    - name: "post-validation-chain.ts"
+      type: "Unknown"
+      size: 4454
+    - name: "post-validation-feedback.ts"
+      type: "PostToolUse"
+      size: 16210
+    - name: "pre-tool-use-gate.ts"
+      type: "PreToolUse"
+      size: 9640
+    - name: "record-tool-in-offer.ts"
+      type: "PostToolUse"
+      size: 6676
+    - name: "registry-check.ts"
+      type: "PreToolUse"
+      size: 3845
+    - name: "regra-2x-detector.ts"
+      type: "UserPromptSubmit"
+      size: 6344
+    - name: "save-session-state.ts"
+      type: "Unknown"
+      size: 9926
+    - name: "self-critique-preflight.ts"
+      type: "PreToolUse"
+      size: 10755
+    - name: "session-digest-save.ts"
+      type: "PreCompact"
+      size: 10921
+    - name: "stop-copy-validation.ts"
+      type: "Stop"
+      size: 7746
+    - name: "story-tracker.ts"
+      type: "PostToolUse"
+      size: 9441
+    - name: "synapse-inject.ts"
+      type: "SessionStart"
+      size: 14718
+    - name: "template-header-validation.ts"
+      type: "Unknown"
+      size: 10235
+    - name: "tool-enforcement-gate.ts"
+      type: "Stop"
+      size: 3783
+    - name: "validate-before-commit.ts"
+      type: "PreToolUse"
+      size: 9776
+    - name: "validate-gate-prereq.ts"
+      type: "PreToolUse"
+      size: 11369
+    - name: "workflow-navigator.ts"
+      type: "SessionStart"
+      size: 14190
+    - name: "analyze-production-task.sh"
+      type: "UserPromptSubmit"
+      size: 1575
+    - name: "auto-approve-reads.sh"
+      type: "PermissionRequest"
+      size: 731
+    - name: "dashboard-autostart.sh"
+      type: "SessionStart"
+      size: 1393
+    - name: "detect-clear-protect.sh"
+      type: "UserPromptSubmit"
+      size: 3808
+    - name: "discover-offer-context.sh"
+      type: "SessionStart"
+      size: 19371
+    - name: "filter-bash-output.sh"
+      type: "PreToolUse"
+      size: 1701
+    - name: "helix-phase-mecanismo.sh"
+      type: "PreToolUse"
+      size: 6228
+    - name: "log-tool-failure.sh"
+      type: "PostToolUseFailure"
+      size: 520
+    - name: "mcp-query-validator.sh"
+      type: "PreToolUse"
+      size: 2006
+    - name: "memory-context.sh"
+      type: "SessionStart"
+      size: 1843
+    - name: "pre-commit-version-bump.sh"
+      type: "Unknown"
+      size: 5042
+    - name: "pre-compact-save.sh"
+      type: "PreCompact"
+      size: 3678
+    - name: "production-preflight.sh"
+      type: "PreToolUse"
+      size: 1896
+    - name: "setup-environment.sh"
+      type: "SessionStart"
+      size: 1491
+    - name: "subagent-output-audit.sh"
+      type: "Unknown"
+      size: 1435
+    - name: "subagent-start-log.sh"
+      type: "SubagentStart"
+      size: 580
+    - name: "subagent-stop-validate.sh"
+      type: "SubagentStop"
+      size: 684
+    - name: "subagent-type-warning.sh"
+      type: "Unknown"
+      size: 1416
+    - name: "sync-repos-on-stop.sh"
+      type: "SessionEnd"
+      size: 1885
+    - name: "sync-site.sh"
+      type: "SessionEnd"
+      size: 894
+
+  hooks_lib:
+    - name: "config-loader.ts"
+      size: 10188
+    - name: "context-health.ts"
+      size: 5422
+    - name: "context-tiering.ts"
+      size: 7247
+    - name: "copy-versioning.ts"
+      size: 4808
+    - name: "decision-queue.ts"
+      size: 7579
+    - name: "etl-helpers.ts"
+      size: 24896
+    - name: "gate-resolver.ts"
+      size: 6235
+    - name: "handoff-engine.ts"
+      size: 17866
+    - name: "helix-phases.ts"
+      size: 9486
+    - name: "helix-requirements.ts"
+      size: 5065
+    - name: "ids.ts"
+      size: 8863
+    - name: "metrics-recorder.ts"
+      size: 2660
+    - name: "offer-state.ts"
+      size: 13238
+    - name: "platform-actors.ts"
+      size: 6007
+    - name: "production-gates.ts"
+      size: 15926
+    - name: "recovery-handler.ts"
+      size: 18675
+    - name: "self-learning.ts"
+      size: 23731
+    - name: "session-state.ts"
+      size: 19471
+    - name: "skill-triggers.ts"
+      size: 6044
+    - name: "state-machine.ts"
+      size: 14553
+    - name: "surface-checker.ts"
+      size: 7605
+    - name: "weighted-gates.ts"
+      size: 24133
+    - name: "workflow-intelligence.ts"
+      size: 13213
+    - name: "hook-helpers.sh"
+      size: 1368
+
+  skills:
+    - name: "audience-research-agent"
+      has_skill_md: true
+    - name: "copy-critic"
+      has_skill_md: true
+    - name: "criativos-agent"
+      has_skill_md: true
+    - name: "ecosystem-guide"
+      has_skill_md: true
+    - name: "helix-system-agent"
+      has_skill_md: true
+    - name: "landing-page-agent"
+      has_skill_md: true
+    - name: "leads-agent"
+      has_skill_md: true
+    - name: "production-agent"
+      has_skill_md: true
+    - name: "rlm-analyze"
+      has_skill_md: true
+    - name: "rlm-parallel"
+      has_skill_md: true
+    - name: "voc-research-agent"
+      has_skill_md: true
+
+  rules:
+    - name: "CLAUDE.md"
+      lines: 20
+      tokens_est: 60
+    - name: "agent-personas.md"
+      lines: 379
+      tokens_est: 1137
+    - name: "aios-principles.md"
+      lines: 477
+      tokens_est: 1431
+    - name: "anti-homogeneization.md"
+      lines: 228
+      tokens_est: 684
+    - name: "atomic-design-copy.md"
+      lines: 409
+      tokens_est: 1227
+    - name: "briefings-helix.md"
+      lines: 162
+      tokens_est: 486
+    - name: "bssf-decision.md"
+      lines: 175
+      tokens_est: 525
+    - name: "ceremony-detection.md"
+      lines: 136
+      tokens_est: 408
+    - name: "constraint-progressivo.md"
+      lines: 344
+      tokens_est: 1032
+    - name: "context-management.md"
+      lines: 176
+      tokens_est: 528
+    - name: "copy-chief.md"
+      lines: 253
+      tokens_est: 759
+    - name: "copy-production.md"
+      lines: 185
+      tokens_est: 555
+    - name: "copy-squad-constitution.md"
+      lines: 308
+      tokens_est: 924
+    - name: "debugging-hypothesis.md"
+      lines: 416
+      tokens_est: 1248
+    - name: "ecosystem.md"
+      lines: 219
+      tokens_est: 657
+    - name: "mecanismo-unico.md"
+      lines: 212
+      tokens_est: 636
+    - name: "micro-unidades.md"
+      lines: 144
+      tokens_est: 432
+    - name: "persuasion-chunking.md"
+      lines: 193
+      tokens_est: 579
+    - name: "session-orchestration.md"
+      lines: 462
+      tokens_est: 1386
+    - name: "signal-translation.md"
+      lines: 256
+      tokens_est: 768
+    - name: "structured-exploration.md"
+      lines: 361
+      tokens_est: 1083
+    - name: "synthesis-flow.md"
+      lines: 202
+      tokens_est: 606
+    - name: "tool-usage-matrix.md"
+      lines: 366
+      tokens_est: 1098
+    - name: "voc-research.md"
+      lines: 291
+      tokens_est: 873
+    - name: "voc-squad.md"
+      lines: 328
+      tokens_est: 984
+    - name: "offers/concursa-ai.md"
+      lines: 66
+      tokens_est: 198
+    - name: "offers/florayla.md"
+      lines: 50
+      tokens_est: 150
+    - name: "offers/gabaritando-portugues.md"
+      lines: 53
+      tokens_est: 159
+    - name: "offers/neuvelys.md"
+      lines: 60
+      tokens_est: 180
+    - name: "offers/quimica-amarracao.md"
+      lines: 49
+      tokens_est: 147
+
+  templates:
+    - name: "CLAUDE.md"
+      size: 531
+    - name: "ads-library-spy-template.md"
+      size: 11282
+      type: " research"
+    - name: "agent-output-template.md"
+      size: 2155
+      type: " agent-prompt"
+    - name: "agent-prompts/copywriter-prompt.md"
+      size: 2189
+      type: " agent-prompt"
+    - name: "agent-prompts/linguistic-pattern-extractor.md"
+      size: 5214
+      type: " agent-prompt"
+    - name: "agent-prompts/researcher-prompt.md"
+      size: 2845
+      type: " agent-prompt"
+    - name: "agent-prompts/reviewer-prompt.md"
+      size: 1788
+      type: " agent-prompt"
+    - name: "agent-prompts/synthesizer-prompt.md"
+      size: 1599
+      type: " agent-prompt"
+    - name: "agent-prompts/voc-instagram-analyst.md"
+      size: 4256
+      type: " agent-prompt"
+    - name: "agent-prompts/voc-reddit-analyst.md"
+      size: 5364
+      type: " agent-prompt"
+    - name: "agent-prompts/voc-review-analyst.md"
+      size: 5714
+      type: " agent-prompt"
+    - name: "agent-prompts/voc-tiktok-analyst.md"
+      size: 4942
+      type: " agent-prompt"
+    - name: "agent-prompts/voc-youtube-analyst.md"
+      size: 3597
+      type: " agent-prompt"
+    - name: "briefing-complete-template.md"
+      size: 7253
+      type: " production"
+    - name: "context-hierarchy-template.md"
+      size: 7980
+      type: " methodology"
+    - name: "copy-validation-checklist.md"
+      size: 7322
+      type: " checklist"
+    - name: "criativos-template.md"
+      size: 6348
+      type: " production"
+    - name: "email-sequence-template.md"
+      size: 6397
+      type: " production"
+    - name: "etl-checklist.md"
+      size: 1913
+      type: " checklist"
+    - name: "extended-thinking-protocol.md"
+      size: 4787
+      type: " methodology"
+    - name: "funnel-reverse-template.md"
+      size: 7237
+      type: " research"
+    - name: "landing-page-template.md"
+      size: 8223
+      type: " production"
+    - name: "mecanismo-unico-template.md"
+      size: 6313
+      type: " methodology"
+    - name: "mup-consensus-validation.md"
+      size: 3389
+      type: " methodology"
+    - name: "mup-human-test.md"
+      size: 3916
+      type: " methodology"
+    - name: "mup-mus-discovery.md"
+      size: 5271
+      type: " methodology"
+    - name: "niche-pack/biblioteca-template.md"
+      size: 2194
+      type: " niche-pack"
+    - name: "niche-pack/cliches-template.md"
+      size: 1517
+      type: " niche-pack"
+    - name: "niche-pack/context-template.md"
+      size: 2312
+      type: " niche-pack"
+    - name: "niche-pack/task-plan-template.md"
+      size: 2254
+      type: " niche-pack"
+    - name: "partials/attribution-header.md"
+      size: 728
+      type: " production"
+    - name: "phase-review-checklist.md"
+      size: 1137
+      type: " checklist"
+    - name: "research-deliverables-checklist.md"
+      size: 4080
+      type: " checklist"
+    - name: "rmbc-ii-workflow.md"
+      size: 7305
+      type: " methodology"
+    - name: "story-criativo.md"
+      size: 11210
+      type: " story"
+    - name: "story-deliverable-generic.md"
+      size: 7805
+      type: " story"
+    - name: "story-email.md"
+      size: 13178
+      type: " story"
+    - name: "story-lp-bloco.md"
+      size: 10756
+      type: " story"
+    - name: "story-vsl-capitulo.md"
+      size: 11910
+      type: " story"
+    - name: "swipe-analysis-specs.md"
+      size: 6845
+      type: " methodology"
+    - name: "swipe-decomposition.md"
+      size: 5065
+      type: " research"
+    - name: "tools-tracking-template.md"
+      size: 5057
+      type: " methodology"
+    - name: "trends-analysis-template.md"
+      size: 10215
+      type: " research"
+    - name: "voc-linguistic-patterns.md"
+      size: 3651
+      type: " research"
+    - name: "voc-squad-consolidation.md"
+      size: 6629
+      type: " research"
+    - name: "voc-viral-extraction-template.md"
+      size: 3650
+      type: " research"
+    - name: "vsl-template.md"
+      size: 5551
+      type: " production"
+
+  commands:
+    - name: "CLAUDE.md"
+      size: 1937
+    - name: "architecture.md"
+      size: 889
+    - name: "cc.md"
+      size: 13912
+    - name: "checklist.md"
+      size: 1117
+    - name: "clickup-setup.md"
+      size: 2932
+    - name: "clone-expert.md"
+      size: 5307
+    - name: "create-offer.md"
+      size: 9224
+    - name: "debate.md"
+      size: 7665
+    - name: "diagnose-offer.md"
+      size: 5511
+    - name: "expert.md"
+      size: 1561
+    - name: "helix-parallel.md"
+      size: 9423
+    - name: "next-action.md"
+      size: 2191
+    - name: "pipeline.md"
+      size: 2063
+    - name: "plan-execution.md"
+      size: 2526
+    - name: "pre-delivery.md"
+      size: 1832
+    - name: "produce-offer.md"
+      size: 9280
+    - name: "production-brief.md"
+      size: 864
+    - name: "review-all.md"
+      size: 8324
+    - name: "squad-research.md"
+      size: 2948
+    - name: "status.md"
+      size: 2284
+    - name: "story.md"
+      size: 1099
+    - name: "sync-ecosystem.md"
+      size: 8593
+    - name: "sync-project.md"
+      size: 1751
+    - name: "update-ecosystem.md"
+      size: 8787
+    - name: "validate.md"
+      size: 1216
+
+  offers:
+    - path: "2c319805-cc08-4f3f-bd61-316ad8f62154/tool-results"
+      phase: "UNKNOWN"
+      has_mecanismo: false
+    - path: "b5735e8d-9e25-4f9a-94e6-15dd29447307/tool-results"
+      phase: "UNKNOWN"
+      has_mecanismo: false
+    - path: "concursos/concursa-ai"
+      phase: "PRODUCTION"
+      has_mecanismo: false
+    - path: "concursos/decifra-lei-seca"
+      phase: "PRODUCTION"
+      has_mecanismo: true
+    - path: "concursos/gabaritando-lei-seca"
+      phase: "IDLE"
+      has_mecanismo: true
+    - path: "concursos/gabaritando-portugues"
+      phase: "PRODUCTION"
+      has_mecanismo: true
+    - path: "concursos/gpt-dos-aprovados"
+      phase: "IDLE"
+      has_mecanismo: true
+    - path: "concursos/hacker"
+      phase: "IDLE"
+      has_mecanismo: true
+    - path: "lucapimenta/copywriting-ecosystem"
+      phase: "UNKNOWN"
+      has_mecanismo: false
+    - path: "relacionamento/quimica-amarracao"
+      phase: "PRODUCTION"
+      has_mecanismo: true
+    - path: "saude/florayla"
+      phase: "UNKNOWN"
+      has_mecanismo: true
+    - path: "saude/neuvelys"
+      phase: "UNKNOWN"
+      has_mecanismo: true
+
+  workers:
+    - name: "context-injector.sh"
+      size: 3209
+    - name: "deliverables-checker.sh"
+      size: 4611
+    - name: "offer-scaffolder.sh"
+      size: 5384
+    - name: "scale-score-calculator.sh"
+      size: 1659
+    - name: "voc-extractor.sh"
+      size: 2628
+
+  copy_squad:
+    - name: "abraham.md"
+      size: 33431
+    - name: "agora.md"
+      size: 39830
+    - name: "bencivenga.md"
+      size: 55950
+    - name: "brown.md"
+      size: 59409
+    - name: "brunson.md"
+      size: 39492
+    - name: "caples.md"
+      size: 48179
+    - name: "carlton.md"
+      size: 40966
+    - name: "chaperon.md"
+      size: 24934
+    - name: "cialdini.md"
+      size: 41227
+    - name: "collier.md"
+      size: 39168
+    - name: "copy-chief.md"
+      size: 7375
+    - name: "halbert.md"
+      size: 47073
+    - name: "hopkins.md"
+      size: 42437
+    - name: "hormozi.md"
+      size: 33909
+    - name: "kennedy.md"
+      size: 51945
+    - name: "kern.md"
+      size: 38345
+    - name: "makepeace.md"
+      size: 47488
+    - name: "ogilvy.md"
+      size: 46419
+    - name: "powers.md"
+      size: 31507
+    - name: "reeves.md"
+      size: 32202
+    - name: "ry-schwartz.md"
+      size: 45295
+    - name: "sabri.md"
+      size: 44614
+    - name: "schwartz.md"
+      size: 57636
+    - name: "sugarman.md"
+      size: 75826
+    - name: "vaynerchuk.md"
+      size: 33963

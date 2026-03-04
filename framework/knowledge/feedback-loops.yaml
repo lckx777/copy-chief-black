@@ -1,0 +1,1311 @@
+# Feedback Loops Knowledge Base
+# Auto-populated by post-validation-feedback hook + seeded from historical helix-state.yaml data
+# Injected as constraints in production prompts
+# Source: helix-state.yaml + mecanismo-unico.yaml from all offers
+version: "1.0.0"
+updated_at: "2026-02-26"
+
+# =============================================================================
+# META-PATTERNS (derived from cross-offer analysis)
+# Placed BEFORE loops so hook appendices don't break YAML structure
+# =============================================================================
+  - timestamp: "2026-02-26T18:36:01.574Z"
+    tool: "blind_critic"
+    offer: "concursos/decifra-lei-seca"
+    niche: "concursos"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-26T18:36:25.656Z"
+    tool: "blind_critic"
+    offer: "concursos/decifra-lei-seca"
+    niche: "concursos"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-26T18:36:32.498Z"
+    tool: "emotional_stress_test"
+    offer: "concursos/decifra-lei-seca"
+    niche: "concursos"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-26T18:36:40.756Z"
+    tool: "emotional_stress_test"
+    offer: "concursos/decifra-lei-seca"
+    niche: "concursos"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T11:26:32.810Z"
+    tool: "validate_gate"
+    offer: "saude/neuvelys"
+    niche: "saude"
+    phase: "research"
+    score: null
+    threshold: 0
+    passed: false
+    details: "No output"
+    constraints_added: ["saude: validate_gate BLOCKED — check required tools for research phase"]
+  - timestamp: "2026-02-27T12:21:52.456Z"
+    tool: "emotional_stress_test"
+    offer: "saude/neuvelys"
+    niche: "saude"
+    phase: "briefing"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T12:24:42.526Z"
+    tool: "emotional_stress_test"
+    offer: "saude/neuvelys"
+    niche: "saude"
+    phase: "briefing"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T12:25:17.619Z"
+    tool: "emotional_stress_test"
+    offer: "saude/neuvelys"
+    niche: "saude"
+    phase: "briefing"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T12:28:08.029Z"
+    tool: "emotional_stress_test"
+    offer: "saude/neuvelys"
+    niche: "saude"
+    phase: "briefing"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T12:28:33.914Z"
+    tool: "validate_gate"
+    offer: "saude/neuvelys"
+    niche: "saude"
+    phase: "briefing"
+    score: null
+    threshold: 0
+    passed: false
+    details: "No output"
+    constraints_added: ["saude: validate_gate BLOCKED — check required tools for briefing phase"]
+  - timestamp: "2026-02-27T16:52:44.109Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T16:52:44.455Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T16:59:27.821Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T16:59:28.126Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T17:06:56.179Z"
+    tool: "blind_critic"
+    offer: "saude/neuvelys"
+    niche: "saude"
+    phase: "briefing"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-27T17:06:56.649Z"
+    tool: "emotional_stress_test"
+    offer: "saude/neuvelys"
+    niche: "saude"
+    phase: "briefing"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-28T13:25:08.293Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-28T13:25:08.592Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-28T13:41:19.549Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-02-28T13:41:33.144Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:06:51.369Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:06:54.206Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:07:10.297Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:11:20.720Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:11:24.509Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:11:29.063Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:12:39.815Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:12:42.195Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:12:44.491Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:13:16.327Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:13:41.656Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:14:03.743Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:14:57.514Z"
+    tool: "layered_review"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T18:16:48.908Z"
+    tool: "layered_review"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:24:52.928Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:24:58.195Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:25:06.149Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:25:10.024Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:25:19.223Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:25:26.598Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:25:34.750Z"
+    tool: "black_validation"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:25:44.549Z"
+    tool: "black_validation"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T19:25:52.866Z"
+    tool: "black_validation"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T20:19:39.318Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T20:19:46.957Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T20:34:20.479Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T20:34:30.468Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:25:58.716Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:26:28.456Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:27:24.157Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:29:17.444Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:30:23.075Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:30:52.961Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:31:30.493Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:32:08.042Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:35:41.812Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:35:52.761Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:36:28.199Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:36:36.652Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:37:15.124Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:37:23.978Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:47:16.391Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:47:31.664Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:47:50.771Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:49:43.719Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-02T21:49:55.557Z"
+    tool: "blind_critic"
+    offer: "saude/florayla"
+    niche: "saude"
+    phase: "production"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-03T16:06:47.561Z"
+    tool: "validate_gate"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 0
+    passed: false
+    details: "No output"
+    constraints_added: ["unknown: validate_gate BLOCKED — check required tools for idle phase"]
+  - timestamp: "2026-03-04T11:30:43.456Z"
+    tool: "validate_gate"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 0
+    passed: false
+    details: "No output"
+    constraints_added: ["unknown: validate_gate BLOCKED — check required tools for idle phase"]
+  - timestamp: "2026-03-04T11:32:44.628Z"
+    tool: "validate_gate"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 0
+    passed: false
+    details: "No output"
+    constraints_added: ["unknown: validate_gate BLOCKED — check required tools for idle phase"]
+  - timestamp: "2026-03-04T12:06:56.274Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:06:57.256Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:06:58.245Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:07:18.270Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:07:46.533Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:08:13.872Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:15:55.684Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:16:10.421Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:16:39.431Z"
+    tool: "blind_critic"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:17:02.709Z"
+    tool: "emotional_stress_test"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 8
+    passed: false
+    details: "No output"
+    constraints_added: []
+  - timestamp: "2026-03-04T12:39:02.249Z"
+    tool: "validate_gate"
+    offer: "unknown/unknown"
+    niche: "unknown"
+    phase: "idle"
+    score: null
+    threshold: 0
+    passed: false
+    details: "No output"
+    constraints_added: ["unknown: validate_gate BLOCKED — check required tools for idle phase"]
+
+meta_patterns:
+
+  blind_critic_high_est_low:
+    description: "blind_critic >= 8 mas EST < 8 — mecanismo solido mas narrativa fraca"
+    affected_offers:
+      - "saude/florayla (BC MUP 8.0 + MUS 8.1, EST 7.1)"
+      - "concursos/decifra-lei-seca (BC MUP 8.6 + MUS 8.0, EST 7.3)"
+      - "concursos/gabaritando-portugues (BC MUP 9.0 + MUS 8.0, EST 5.8)"
+    fix: "Adicionar cenas vividas e especificas ANTES de revelar mecanismo cientifico/tecnico."
+    frequency: "3/8 ofertas validadas (37.5%)"
+
+  gimmick_equals_product:
+    description: "Gimmick Name identico ao nome do produto gera marketing organico"
+    examples:
+      - "Quimica da Amarracao Infiel (produto = gimmick)"
+      - "GPT dos Aprovados (produto = gimmick)"
+      - "Metodo Gabaritando (produto ≈ gimmick)"
+    recommendation: "Quando possivel, nomear produto = gimmick."
+
+  rmbc_above_8_5_correlates_with_est:
+    description: "RMBC medio >= 8.5 correlaciona com EST >= 8 na maioria dos casos"
+    data:
+      - "quimica-amarracao: RMBC 8.75, EST 9.1 — CONFIRMADO"
+      - "hacker: RMBC 8.75, EST 8.0 — CONFIRMADO"
+      - "decifra-lei-seca: RMBC 8.875, EST 7.3 — EXCECAO"
+    note: "RMBC alto e necessario mas nao suficiente."
+
+  dual_naming_pattern:
+    description: "Nome cientifico + nome popular para mecanismo aumenta blind_critic score"
+    examples:
+      - "Claustro + TPM Masculina (BC MUP 9.0)"
+      - "Celulas Caliciformes + Celulas de Lubrificacao (BC MUP 8.0)"
+    recommendation: "Sempre criar par cientifico/popular para Nova Causa e Ingrediente Hero."
+
+  sexy_cause_transmissibility_threshold:
+    description: "Sexy Cause com score de transmissibilidade >= 8 correlaciona com blind_critic MUP >= 8.5"
+    data:
+      - "Efeito Desapego Primitivo: transmissivel SIM, BC MUP 9.0"
+      - "Ponto Cego da Legislacao: score 8.65, BC MUP 8.6"
+      - "Ponto Cego de Leitura: score 9, BC MUP 9.0"
+      - "Ovelha Negra: score 9, BC MUP 8.0"
+    recommendation: "Investir tempo extra na Sexy Cause — melhor preditor de MUP score."
+
+# =============================================================================
+# STATS (aggregated from all historical data)
+# =============================================================================
+
+stats:
+  total_validations_historical: 104
+  total_passed_historical: 21
+  total_failed_historical: 83
+  pass_rate_historical: 87.5
+  avg_score_passed: 8.41
+  avg_score_failed: 6.73
+  by_tool:
+    blind_critic:
+      count: 16
+      avg: 8.34
+      pass_rate: 100
+      note: "Nenhum blind_critic historico falhou — valida mecanismo, nao narrativa"
+    emotional_stress_test:
+      count: 7
+      avg: 7.46
+      pass_rate: 57.1
+      note: "3/7 falhas — EST e o gargalo mais critico do pipeline"
+    consensus:
+      count: 2
+      avg: 9.0
+      pass_rate: 100
+    black_validation:
+      count: 1
+      avg: 9.2
+      pass_rate: 100
+  by_niche:
+    concursos:
+      offers_validated: 6
+      avg_blind_critic: 8.23
+      avg_est: 7.32
+      weakest_area: "emotional_stress_test (2 falhas: gabaritando-portugues 5.8, decifra-lei-seca 7.3)"
+    relacionamento:
+      offers_validated: 1
+      avg_blind_critic: 9.05
+      avg_est: 9.1
+      weakest_area: "nenhum — scores mais altos do portfolio"
+    saude:
+      offers_validated: 1
+      avg_blind_critic: 8.05
+      avg_est: 7.1
+      weakest_area: "emotional_stress_test (florayla 7.1)"
+
+# =============================================================================
+# LOOPS (historical seed data + live hook data)
+# This section is LAST so the post-validation-feedback hook can safely append
+# =============================================================================
+
+loops:
+
+  # --- RELACIONAMENTO / QUIMICA DA AMARRACAO ---
+
+  - offer: "relacionamento/quimica-amarracao"
+    niche: "relacionamento"
+    tool: "blind_critic"
+    target: "mup"
+    score: 9.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Angulo neuroquimico inedito no mercado (0/352 ads usam) cria diferenciacao maxima"
+      - "Sexy Cause 'Efeito Desapego Primitivo' gera transmissibilidade alta"
+      - "Paradigm shift claro: 'Voce atacava SINTOMA. O problema e QUIMICO'"
+      - "Tirar culpa do avatar ('culpa da sociedade, nao dela') gera alivio emocional imediato"
+      - "Nova Causa com nome cientifico real (Claustro) + nome popular (TPM Masculina)"
+    applies_to: ["relacionamento/*"]
+    created_at: "2026-02-14"
+
+  - offer: "relacionamento/quimica-amarracao"
+    niche: "relacionamento"
+    tool: "blind_critic"
+    target: "mus"
+    score: 9.1
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Gimmick Name identico ao nome do produto ('Quimica da Amarracao Infiel')"
+      - "Origin Story com credibilidade emocional: expert traida + pesquisa academica (Stanford)"
+      - "Authority Hook 'A Ciencia que as Amantes Usam Sem Saber' ativa dor + curiosidade"
+      - "Ingrediente Hero com 5 micro-comportamentos nomeados"
+      - "RMBC 8.75 — todos criterios acima de 8"
+    applies_to: ["relacionamento/*"]
+    created_at: "2026-02-14"
+
+  - offer: "relacionamento/quimica-amarracao"
+    niche: "relacionamento"
+    tool: "emotional_stress_test"
+    score: 9.1
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "MUP+MUS juntos criam narrativa coesa: problema quimico → solucao quimica"
+      - "Nomenclatura v3.2 com distincao clara entre Gimmick, Authority Hook, Sexy Cause e Causa Raiz"
+      - "Genericidade alta (9.1) — impossivel confundir com outro produto de relacionamento"
+      - "3 Modos (Viril, Maternal, Submisso) criam especificidade reconhecivel"
+    applies_to: ["relacionamento/*"]
+    created_at: "2026-02-14"
+
+  - offer: "relacionamento/quimica-amarracao"
+    niche: "relacionamento"
+    tool: "black_validation"
+    score: 9.2
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "BLACK 9.2/10 na mini VSL — copy production-ready"
+      - "Inimigo externo + grupo seleto + superioridade epistemica + CTA tribal"
+      - "Mecanismo presente e verificavel ao longo de toda a copy"
+    applies_to: ["relacionamento/*", "saude/*"]
+    created_at: "2026-02-14"
+
+  # --- SAUDE / FLORAYLA ---
+
+  - offer: "saude/florayla"
+    niche: "saude"
+    tool: "blind_critic"
+    target: "mup"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Numero nao-redondo de celulas (107 milhoes → 3 milhoes) cria especificidade cientifica"
+      - "Nome cientifico real (celulas caliciformes) + nome popular (celulas de lubrificacao)"
+      - "Paradigm shift 'NAO e falta de fibra, agua ou exercicio' invalida solucoes conhecidas"
+      - "Dados de pesquisa Harvard 2024 como authority proof"
+    applies_to: ["saude/*"]
+    created_at: "2026-02-26"
+
+  - offer: "saude/florayla"
+    niche: "saude"
+    tool: "blind_critic"
+    target: "mus"
+    score: 8.1
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Ingrediente Hero com especificidade geografica (Psyllium Husk dos Pireneus, solo vulcanico)"
+      - "Gimmick Name 'Truque Intestinal de 7 Segundos' comunica facilidade e rapidez"
+      - "Origin Story com caso clinico vivido (paciente 58 anos, 2 semanas sem evacuar)"
+      - "Dados PubMed 2024 sobre reversibilidade do declinio celular (28-29%)"
+    applies_to: ["saude/*"]
+    created_at: "2026-02-26"
+
+  - offer: "saude/florayla"
+    niche: "saude"
+    tool: "emotional_stress_test"
+    score: 7.1
+    threshold: 8.0
+    passed: false
+    failure_reasons:
+      - "Score 7.1 abaixo do threshold 8.0 — humano aprovou manualmente"
+      - "Estrutura linear problema→mecanismo→solucao avaliada como generica"
+      - "Falta de narrativa sensorial vivida antes de revelar mecanismo cientifico"
+      - "Gimmick Name 'Truque Intestinal de 7 Segundos' pode soar formulaico"
+    constraints_derived:
+      - "Para saude: abrir com cena vivida e sensorial ANTES de introduzir mecanismo cientifico"
+      - "Evitar estrutura puramente linear — quebrar com historia/cena pessoal"
+      - "Gimmick Names tipo 'X de Y segundos' precisam de contexto diferenciador forte"
+      - "EST 7.1 com BC 8.0/8.1: mecanismo solido mas NARRATIVA precisa de mais especificidade"
+      - "Priorizar Face 2 (narrativa vivida) sobre Face 1 (dados) quando ambos presentes"
+    applies_to: ["saude/*"]
+    created_at: "2026-02-26"
+
+  # --- CONCURSOS / DECIFRA LEI SECA ---
+
+  - offer: "concursos/decifra-lei-seca"
+    niche: "concursos"
+    tool: "consensus"
+    target: "mup"
+    score: 9.0
+    threshold: 7.0
+    passed: true
+    success_patterns:
+      - "Sexy Cause 'Ponto Cego da Legislacao' venceu entre 3 candidatos (8.65 vs 8.60 vs 7.70)"
+      - "Consenso multi-modelo forte — Gemini Flash deu 9/10 mesmo contra-argumentando"
+      - "Framing de invisibilidade ('padrao INVISIVEL a olho nu') cria urgencia"
+    applies_to: ["concursos/*"]
+    created_at: "2026-02-17"
+
+  - offer: "concursos/decifra-lei-seca"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mup"
+    score: 8.6
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Numeros especificos de bancas (37 artigos, 83% das provas, 50.000 questoes)"
+      - "Diferenciacao por banca (CEBRASPE 37, FGV 42, FCC 29) = especificidade maxima"
+      - "Causa raiz em 4 pontos estruturados"
+    applies_to: ["concursos/*"]
+    created_at: "2026-02-17"
+
+  - offer: "concursos/decifra-lei-seca"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mus"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Gimmick Name 'Codigo da Legislacao' venceu com 9.20 — chiclete e ligado ao hero"
+      - "Produto = prompts para ChatGPT — posicionamento 'combustivel para motor gratuito'"
+      - "6 componentes nomeados com funcoes claras"
+      - "Origin Story com insider knowledge (Rafael Mendes, 6 anos dentro das bancas)"
+    applies_to: ["concursos/*"]
+    created_at: "2026-02-17"
+
+  - offer: "concursos/decifra-lei-seca"
+    niche: "concursos"
+    tool: "emotional_stress_test"
+    score: 7.3
+    threshold: 8.0
+    passed: false
+    failure_reasons:
+      - "EST 7.3 abaixo do threshold 8.0"
+      - "Genericidade 9.0 PASSOU — problema nao e genericidade"
+      - "Fear level 4 PASSOU — escalada emocional adequada"
+      - "Gap: execucao da copy do statement, nao do mecanismo em si"
+    constraints_derived:
+      - "Genericidade alta + EST baixo = gap na ARTICULACAO narrativa, nao no conteudo"
+      - "Para concursos: mais cenas vividas do concurseiro (vestiario, noite antes, resultado)"
+      - "Dados estatisticos precisam de envelope emocional no EST"
+      - "PADRAO: blind_critic alto + EST baixo = mecanismo bom, narrativa precisa mais emocao"
+    applies_to: ["concursos/*"]
+    created_at: "2026-02-17"
+
+  # --- CONCURSOS / HACKER DO CONCURSO ---
+
+  - offer: "concursos/hacker"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mup"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Sexy Cause 'Ovelha Negra' altamente transmissivel (score 9) e culturalmente reconhecivel"
+      - "Framing simples: 'a resposta certa FOGE do padrao das demais'"
+      - "Problema com escalada emocional: 2000h de estudo → reprova por 1-2 questoes"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-20"
+
+  - offer: "concursos/hacker"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mus"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Gimmick Name identico ao ingrediente hero ('Tecnica Ovelha Negra')"
+      - "Origin Story com numero especifico (12.000 alunos, universidade colombiana)"
+      - "4 componentes do indutor com siglas (IP, DON, VC, ATR)"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-20"
+
+  - offer: "concursos/hacker"
+    niche: "concursos"
+    tool: "emotional_stress_test"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "EST 8.0 = threshold exato — mecanismo funciona"
+      - "Dor emocional ('ver outros passando') + promessa tangivel ('acertar sem saber')"
+      - "RMBC 8.75 com 'provavel' em 9 — avatar acredita porque percebe padroes"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-20"
+
+  # --- CONCURSOS / GABARITANDO PORTUGUES ---
+
+  - offer: "concursos/gabaritando-portugues"
+    niche: "concursos"
+    tool: "consensus"
+    target: "mup"
+    score: 9.0
+    threshold: 7.0
+    passed: true
+    success_patterns:
+      - "'Ponto Cego de Leitura' validado com consensus 9/10"
+      - "Reframe de 'burrice' para 'ponto cego ensinavel' tira culpa e da esperanca"
+      - "Ancoragem em VOC real: 'quando chega no final ja nao sei o que esta escrito'"
+    applies_to: ["concursos/*"]
+    created_at: "2026-02-02"
+
+  - offer: "concursos/gabaritando-portugues"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mup"
+    score: 9.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Score 9 = MUP mais alto do portfolio concursos"
+      - "Especificidade tecnica: 'LITERALIDADE vs PARAFRASE' — nomenclatura propria"
+      - "Quote VOC integrada no problema fundamental = prova social embutida"
+    applies_to: ["concursos/*"]
+    created_at: "2026-02-02"
+
+  - offer: "concursos/gabaritando-portugues"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mus"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Gimmick Name 'Radar de Parafrases' chiclete e ligado ao hero (score 9)"
+      - "Origin Story com elite profissional (juizes federais, 200 paginas)"
+      - "Authority Hook 'Leitura Judicial' — aspiracional para concurseiro"
+    applies_to: ["concursos/*"]
+    created_at: "2026-02-02"
+
+  - offer: "concursos/gabaritando-portugues"
+    niche: "concursos"
+    tool: "emotional_stress_test"
+    score: 5.8
+    threshold: 8.0
+    passed: false
+    failure_reasons:
+      - "EST 5.8 — pior score de EST do portfolio"
+      - "Genericidade apenas 5.9/10 — copy confundivel com concorrente"
+      - "'estrutura OK, execucao precisa mais elementos proprietarios'"
+      - "Fear hierarchy nivel 4 ativado mas nao refletido na articulacao"
+      - "GAP CRITICO: MUP blind_critic 9.0 mas EST 5.8"
+    constraints_derived:
+      - "NUNCA produzir copy de portugues sem pelo menos 3 cenas vividas do avatar"
+      - "Incluir OBRIGATORIAMENTE elementos proprietarios na narrativa"
+      - "EST < 6 com BC > 8 = ALERTA MAXIMO: rewrite narrativo completo"
+      - "Explorar vergonha academica ('pos-graduacao e erra portugues basico') com cenas"
+      - "Usar variacao_lead do mecanismo-unico.yaml como referencia"
+    applies_to: ["concursos/*"]
+    created_at: "2026-02-02"
+
+  # --- CONCURSOS / GABARITANDO LEI SECA ---
+
+  - offer: "concursos/gabaritando-lei-seca"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mup"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Sexy Cause 'O Buraco da Lei Seca' score 9 — altamente transmissivel"
+      - "Problema universal: 'sabe mas nao lembra na hora' = VOC pura"
+      - "Framing de gargalo entre teoria e memorizacao literal"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-25"
+
+  - offer: "concursos/gabaritando-lei-seca"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mus"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "'Metodo Gabaritando' como Gimmick Name — simples e identico ao produto"
+      - "4 componentes com siglas (MA, AV, RE, SLS)"
+      - "Associacao visual como tecnica intuitiva"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-25"
+
+  - offer: "concursos/gabaritando-lei-seca"
+    niche: "concursos"
+    tool: "emotional_stress_test"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "EST 8.0 = threshold exato"
+      - "Dor universal (memoria de artigos) + solucao tangivel (visual)"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-25"
+
+  # --- CONCURSOS / GPT DOS APROVADOS ---
+
+  - offer: "concursos/gpt-dos-aprovados"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mup"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "'Desalinhamento de Contexto' como Sexy Cause — tecnico e transmissivel"
+      - "Problema concreto: 'ChatGPT te induziu ao erro porque nao conhece SUA banca'"
+      - "Causa raiz simples: IA generica vs IA especializada"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-28"
+
+  - offer: "concursos/gpt-dos-aprovados"
+    niche: "concursos"
+    tool: "blind_critic"
+    target: "mus"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "Gimmick identico ao produto ('GPT dos Aprovados')"
+      - "'Sistema de 3 Etapas' como Authority Hook — numero especifico"
+      - "Posicionamento 'copiar/colar, nao aprender' = baixa barreira"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-28"
+
+  - offer: "concursos/gpt-dos-aprovados"
+    niche: "concursos"
+    tool: "emotional_stress_test"
+    score: 8.0
+    threshold: 8.0
+    passed: true
+    success_patterns:
+      - "EST 8.0 com RMBC 8.25 — equilibrado"
+      - "77% do mercado NAO usa IA — angulo de 'mercado virgem'"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-28"
+
+  # --- CONCURSOS / CONCURSA.AI ---
+
+  - offer: "concursos/concursa-ai"
+    niche: "concursos"
+    tool: "helix_validation"
+    target: "mup_mus"
+    score: null
+    threshold: null
+    passed: true
+    success_patterns:
+      - "MUP 'Padrao de Eliminacao das Bancas' — STAND 94%"
+      - "MUS 'DNA da Banca' com 5 componentes — STAND 98%"
+      - "Hierarquia de vilao: Padrao → Cursinhos → ChatGPT → CONCURSA.AI"
+      - "CEBRASPE 34% absolutizantes (78% ERRADO), FGV 41% doutrina, FCC 19% troca numeros"
+      - "One Belief v5.0 integra MUP + MUS + indutor"
+      - "Authority Hook: 'IA 100x mais potente que GPT' + '500K+ questoes reais'"
+    note: "Scores BC/EST nao registrados — validacao pre-ecossistema"
+    applies_to: ["concursos/*"]
+    created_at: "2026-01-23"
+
+  # --- SEM VALIDACAO ---
+
+  - offer: "saude/neuvelys"
+    niche: "saude"
+    tool: "none"
+    score: null
+    threshold: null
+    passed: false
+    note: "DRAFT — nenhuma validacao MCP executada"
+    no_validation_data: true
+    created_at: "2026-02-26"
+
+  # --- LIVE HOOK DATA (appended below by post-validation-feedback hook) ---

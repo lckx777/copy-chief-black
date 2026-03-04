@@ -1,0 +1,16 @@
+version: '1.0'
+total_registered: 1
+last_updated: '2026-03-04T11:25:57.282Z'
+entries:
+  - id: gr-mmbyaqht-q1np1
+    agent: vox
+    niche: saude
+    offer: saude/florayla
+    error_type: synthesis.md missing confidence field
+    resolution: Add confidence_pct to synthesis YAML frontmatter before gate call
+    confidence: 0.8
+    phase: null
+    task: null
+    occurrences: 1
+    registered_at: '2026-03-04T11:25:57.281Z'
+    last_seen: '2026-03-04T11:25:57.282Z'

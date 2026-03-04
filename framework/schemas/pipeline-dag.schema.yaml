@@ -1,0 +1,193 @@
+# DAG Pipeline Schema (v1.0)
+# Sprint S40.1 — DAG Pipeline Engine
+# Defines the structure for representing workflows as Directed Acyclic Graphs
+# Created: 2026-03-01
+
+schema_version: "1.0"
+description: "Schema for pipeline DAG definitions in the copywriting ecosystem"
+
+# ═══════════════════════════════════════════
+# NODE
+# ═══════════════════════════════════════════
+node:
+  id:
+    type: string
+    required: true
+    description: "Unique identifier for this node within the DAG"
+    example: "fase-05"
+
+  label:
+    type: string
+    required: true
+    description: "Human-readable name for display in CLI output"
+    example: "Problema/Vilão/MUP"
+
+  type:
+    type: enum
+    required: true
+    values:
+      - task           # Executable action (production, research, etc.)
+      - gate           # Quality/validation checkpoint
+      - decision       # Branching point requiring human input
+      - parallel_group # Container for parallel execution
+    description: "Node type determines execution behavior"
+
+  persona:
+    type: string
+    required: false
+    description: "Handle of the primary persona responsible for this node"
+    example: "@briefer"
+    known_values:
+      - "@researcher"
+      - "@briefer"
+      - "@producer"
+      - "@critic"
+      - "@creative"
+      - "@lp"
+      - "@vsl"
+      - "@miner"
+      - "@gatekeeper"
+      - "@chief"
+
+  tools:
+    type: array
+    items: string
+    required: false
+    description: "List of MCP tools required by this node"
+    example:
+      - get_phase_context
+      - blind_critic
+      - emotional_stress_test
+
+  status:
+    type: enum
+    required: true
+    default: "pending"
+    values:
+      - pending      # Not yet started
+      - in_progress  # Currently executing
+      - completed    # Successfully finished
+      - blocked      # Cannot execute — dependencies not satisfied
+      - skipped      # Intentionally bypassed
+    description: "Current execution status of this node"
+
+  threshold:
+    type: number
+    required: false
+    description: "Minimum score required for gate nodes (e.g., 8 for blind_critic)"
+    example: 8
+
+  human_gate:
+    type: boolean
+    required: false
+    default: false
+    description: "If true, node requires explicit human approval before marking complete"
+
+  parallel_members:
+    type: array
+    items: string
+    required: false
+    description: "For parallel_group nodes: list of member node IDs that run concurrently"
+
+  deliverable:
+    type: string
+    required: false
+    description: "Expected output file or directory path"
+    example: "briefings/phases/fase-05-*.md"
+
+  description:
+    type: string
+    required: false
+    description: "Detailed description of what this node does"
+
+# ═══════════════════════════════════════════
+# EDGE
+# ═══════════════════════════════════════════
+edge:
+  from:
+    type: string
+    required: true
+    description: "ID of the source node"
+
+  to:
+    type: string
+    required: true
+    description: "ID of the target node"
+
+  type:
+    type: enum
+    required: true
+    values:
+      - requires  # Target node requires source to be completed first
+      - produces  # Source node produces output consumed by target
+      - gates     # Source is a gate that blocks target
+    description: "Semantic type of the dependency relationship"
+
+  condition:
+    type: string
+    required: false
+    description: "Optional condition expression for conditional edges"
+    example: "status == 'completed' && score >= 8"
+
+# ═══════════════════════════════════════════
+# DAG (root document)
+# ═══════════════════════════════════════════
+dag:
+  id:
+    type: string
+    required: true
+    description: "Unique identifier for this DAG"
+    example: "helix-pipeline"
+
+  name:
+    type: string
+    required: true
+    description: "Human-readable display name"
+    example: "HELIX Briefing Pipeline"
+
+  version:
+    type: string
+    required: true
+    description: "Semantic version of this DAG definition"
+    example: "1.0"
+
+  description:
+    type: string
+    required: false
+    description: "Extended description of the pipeline's purpose"
+
+  nodes:
+    type: array
+    items: node
+    required: true
+    description: "All nodes in the DAG"
+    min_length: 2
+
+  edges:
+    type: array
+    items: edge
+    required: true
+    description: "All directed edges defining dependencies"
+    min_length: 1
+
+# ═══════════════════════════════════════════
+# VALIDATION RULES
+# ═══════════════════════════════════════════
+validation_rules:
+  - name: "no_cycles"
+    description: "DAG must have no cycles (topological sort must succeed)"
+
+  - name: "valid_edge_refs"
+    description: "All edge from/to values must reference existing node IDs"
+
+  - name: "single_root"
+    description: "DAG should have at least one node with no incoming edges (root)"
+
+  - name: "single_terminal"
+    description: "DAG should have at least one node with no outgoing edges (terminal)"
+
+  - name: "gate_type_check"
+    description: "Nodes of type 'gate' should have threshold defined"
+
+  - name: "parallel_members_check"
+    description: "parallel_group nodes must have parallel_members defined and all IDs must exist"

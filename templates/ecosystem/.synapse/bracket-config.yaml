@@ -1,0 +1,43 @@
+# Synapse Context Bracket Configuration
+# Externalizes bracket thresholds, token budgets, and layer configs
+# Read by context-tracker.js at engine init
+#
+# @atom U-05
+# @version 1.0.0
+
+brackets:
+  FRESH:
+    min_percent: 60
+    max_percent: 100
+    token_budget: 800
+    layers: [0, 1, 2, 6, 7]
+    memory_hints: false
+    handoff_warning: false
+
+  MODERATE:
+    min_percent: 40
+    max_percent: 60
+    token_budget: 1500
+    layers: [0, 1, 2, 3, 4, 5, 6, 7]
+    memory_hints: false
+    handoff_warning: false
+
+  DEPLETED:
+    min_percent: 25
+    max_percent: 40
+    token_budget: 2000
+    layers: [0, 1, 2, 3, 4, 5, 6, 7]
+    memory_hints: true
+    handoff_warning: false
+
+  CRITICAL:
+    min_percent: 0
+    max_percent: 25
+    token_budget: 2500
+    layers: [0, 1, 2, 3, 4, 5, 6, 7]
+    memory_hints: true
+    handoff_warning: true
+
+defaults:
+  avg_tokens_per_prompt: 1500
+  max_context: 200000

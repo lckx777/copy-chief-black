@@ -1,0 +1,350 @@
+# HELIX Phases Schema - Single Source of Truth
+#
+# Este arquivo define as 10 fases HELIX com configuração autoritativa.
+# Usado por: get_phase_context (MCP Copywriting), templates, validação
+#
+# NUNCA editar PHASE_CONFIG em phase-context.ts diretamente.
+# Todas mudanças devem ser feitas AQUI.
+#
+# Criado: 2026-02-02 (BSSF Score 8.1, GBS 90%)
+# Versão: 1.0.0
+
+version: "2.0.0"
+updated: "2026-02-02"
+changelog: |
+  v2.0.0 - Adicionado template_file em todas as fases
+         - get_phase_context agora carrega e mostra o template real da skill
+         - Output inclui instrução de onde salvar o arquivo preenchido
+
+# Metodologias referenciadas por fase
+methodologies:
+  puzzle_pieces: "Puzzle Pieces (4 Camadas do Mecanismo)"
+  rmbc_scores: "RMBC (Reason, Mechanism, Believability, Connection)"
+  quick_start: "Quick Start Templates"
+  sixteen_word: "16-Word Framework"
+  schwartz: "Eugene Schwartz (5 Níveis de Consciência)"
+
+phases:
+  1:
+    name: "Identificação e Posicionamento"
+    short_name: "Identificação"
+    description: "Definir produto, avatar inicial, e posicionamento no mercado"
+
+    required_files:
+      - "CONTEXT.md"
+
+    optional_files:
+      - "biblioteca_nicho_*.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase01_identificacao.md"
+    output_file: "briefings/phases/phase-01-identificacao.md"
+    next_phase: "2-Pesquisa de Mercado"
+
+    methodologies:
+      - "puzzle_pieces"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Ler CONTEXT.md para entender a oferta
+      3. Preencher CADA SEÇÃO do template fielmente
+      4. Salvar em output_file
+
+  2:
+    name: "Pesquisa de Mercado e Concorrência"
+    short_name: "Mineração"
+    description: "Mapear concorrentes, ads escalando, e tendências de mercado"
+
+    required_files:
+      - "CONTEXT.md"
+      - "briefings/phases/phase-01-*.md"
+
+    optional_files:
+      - "biblioteca_nicho_*.md"
+      - "research/competitors/summary.md"
+      - "research/competitors/processed/ads-library-spy.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase02_pesquisa_mercado.md"
+    output_file: "briefings/phases/phase-02-mineracao.md"
+    previous_output: "Fase 1 completa"
+    next_phase: "3-Avatar"
+
+    methodologies:
+      - "rmbc"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente
+      3. Salvar em output_file
+
+  3:
+    name: "Avatar e Psicologia Profunda"
+    short_name: "Avatar"
+    description: "Definir avatar com DRE (Desejo Real Escondido) e psicografia"
+
+    required_files:
+      - "CONTEXT.md"
+      - "briefings/phases/phase-02-*.md"
+
+    optional_files:
+      - "research/voc/summary.md"
+      - "research/voc/trends-analysis.md"
+      - "research/avatar/summary.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase03_avatar_psicologia.md"
+    output_file: "briefings/phases/phase-03-avatar.md"
+    previous_output: "Fase 2 + VOC extraída"
+    next_phase: "4-Consciência"
+
+    methodologies:
+      - "quick_start"
+      - "rmbc"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente
+      3. Salvar em output_file
+
+  4:
+    name: "Níveis de Consciência"
+    short_name: "Consciência"
+    description: "Mapear awareness e sophistication do avatar (Schwartz)"
+
+    required_files:
+      - "CONTEXT.md"
+      - "briefings/phases/phase-03-*.md"
+
+    optional_files:
+      - "research/voc/summary.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase04_niveis_consciencia.md"
+    output_file: "briefings/phases/phase-04-consciencia.md"
+    previous_output: "Fase 3 (Avatar) completa"
+    next_phase: "5-MUP"
+
+    methodologies:
+      - "schwartz"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente
+      3. Salvar em output_file
+
+  5:
+    name: "Problema, Vilão e MUP"
+    short_name: "MUP"
+    description: "Definir Mecanismo Único do Problema com Nova Causa e Sexy Cause"
+
+    required_files:
+      - "CONTEXT.md"
+      - "briefings/phases/phase-04-*.md"
+      - "research/synthesis.md"
+
+    optional_files:
+      - "mecanismo-unico.yaml"
+      - "research/mechanism/summary.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase05_problema_vilao_mup.md"
+    output_file: "briefings/phases/phase-05-problema-vilao-mup.md"
+    previous_output: "Fase 4 + Research synthesis"
+    next_phase: "6-MUS"
+
+    load_mechanism: true
+
+    methodologies:
+      - "rmbc"
+      - "sixteen_word"
+      - "puzzle_pieces"
+
+    validations:
+      - "MUP deve passar em 3 critérios RMBC (digerível, único, provável)"
+      - "blind_critic score >= 8"
+      - "consensus com multi-modelo"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente
+      3. Usar consensus + blind_critic para validar
+      4. Salvar em output_file
+
+  6:
+    name: "Solução, Especialista e MUS"
+    short_name: "MUS"
+    description: "Definir Mecanismo Único da Solução com Ingrediente Hero e Gimmick Name"
+
+    required_files:
+      - "CONTEXT.md"
+      - "briefings/phases/phase-05-*.md"
+      - "mecanismo-unico.yaml"
+
+    optional_files:
+      - "research/mechanism/summary.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase06_solucao_mus.md"
+    output_file: "briefings/phases/phase-06-solucao-mus.md"
+    previous_output: "Fase 5 (MUP) validado"
+    next_phase: "7-Big Offer"
+
+    load_mechanism: true
+
+    methodologies:
+      - "rmbc"
+      - "puzzle_pieces"
+      - "quick_start"
+
+    validations:
+      - "MUS deve espelhar MUP (Nova Oportunidade = inverso da Nova Causa)"
+      - "Gimmick Name ligado ao INGREDIENTE, não ao sistema"
+      - "Authority Hook ligado à SUPER ESTRUTURA"
+      - "blind_critic score >= 8"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente
+      3. Usar blind_critic + emotional_stress_test para validar
+      4. Salvar em output_file
+
+  7:
+    name: "Big Offer"
+    short_name: "Oferta"
+    description: "Construir oferta irresistível com stack de valor e reason why"
+
+    required_files:
+      - "CONTEXT.md"
+      - "briefings/phases/phase-05-*.md"
+      - "briefings/phases/phase-06-*.md"
+      - "mecanismo-unico.yaml"
+
+    optional_files:
+      - "briefings/phases/phase-01-*.md"
+      - "briefings/phases/phase-02-*.md"
+      - "briefings/phases/phase-03-*.md"
+      - "briefings/phases/phase-04-*.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase07_big_offer.md"
+    output_file: "briefings/phases/phase-07-big-offer.md"
+    previous_output: "MUP + MUS validados"
+    next_phase: "8-Pitch"
+
+    load_mechanism: true
+
+    methodologies:
+      - "puzzle_pieces"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente
+      3. Salvar em output_file
+
+  8:
+    name: "Fechamento e Pitch"
+    short_name: "Pitch"
+    description: "Estruturar pitch final com CTA e gatilhos de fechamento"
+
+    required_files:
+      - "CONTEXT.md"
+      - "briefings/phases/phase-07-*.md"
+
+    optional_files:
+      - "mecanismo-unico.yaml"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase08_fechamento_pitch.md"
+    output_file: "briefings/phases/phase-08-fechamento-pitch.md"
+    previous_output: "Fase 7 (Big Offer) completa"
+    next_phase: "9-Leads e Ganchos"
+
+    methodologies:
+      - "sixteen_word"
+      - "quick_start"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente
+      3. Salvar em output_file
+
+  9:
+    name: "Leads e Ganchos"
+    short_name: "Leads"
+    description: "Criar leads, hooks e headlines usando 24 tipos de Clayton"
+
+    required_files:
+      - "CONTEXT.md"
+      - "briefings/phases/phase-08-*.md"
+      - "research/synthesis.md"
+      - "mecanismo-unico.yaml"
+
+    optional_files:
+      - "research/voc/summary.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase09_leads_ganchos.md"
+    output_file: "briefings/phases/phase-09-leads-ganchos.md"
+    previous_output: "Fase 8 (Pitch) completa"
+    next_phase: "10-VSL"
+
+    load_mechanism: true
+
+    methodologies:
+      - "quick_start"
+      - "puzzle_pieces"
+
+    validations:
+      - "Headlines devem passar 6-Question Litmus Test (Clayton)"
+      - "5 leads completas com tipos diferentes"
+      - "Pattern Interrupt para cada lead"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente (10 ganchos, 5 leads, 24 starters)
+      3. Aplicar 6-Question Litmus Test em cada headline
+      4. Salvar em output_file
+
+  10:
+    name: "Progressão Emocional e VSL"
+    short_name: "VSL"
+    description: "Definir estrutura da VSL com progressão emocional e ONE BELIEF"
+
+    required_files:
+      - "CONTEXT.md"
+      - "research/synthesis.md"
+      - "mecanismo-unico.yaml"
+      - "briefings/helix-complete.md"
+
+    optional_files:
+      - "briefings/phases/phase-*.md"
+
+    template_file: "~/.claude/skills/helix-system-agent/references/templates/briefing_fase10_progressao_emocional.md"
+    output_file: "briefings/phases/phase-10-progressao-emocional.md"
+    previous_output: "Fases 1-9 completas"
+    next_phase: "Produção Final"
+
+    load_mechanism: true
+
+    methodologies:
+      - "sixteen_word"
+      - "quick_start"
+      - "rmbc"
+
+    validations:
+      - "ONE BELIEF Statement final valida toda progressão"
+
+    guidance: |
+      1. Carregar o TEMPLATE (template_file) para ver a estrutura
+      2. Preencher CADA SEÇÃO do template fielmente
+      3. Usar write_chapter + layered_review para produzir
+      4. Salvar em output_file
+
+# Configuração global
+config:
+  always_load:
+    - "CONTEXT.md"
+
+  mechanism_phases: [5, 6, 7, 9, 10]  # Fases que carregam mecanismo-unico.yaml
+
+  validation_tools:
+    - "blind_critic"
+    - "emotional_stress_test"
+    - "consensus"
+
+  production_tools:
+    - "write_chapter"
+    - "layered_review"
+    - "black_validation"

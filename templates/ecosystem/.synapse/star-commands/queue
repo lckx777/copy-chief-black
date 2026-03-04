@@ -1,0 +1,6 @@
+[*queue] QUEUE:
+  Display the dispatch queue summary for the active offer.
+  Load: DispatchQueueManager.formatSummary(offerPath)
+  Show: status counts (pending, dispatched, completed, failed), list of pending agents with phase and group, list of failed agents with reason and retryable flag.
+  Context: Queue state reflects pipeline progress. Pending = awaiting dispatch. Failed = check retryable flag.
+  Action: If failed entries exist and are retryable (reason: agent timeout, partial output, context overflow, mcp timeout), suggest retryFailed(). If non-retryable (missing artifacts, gate block, manual abort, validation failed), escalate to user.

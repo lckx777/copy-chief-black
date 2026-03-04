@@ -1,0 +1,136 @@
+# HELIX State Schema v1.0
+# Tracking de ferramentas e gates por OFERTA (não por sessão)
+# Criado: 2026-02-02 (BSSF Score 8.3, GBS 95%)
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "HELIX State"
+description: "Estado persistente do workflow HELIX por oferta"
+type: object
+
+required:
+  - offer_path
+  - created_at
+  - updated_at
+  - workflow_phase
+  - gates
+  - helix_phases
+
+properties:
+  # Identificação
+  offer_path:
+    type: string
+    description: "Path da oferta (ex: concursos/gabaritando-portugues)"
+
+  created_at:
+    type: string
+    format: date-time
+    description: "Data de criação do state"
+
+  updated_at:
+    type: string
+    format: date-time
+    description: "Última atualização"
+
+  # State Machine
+  workflow_phase:
+    type: string
+    enum: ["idle", "research", "briefing", "production", "delivered"]
+    description: "Fase atual do workflow"
+    default: "idle"
+
+  # Gates (fonte de verdade para transições)
+  gates:
+    type: object
+    properties:
+      research:
+        type: object
+        properties:
+          passed: { type: boolean, default: false }
+          passed_at: { type: string, format: date-time }
+          confidence: { type: number, minimum: 0, maximum: 100 }
+      briefing:
+        type: object
+        properties:
+          passed: { type: boolean, default: false }
+          passed_at: { type: string, format: date-time }
+          phases_completed: { type: integer, minimum: 0, maximum: 10 }
+      production:
+        type: object
+        properties:
+          passed: { type: boolean, default: false }
+          passed_at: { type: string, format: date-time }
+          black_validation_score: { type: number, minimum: 0, maximum: 10 }
+
+  # HELIX Phases (1-10)
+  helix_phases:
+    type: object
+    description: "Tracking por fase HELIX"
+    patternProperties:
+      "^phase_[0-9]+$":
+        type: object
+        properties:
+          status:
+            type: string
+            enum: ["not_started", "in_progress", "completed"]
+            default: "not_started"
+          started_at:
+            type: string
+            format: date-time
+          completed_at:
+            type: string
+            format: date-time
+          tools_used:
+            type: array
+            items: { type: string }
+            description: "Ferramentas MCP usadas nesta fase"
+          tools_required:
+            type: array
+            items: { type: string }
+            description: "Ferramentas obrigatórias para esta fase"
+          tools_missing:
+            type: array
+            items: { type: string }
+            description: "Ferramentas que faltam usar"
+          file_path:
+            type: string
+            description: "Path do arquivo de briefing"
+          validation:
+            type: object
+            properties:
+              header_checked: { type: boolean, default: false }
+              tools_verified: { type: boolean, default: false }
+
+  # Mecanismo Único (integração com mecanismo-unico.yaml)
+  mecanismo:
+    type: object
+    properties:
+      state:
+        type: string
+        enum: ["UNDEFINED", "DRAFT", "PENDING_VALIDATION", "VALIDATED", "APPROVED"]
+      mup_validated: { type: boolean, default: false }
+      mus_validated: { type: boolean, default: false }
+      consensus_score: { type: number }
+      blind_critic_mup_score: { type: number }
+      blind_critic_mus_score: { type: number }
+      emotional_stress_test_score: { type: number }
+
+  # Histórico de validações
+  validation_history:
+    type: array
+    items:
+      type: object
+      properties:
+        tool: { type: string }
+        phase: { type: integer }
+        timestamp: { type: string, format: date-time }
+        result: { type: string, enum: ["passed", "failed", "warning"] }
+        score: { type: number }
+        details: { type: string }
+
+  # Metadata
+  metadata:
+    type: object
+    properties:
+      version: { type: string, default: "1.0.0" }
+      last_session_id: { type: string }
+      total_sessions: { type: integer, default: 0 }

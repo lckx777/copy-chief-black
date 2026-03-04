@@ -1,0 +1,282 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║ FRAMEWORK CONFIG — Copy Chief BLACK (Immutable)                              ║
+# ║ S20.1: Principios, thresholds, phases, DRE types                              ║
+# ║ Criado: 2026-02-28 | Ref: AIOS core-config + framework-config pattern        ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# REGRA: Este arquivo e IMUTAVEL por sessao. Mudancas requerem JUSTIFICATIVA
+# documentada em architecture-decisions.md. Nao edite durante producao.
+#
+# Hierarquia de merge (config-loader.ts):
+#   1. framework-config.yaml (este arquivo) — defaults imutaveis
+#   2. settings.json + synapse-manifest.yaml — projeto mutavel
+#   3. offers/*/helix-state.yaml — override por oferta
+
+version: "1.0.0"
+updated: "2026-02-28"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 1. WORKFLOW PHASES (HELIX Pipeline)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+workflow:
+  phases:
+    - idle
+    - research
+    - briefing
+    - production
+    - delivered
+
+  # Phase descriptions for context injection
+  phase_descriptions:
+    idle: "Nenhum trabalho ativo. Aguardando nova oferta ou direcionamento."
+    research: "VOC Research ativo. Coletando dados de audiencia, competitors, tendencias."
+    briefing: "Briefing/Estrategia em construcao. Definindo mecanismo unico, promessa, persona."
+    production: "Producao de copy. Criando VSL, LP, emails, criativos."
+    delivered: "Entrega concluida. Copy finalizada e aprovada."
+
+  # Default gates per phase (can be overridden per offer)
+  default_gates:
+    research:
+      - validate_gate RESEARCH
+      - synthesis.md confidence >= 70
+      - 4 summaries criados
+    briefing:
+      - validate_gate BRIEFING
+      - mecanismo-unico.yaml completo
+      - offer-briefing.md aprovado
+    production:
+      - validate_gate PRODUCTION
+      - blind_critic score >= 8
+      - EST score >= 8
+      - black_validation score >= 8
+    delivered:
+      - entrega confirmada pelo humano
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 2. QUALITY THRESHOLDS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+quality:
+  # Score minimos para aprovacao
+  thresholds:
+    blind_critic: 8
+    emotional_stress_test: 8
+    black_validation: 8
+    logo_test: 7
+    specificity_score: 7
+    synthesis_confidence: 70  # percentual
+
+  # Iteracoes maximas antes de escalar para humano
+  max_iterations:
+    per_deliverable: 3
+    per_phase: 5
+    total_offer: 20
+
+  # Copy Quality Score formula (C9 do AIOS-EXPANSION-PLAN)
+  # Usado para ranking de deliverables e health score
+  quality_score_formula:
+    blind_critic: 0.25      # 25%
+    est: 0.25               # 25%
+    logo_test: 0.15         # 15%
+    specificity: 0.15       # 15%
+    black_validation: 0.20  # 20%
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 3. DRE TYPES (Escalada de Realidade do Expert)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+dre:
+  types:
+    - name: "SPEC"
+      description: "Especialista com dados e pesquisas. Autoridade tecnica."
+      when_to_use: "Audiencia cetica, produto tecnico, claims precisam de prova."
+
+    - name: "STORY"
+      description: "Narrativa pessoal do expert. Jornada de transformacao."
+      when_to_use: "Audiencia emocional, transformacao pessoal, conexao humana."
+
+    - name: "VISION"
+      description: "Visao de futuro. Promessa de resultado."
+      when_to_use: "Audiencia aspiracional, produtos de lifestyle, mudanca de vida."
+
+    - name: "HYBRID"
+      description: "Combinacao de 2+ tipos. Adapta ao contexto."
+      when_to_use: "Audiencias mistas, produtos complexos, VSLs longos."
+
+  # Regras de escalada emocional
+  escalation:
+    start_with: "SPEC"  # Comeca com autoridade
+    escalate_to: ["STORY", "VISION"]  # Progride para emocao
+    reset_if: "resistencia detectada"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 4. TIMEOUTS & CRASH DETECTION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+timeouts:
+  # Crash detection (S19.2)
+  crash_threshold_ms: 1800000  # 30 minutos = pipeline parado = crash
+
+  # Subtask timeout (S19.3)
+  subtask_timeout_ms: 300000   # 5 minutos default por fase/subtask
+
+  # Auto-resume grace period
+  auto_resume_grace_ms: 60000  # 1 minuto antes de considerar abandono
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 5. CONTEXT MANAGEMENT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+context:
+  # Regra 60% (AIOS ajustou para 50%)
+  compact_threshold: 0.50     # /compact quando > 50% (~100K tokens)
+  warning_threshold: 0.60     # alerta quando > 60%
+  new_session_threshold: 0.75 # nova sessao quando > 75% (qualidade degradada)
+
+  # Tokens aproximados
+  max_context_tokens: 200000  # Claude Sonnet 3.5
+
+  # Tiers (HOT/WARM/COLD)
+  tiers:
+    hot:
+      description: "Contexto ativo. Sempre carregado."
+      max_tokens: 20000
+      examples: ["CONTEXT.md", "helix-state.yaml", "mecanismo-unico.yaml"]
+    warm:
+      description: "Contexto recente. Carrega sob demanda."
+      max_tokens: 50000
+      examples: ["synthesis.md", "offer-briefing.md", "findings.md"]
+    cold:
+      description: "Historico. Carrega quando necessario."
+      max_tokens: 100000
+      examples: ["swipe files", "vsl-completos/", "research archives"]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 6. COPY SQUAD (Personas Primarias)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+squad:
+  # Personas core do Copy Chief BLACK
+  personas:
+    - id: vox
+      name: "Vox"
+      role: "Pesquisador VOC"
+      specialization: "Voz do cliente, etnografia digital, mining de dor"
+
+    - id: atlas
+      name: "Atlas"
+      role: "Estrategista"
+      specialization: "Briefing, mecanismo unico, arquitetura de oferta"
+
+    - id: quill
+      name: "Quill"
+      role: "Copywriter"
+      specialization: "VSL, LP, emails, headlines, hooks"
+
+    - id: sentinel
+      name: "Sentinel"
+      role: "Validador"
+      specialization: "Quality gates, blind_critic, EST, BLACK validation"
+
+    - id: helix
+      name: "Helix"
+      role: "Orquestrador"
+      specialization: "Pipeline HELIX, phase gates, coordination"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 7. ANTI-PATTERNS (Cerimonias a evitar)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+anti_patterns:
+  # Detectados por ceremony-audit.ts
+  ceremonies:
+    - pattern: "excessive_checklist"
+      trigger: "> 10 items em um checklist"
+      fix: "Dividir em sub-checklists ou automatizar"
+
+    - pattern: "redundant_validation"
+      trigger: "mesmo criterio validado 2+ vezes"
+      fix: "Centralizar em validate-gate ou remover duplicata"
+
+    - pattern: "manual_repetition"
+      trigger: "acao manual repetida 3+ vezes"
+      fix: "Criar hook ou script para automatizar"
+
+    - pattern: "context_bloat"
+      trigger: "carregar > 50K tokens para tarefa simples"
+      fix: "Usar progressive loading ou subagent"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 8. DOMAIN TAXONOMY (C8 - Dashboard)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+taxonomy:
+  domains:
+    research:
+      color: "#3B82F6"  # azul
+      label: "Research"
+      icon: "search"
+
+    briefing:
+      color: "#8B5CF6"  # roxo
+      label: "Briefing"
+      icon: "clipboard"
+
+    production:
+      color: "#EF4444"  # vermelho
+      label: "Production"
+      icon: "edit"
+
+    validation:
+      color: "#F59E0B"  # amarelo
+      label: "Validation"
+      icon: "check-circle"
+
+    delivery:
+      color: "#10B981"  # verde
+      label: "Delivery"
+      icon: "send"
+
+    meta:
+      color: "#6B7280"  # cinza
+      label: "Meta"
+      icon: "settings"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 9. VALIDATE-BEFORE-COMMIT (S19.1)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+commit_validation:
+  enabled: true
+
+  protected_paths:
+    - "production/"
+    - "offers/*/deliverables/"
+    - "offers/*/final/"
+
+  required_checks:
+    - health_check
+    - validate_gate
+    - no_todo_markers
+    - no_fixme_markers
+
+  block_on_failure: true
+  allow_wip_commits: false  # WIP commits bloqueados em protected paths
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 10. VERSIONING & CHANGELOG
+# ═══════════════════════════════════════════════════════════════════════════════
+
+_meta:
+  schema_version: "1.0.0"
+  created_by: "S20.1 (Config Architecture)"
+  changelog:
+    - version: "1.0.0"
+      date: "2026-02-28"
+      changes:
+        - "Initial creation from AIOS-EXPANSION-PLAN S20.1"
+        - "Extracted constants from rules/, hooks/, scripts/"
+        - "Defined workflow phases, quality thresholds, DRE types"
+        - "Added context management, squad personas, anti-patterns"
+        - "Included domain taxonomy for dashboard (C8)"

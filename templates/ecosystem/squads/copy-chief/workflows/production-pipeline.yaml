@@ -1,0 +1,49 @@
+workflow:
+  id: production-pipeline
+  title: "Production Pipeline"
+  description: "Parallel copy production — VSL, LP, Creatives, Emails"
+  gate_required: production
+  depends_on_gate: briefing
+
+  phases:
+    - id: parallel-production
+      title: "Parallel Copy Production"
+      agents: [echo, forge, scout]
+      tasks: [produce-vsl, produce-landing-page, produce-creatives]
+      parallel: true
+      handoff_prompt: |
+        Echo produces VSL (6 chapters with write_chapter).
+        Forge produces Landing Page (14 blocks).
+        Scout produces Creatives (5+ per platform).
+        All read briefings/helix-complete.md + mecanismo-unico.yaml.
+        blind_critic after each unit. emotional_stress_test after each deliverable.
+
+    - id: email-production
+      title: "Email Sequence Production"
+      agents: [blade]
+      tasks: [produce-emails]
+      parallel: false
+      depends_on: [parallel-production]
+      handoff_prompt: |
+        Blade produces email sequences after VSL is complete.
+        Emails reference VSL narrative and LP structure.
+
+    - id: layered-review
+      title: "Layered Review"
+      agents: [hawk]
+      tasks: [validate-deliverable]
+      parallel: false
+      depends_on: [email-production]
+      handoff_prompt: |
+        Hawk runs layered_review (3 layers) on each deliverable.
+        Then black_validation on each.
+        Score >= 8 required for all.
+
+    - id: production-gate
+      title: "Production Gate"
+      agents: [sentinel]
+      parallel: false
+      depends_on: [layered-review]
+      handoff_prompt: |
+        Sentinel runs validate_gate PRODUCTION.
+        Required: blind_critic >= 8, emotional_stress_test >= 8, black_validation >= 8.

@@ -1,0 +1,171 @@
+# Copy Chief Data Requirements — Central Registry v2.0
+# Pattern: AIOS config_sections + dynamic resolution via manifest
+# Agents declare WHAT sections they work on, manifest resolves WHO (experts) at runtime.
+# Single source of truth: manifest.yaml (section_to_expert + decision_tree)
+
+version: "2.0"
+
+# =============================================================================
+# CHIEF KNOWLEDGE (injected at SessionStart, not per-agent)
+# =============================================================================
+
+chief_knowledge:
+  source_file: squads/copy-chief/data/craft/chief-principles.md
+  always_on: true
+
+# =============================================================================
+# VOICE DNA CONFIGURATION
+# =============================================================================
+
+voice_dna:
+  source_dir: ~/.claude/copy-squad/
+  manifest: ~/.claude/copy-squad/manifest.yaml
+  resolution: section_to_expert
+
+  extraction:
+    preferred_section: "## Injection Prompt"
+    fallback_fields: ["Core Identity"]
+    max_tokens_per_expert: 400
+    max_experts_per_agent: 4
+
+  # NO agent_defaults — resolved dynamically via copy_sections + section_to_expert
+  # NO task_routing — resolved dynamically via manifest decision_tree
+
+# =============================================================================
+# SHARED FILES (AIOS pattern — declared once, referenced by used_by)
+# =============================================================================
+
+shared_files:
+  - path: squads/copy-chief/data/craft/psicologia.md
+    size: 15KB
+    used_by: [scout, echo, forge, blade, hawk, atlas]
+    cache_priority: high
+  - path: squads/copy-chief/data/craft/escrita.md
+    size: 12KB
+    used_by: [scout, echo, forge, blade, hawk, atlas]
+    cache_priority: high
+  - path: squads/copy-chief/data/craft/checklist.md
+    size: 8KB
+    used_by: [scout, echo, forge, blade, hawk, atlas]
+    cache_priority: high
+  - path: squads/copy-chief/data/craft/erros-comuns.md
+    size: 10KB
+    used_by: [scout, echo, forge, blade, hawk, atlas]
+    cache_priority: high
+
+# =============================================================================
+# CACHE STRATEGY
+# =============================================================================
+
+cache_strategy:
+  ttl: 300000  # 5 min
+  high_priority_files:
+    - squads/copy-chief/data/craft/psicologia.md
+    - squads/copy-chief/data/craft/escrita.md
+    - squads/copy-chief/data/craft/checklist.md
+    - squads/copy-chief/data/craft/erros-comuns.md
+  cache_invalidation_triggers:
+    - file_modification
+    - config_reload_command
+    - ttl_expiration
+
+# =============================================================================
+# AGENT REGISTRY — copy_sections + files_loaded (AIOS pattern)
+# =============================================================================
+
+agents:
+  scout:
+    copy_sections: [ad_creative, hook, headline_testing, high_volume_testing, funnel_copy]
+    files_loaded:
+      - path: squads/copy-chief/data/creative/angulos.md
+        lazy: false
+        size: 8KB
+      - path: squads/copy-chief/data/creative/breakdown.md
+        lazy: false
+        size: 6KB
+    pre_flight: true
+    tier: production
+    performance_target: <120ms
+
+  echo:
+    copy_sections: [body_copy, story, flow, transitions, power_lead, emotional_proof]
+    files_loaded:
+      - path: squads/copy-chief/data/leads/anatomia.md
+        lazy: false
+        size: 10KB
+      - path: squads/copy-chief/data/leads/tipos-de-lead.md
+        lazy: false
+        size: 8KB
+      - path: squads/copy-chief/data/leads/microleads.md
+        lazy: false
+        size: 6KB
+    pre_flight: true
+    tier: production
+    performance_target: <120ms
+
+  forge:
+    copy_sections: [lead, reader_entry, mecanismo, bullets, urgency, cta, guarantee, close]
+    files_loaded:
+      - path: squads/copy-chief/data/lp/ref_blocos_estrutura_14.md
+        lazy: false
+        size: 12KB
+      - path: squads/copy-chief/data/lp/ref_copy_patterns_formulas.md
+        lazy: false
+        size: 10KB
+      - path: squads/copy-chief/data/lp/ref_canva_implementacao.md
+        lazy: true
+        condition: "canva|design|template"
+        size: 8KB
+      - path: squads/copy-chief/data/lp/ref_templates_variacoes_nicho.md
+        lazy: true
+        condition: "template|bloco|wireframe|variacao"
+        size: 6KB
+    pre_flight: true
+    tier: production
+    performance_target: <120ms
+
+  blade:
+    copy_sections: [email_sequence, soap_opera, nurture, sales_letter, personality_voice]
+    files_loaded: []
+    pre_flight: true
+    tier: production
+    performance_target: <100ms
+
+  hawk:
+    copy_sections: [audit, testing_framework, metrics, accountability, scientific_review]
+    files_loaded:
+      - path: squads/copy-chief/data/critic/metodologia-stand.md
+        lazy: false
+        size: 8KB
+      - path: squads/copy-chief/data/critic/checklist-validacao.md
+        lazy: false
+        size: 6KB
+    pre_flight: true
+    tier: validation
+    performance_target: <100ms
+
+  atlas:
+    copy_sections: [mecanismo, big_idea, paradigm_shift, persuasion_core, belief_shift]
+    files_loaded:
+      - path: squads/copy-chief/data/helix-ref/metodologias.md
+        lazy: false
+        size: 10KB
+      - path: squads/copy-chief/data/helix-ref/DRE.md
+        lazy: false
+        size: 8KB
+      - path: squads/copy-chief/data/helix-ref/RMBC.md
+        lazy: false
+        size: 6KB
+      - path: squads/copy-chief/data/helix-ref/formulas_e_criterios.md
+        lazy: false
+        size: 8KB
+    pre_flight: true
+    tier: strategic
+    performance_target: <120ms
+
+  # Agents without knowledge requirements
+  vox: { copy_sections: [], files_loaded: [], pre_flight: false }
+  cipher: { copy_sections: [], files_loaded: [], pre_flight: false }
+  ops: { copy_sections: [], files_loaded: [], pre_flight: false }
+  strategist: { copy_sections: [], files_loaded: [], pre_flight: false }
+  sentinel: { copy_sections: [], files_loaded: [], pre_flight: false }

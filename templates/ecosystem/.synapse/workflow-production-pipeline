@@ -1,0 +1,8 @@
+# Workflow: Production Pipeline — L3 Rules
+# Injected when session.active_workflow.id === "production-pipeline"
+
+Pre-flight: verify mecanismo state = VALIDATED/APPROVED.
+Pre-flight: read data/craft/ for all production agents.
+Deliverables: VSL -> LP -> Creatives -> Emails (parallel where possible).
+Per-deliverable: blind_critic + emotional_stress_test. Final: black_validation.
+Output to production/{type}/. Gate: validate_gate(production)

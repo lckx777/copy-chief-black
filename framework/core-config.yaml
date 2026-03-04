@@ -1,0 +1,243 @@
+# Copy Squad AIOS Core Config
+# Forked from: github.com/SynkraAI/aios-core v4.4.6
+# Adapted: Copy Chief BLACK — Copywriting Direct Response
+# Date: 2026-03-02
+
+project:
+  type: COPY_SQUAD
+  version: 1.0.0
+  installedAt: '2026-03-02T00:00:00Z'
+  framework: aios-core-fork
+
+# Story-Driven Development
+stories:
+  location: ~/.claude/stories
+  activeStoryDetection: status_field  # looks for Status: PENDING|IN_PROGRESS
+  workflow:
+    - story_loader reads active story on SessionStart
+    - agent implements ONLY acceptance criteria
+    - agent updates checklist ([ ] → [x])
+    - story_complete checks on Stop
+  noInventionRule: true  # MUST NOT add features not in story
+
+# Agent Configuration
+agents:
+  location: ~/.claude/agents
+  format: AGENT.md + SOUL.md  # per-persona directory
+  activation:
+    method: keyword_routing  # via persona-router.ts hook
+    fallback: helix_decides  # if no keyword match
+  registry:
+    - id: vox
+      name: Vox
+      handle: "@researcher"
+      title: VOC Researcher
+      model: sonnet
+      icon: "🔍"
+      dir: agents/vox
+      triggers: [pesquisa, voc, avatar, quotes, publico, extrair]
+
+    - id: cipher
+      name: Cipher
+      handle: "@miner"
+      title: Pattern Miner
+      model: sonnet
+      icon: "🔎"
+      dir: agents/cipher
+      triggers: [concorrente, ads, spy, scale, pattern]
+
+    - id: atlas
+      name: Atlas
+      handle: "@briefer"
+      title: Persuasion Architect
+      model: opus
+      icon: "📐"
+      dir: agents/atlas
+      triggers: [briefing, helix, mup, mus, mecanismo, fase]
+
+    - id: blade
+      name: Blade
+      handle: "@producer"
+      title: Copy Producer
+      model: sonnet
+      icon: "⚔️"
+      dir: agents/blade
+      triggers: [produzir, escrever, copy, draft, email]
+
+    - id: echo
+      name: Echo
+      handle: "@vsl"
+      title: VSL Narrator
+      model: opus
+      icon: "🎬"
+      dir: agents/echo
+      triggers: [vsl, lead, capitulo, video, retencao]
+
+    - id: forge
+      name: Forge
+      handle: "@lp"
+      title: Landing Page Builder
+      model: sonnet
+      icon: "🔨"
+      dir: agents/forge
+      triggers: [landing page, lp, bloco, pagina de vendas]
+
+    - id: scout
+      name: Scout
+      handle: "@creative"
+      title: Creative Divergent
+      model: sonnet
+      icon: "🎯"
+      dir: agents/scout
+      triggers: [criativo, hook, angulo, formato, anuncio]
+
+    - id: hawk
+      name: Hawk
+      handle: "@critic"
+      title: Adversarial Validator
+      model: sonnet
+      icon: "🦅"
+      dir: agents/hawk
+      triggers: [validar, revisar, criticar, score, stress-test]
+
+    - id: sentinel
+      name: Sentinel
+      handle: "@gatekeeper"
+      title: Gate Guardian
+      model: haiku
+      icon: "🛡️"
+      dir: agents/sentinel
+      triggers: [gate, threshold, enforcement]
+
+    - id: helix
+      name: Helix
+      handle: "@chief"
+      title: Orchestrator
+      model: opus
+      icon: "🧬"
+      dir: agents/helix
+      triggers: [status, onde parei, proximo, pipeline, ecossistema]
+      direct: true  # no subagent — Helix IS main Claude
+
+# Constitution
+constitution:
+  file: ~/.claude/constitution.md
+  principles:
+    - id: story_driven
+      severity: BLOCK
+      rule: "Nenhum codigo/copy e produzido sem story ativa"
+      gate: story-loader.ts
+
+    - id: no_invention
+      severity: BLOCK
+      rule: "NAO adicionar features/deliverables nao presentes na story"
+
+    - id: agent_authority
+      severity: WARN
+      rule: "Cada persona tem autoridade exclusiva sobre seu dominio"
+      exclusivities:
+        vox: [research_extraction, voc_collection]
+        atlas: [briefing_phases, mup_definition]
+        hawk: [validation_verdicts, quality_scores]
+        sentinel: [gate_enforcement, threshold_checks]
+
+    - id: quality_first
+      severity: BLOCK
+      rule: "blind_critic >= 8, EST >= 8, black_validation >= 8"
+      gate: validate_gate
+
+    - id: cli_first
+      severity: WARN
+      rule: "Copy em ARQUIVO, nunca no terminal. Dashboard e observacional."
+
+# Handoff Rules (equivalent to AIOS story-driven workflow)
+handoffs:
+  detection: path_based  # via handoff-detector.ts
+  rules:
+    - pattern: "research/synthesis.md"
+      next_agent: atlas
+      message: "Research complete → Atlas for HELIX briefing"
+
+    - pattern: "briefings/helix-complete.md"
+      next_agent: blade
+      message: "Briefing complete → Blade for production"
+
+    - pattern: "mecanismo-unico.yaml"
+      condition: "state: VALIDATED"
+      next_agent: hawk
+      message: "Mecanismo validated → Hawk for approval"
+
+    - pattern: "production/*/drafts/*"
+      next_agent: hawk
+      message: "Draft produced → Hawk for validation"
+
+    - pattern: "production/reviews/*"
+      condition: "PASS"
+      next_agent: helix
+      message: "Review passed → Helix for delivery"
+
+# Context Injection (equivalent to AIOS devLoadAlwaysFiles)
+context:
+  always_load:
+    - ~/.claude/constitution.md
+    - ~/.claude/orchestrator.md
+    - ~/.claude/core-config.yaml
+
+  per_agent:
+    vox: [CONTEXT.md, synthesis.md, biblioteca_nicho]
+    atlas: [synthesis.md, mecanismo-unico.yaml]
+    blade: [helix-complete.md, synthesis.md, language-patterns.md]
+    hawk: ["production/drafts/*", helix-complete.md]
+    scout: [helix-complete.md, "swipes/criativos/*"]
+    forge: [helix-complete.md, "swipes/lp/*"]
+    echo: [helix-complete.md, synthesis.md]
+
+# Quality Gates (equivalent to AIOS quality gates)
+quality:
+  gates:
+    research:
+      required_tools: [firecrawl_agent, voc_search]
+      deliverables: [voc/summary.md, competitors/summary.md, mechanism/summary.md, avatar/summary.md, synthesis.md]
+      threshold: "confidence >= 70%"
+
+    briefing:
+      required_tools: [get_phase_context]
+      deliverables: [phases/fase-01.md through fase-10.md, helix-complete.md]
+      threshold: "mecanismo state = VALIDATED"
+
+    production:
+      required_tools: [blind_critic, emotional_stress_test]
+      threshold: "blind_critic >= 8 AND EST >= 8"
+
+    delivery:
+      required_tools: [black_validation]
+      threshold: "black_validation >= 8"
+
+# Hooks registered in settings.json
+hooks:
+  SessionStart:
+    - story-loader.ts       # AIOS: story detection + injection
+    - workflow-navigator.ts  # offer state detection
+    - active-offer-detector.ts
+
+  UserPromptSubmit:
+    - persona-router.ts     # AIOS: agent activation (WIRE Phase 2)
+
+  PostToolUse:
+    - handoff-detector.ts   # AIOS: story-driven handoff (WIRE Phase 3)
+
+  SubagentStart:
+    - subagent-context-inject.ts  # AIOS: context engineering (WIRE Phase 4)
+
+  Stop:
+    - story-complete.ts     # AIOS: completion check
+
+# Boundary Protection (equivalent to AIOS boundary mapping)
+boundary:
+  protected:
+    - ~/.claude/constitution.md
+    - ~/.claude/core-config.yaml
+    - ~/.claude/orchestrator.md
+  mutable:
+    - ~/.claude/stories/*
+    - ~/.claude/agents/*/MEMORY.md

@@ -1,0 +1,167 @@
+# SYNAPSE Context Engine — Manifest v3.0 (8-Layer + AIOS)
+# Controla quais rules são injetadas por fase/path.
+# Hook: synapse-inject.ts lê este arquivo no SessionStart.
+# v3.0: AIOS principles integrated across all layers
+
+# ==========================================
+# 8 LAYERS — Ativação por bracket
+# ==========================================
+# L0: Constitution (ALWAYS ON)
+# L1: Ecosystem rules (ALWAYS ON)
+# L2: Offer context — CONTEXT.md, mecanismo-unico.yaml (FRESH+MODERATE+DEPLETED)
+# L3: Phase rules — synapse-manifest.yaml (FRESH+MODERATE+DEPLETED)
+# L4: Task-specific — briefing atual, swipes relevantes (FRESH+MODERATE)
+# L5: Expert knowledge — Copy Squad expert do momento (FRESH+MODERATE)
+# L6: VOC/Research — synthesis.md, quotes relevantes (FRESH only)
+# L7: Active memory — gotchas, patterns, decisions recentes (FRESH only)
+#
+# Bracket-aware: FRESH=L0-L7, MODERATE=L0-L5, DEPLETED=L0-L3, CRITICAL=L0-L1
+
+# Context brackets — ação baseada em % de context consumido
+brackets:
+  FRESH:    { max_pct: 30, layers: [0,1,2,3,4,5,6,7] }
+  MODERATE: { max_pct: 50, layers: [0,1,2,3,4,5] }
+  DEPLETED: { max_pct: 70, layers: [0,1,2,3] }
+  CRITICAL: { max_pct: 85, layers: [0,1] }
+
+# ==========================================
+# Layer definitions
+# ==========================================
+
+layers:
+  L0_constitution:
+    files:
+      - constitution.md
+    tokens_est: 500
+    always: true
+
+  L1_ecosystem:
+    files:
+      - tool-usage-matrix.md
+      - signal-translation.md
+      - debugging-hypothesis.md
+      - synthesis-flow.md
+      - dual-doc-taxonomy.md
+    tokens_est: 3800
+    always: true
+
+  L2_offer_context:
+    # Loaded dynamically from detected offer path:
+    # {offer}/CONTEXT.md + {offer}/mecanismo-unico.yaml
+    dynamic: true
+    source: "offer"
+    tokens_est: 3000
+
+  L3_phase_rules:
+    # Loaded from phase config below
+    dynamic: true
+    source: "phase"
+    tokens_est: 5000
+
+  L4_task_specific:
+    # Loaded dynamically: current briefing phase file + relevant swipes
+    dynamic: true
+    source: "task"
+    tokens_est: 5000
+
+  L5_expert_knowledge:
+    # Loaded from copy-squad/ expert file matching current deliverable
+    dynamic: true
+    source: "expert"
+    tokens_est: 3000
+
+  L6_voc_research:
+    # {offer}/research/synthesis.md + {offer}/research/voc/summary.md
+    dynamic: true
+    source: "research"
+    tokens_est: 4000
+
+  L7_active_memory:
+    # ~/.claude/gotchas/*.yaml (active) + ~/.claude/patterns/*.yaml (relevant)
+    dynamic: true
+    source: "memory"
+    tokens_est: 2000
+
+# ==========================================
+# Phase-specific rules (L3)
+# ==========================================
+phases:
+  IDLE:
+    rules:
+      - constitution.md
+    tokens_est: 500
+
+  RESEARCH:
+    rules:
+      - constitution.md
+      - voc-research.md
+      - anti-homogeneization.md
+      - tool-usage-matrix.md
+      - structured-exploration.md
+      - micro-unidades.md
+      - voc-squad.md
+    tokens_est: 12000
+
+  BRIEFING:
+    rules:
+      - constitution.md
+      - briefings-helix.md
+      - mecanismo-unico.md
+      - tool-usage-matrix.md
+      - debugging-hypothesis.md
+      - agent-personas.md
+      - epistemic-protocol.md
+      - conclave.md
+    tokens_est: 10000
+
+  PRODUCTION:
+    rules:
+      - constitution.md
+      - copy-production.md
+      - copy-chief.md
+      - anti-homogeneization.md
+      - tool-usage-matrix.md
+      - atomic-design-copy.md
+      - constraint-progressivo.md
+      - persuasion-chunking.md
+      - agent-personas.md
+      - epistemic-protocol.md
+      - copy-fidelity.md
+      - agent-fluidity.md
+      - conclave.md
+    tokens_est: 17500
+
+  REVIEW:
+    rules:
+      - constitution.md
+      - copy-chief.md
+      - tool-usage-matrix.md
+      - debugging-hypothesis.md
+      - copy-squad-constitution.md
+      - ceremony-detection.md
+    tokens_est: 8500
+
+# Path-based auto-detection (fallback when phase not explicit)
+path_detection:
+  - pattern: "**/research/**"
+    phase: RESEARCH
+  - pattern: "**/briefings/**"
+    phase: BRIEFING
+  - pattern: "**/production/**"
+    phase: PRODUCTION
+
+# Rules que SEMPRE carregam (L0 + L1)
+always_load:
+  - constitution.md
+  - signal-translation.md
+  - debugging-hypothesis.md
+
+# Rules disponíveis mas só carregam sob demanda
+on_demand:
+  - bssf-decision.md
+  - ecosystem.md
+  - context-management.md
+  - session-orchestration.md
+  - aios-principles.md
+  - copy-squad-constitution.md
+  - structured-exploration.md

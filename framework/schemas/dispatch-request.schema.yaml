@@ -1,0 +1,43 @@
+# Dispatch Request Schema v1.0
+# Written by agents to {offer}/.aios/dispatch-request.yaml
+# to request sub-task delegation (Gap 3: Nested Subagents workaround)
+#
+# The handoff-validator-hook ingests these requests on SubagentStop,
+# converts them to dispatch queue entries, and renames to .processed.
+
+type: object
+required: [version, requesting_agent, requests]
+properties:
+  version:
+    type: string
+    enum: ["1.0"]
+  requesting_agent:
+    type: string
+    description: "ID of the agent making the request"
+    enum: [vox, cipher, atlas, echo, forge, scout, blade, hawk, sentinel]
+  requests:
+    type: array
+    maxItems: 3
+    items:
+      type: object
+      required: [agent, task]
+      properties:
+        agent:
+          type: string
+          description: "Target agent ID"
+          enum: [vox, cipher, atlas, echo, forge, scout, blade, hawk]
+        task:
+          type: string
+          description: "Short task description"
+          maxLength: 200
+        model:
+          type: string
+          enum: [sonnet, opus, haiku]
+          default: sonnet
+        expected_output:
+          type: string
+          description: "Relative path from offer root for expected output"
+        priority:
+          type: string
+          enum: [normal, high]
+          default: normal

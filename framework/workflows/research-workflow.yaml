@@ -1,0 +1,92 @@
+# Research Workflow — Sub-workflow for audience research
+# Defines sequential steps within the research phase
+# Created: 2026-02-25 (Plano 1)
+
+version: "1.0"
+name: research-workflow
+parent: helix-pipeline
+phase: research
+
+steps:
+  - id: setup
+    name: "Load niche library + offer context"
+    type: context_load
+    files:
+      - "{nicho}/biblioteca_nicho_{nicho}_CONSOLIDADA.md"
+      - "{offer}/CONTEXT.md"
+    auto: true
+
+  - id: voc_extraction
+    name: "VOC Extraction (4 platforms)"
+    type: agent_task
+    agent: general-purpose
+    description: "Extract VOC from YouTube, TikTok, Instagram, Reddit via Apify"
+    tools_required: [firecrawl_agent, voc_search]
+    output: research/voc/
+    deliverables:
+      - summary.md
+      - trends-analysis.md
+    min_quotes: 200
+    platforms: [youtube, tiktok, instagram, reddit]
+    auto: true
+
+  - id: competitor_analysis
+    name: "Competitor Analysis (Ads Library)"
+    type: agent_task
+    agent: general-purpose
+    description: "Discovery-first competitor analysis via Apify + Meta Ads"
+    tools_required: [fb_ad_library.get_meta_ads]
+    tools_recommended: [fb_ad_library.analyze_ad_video]
+    output: research/competitors/
+    deliverables:
+      - summary.md
+      - processed/ads-library-spy.md
+    auto: true
+
+  - id: mechanism_discovery
+    name: "Mechanism Discovery"
+    type: agent_task
+    agent: general-purpose
+    description: "Discover MUP candidates from research data"
+    depends_on: [voc_extraction, competitor_analysis]
+    output: research/mechanism/
+    deliverables:
+      - summary.md
+    auto: true
+
+  - id: avatar_synthesis
+    name: "Avatar Synthesis"
+    type: agent_task
+    agent: general-purpose
+    description: "Synthesize avatar profile from VOC + competitors"
+    depends_on: [voc_extraction]
+    output: research/avatar/
+    deliverables:
+      - summary.md
+    auto: true
+
+  - id: research_synthesis
+    name: "Research Synthesis"
+    type: agent_task
+    agent: general-purpose
+    description: "Consolidate all research into synthesis.md"
+    depends_on: [voc_extraction, competitor_analysis, mechanism_discovery, avatar_synthesis]
+    output: research/
+    deliverables:
+      - synthesis.md
+    auto: true
+
+  - id: research_gate
+    name: "Research Gate Validation"
+    type: gate_validation
+    gate: research
+    tool: validate_gate
+    threshold: 70
+    depends_on: [research_synthesis]
+    auto: true
+
+config:
+  parallel_steps: [voc_extraction, competitor_analysis]
+  sequential_after: [mechanism_discovery, avatar_synthesis, research_synthesis, research_gate]
+  max_retries: 2
+  timeout_minutes: 120

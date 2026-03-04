@@ -1,0 +1,44 @@
+# Self-Healing Retry Queue
+# Failed MCP operations queued for retry
+# Created: 2026-02-26
+# Part of Level 4: Self-Healing Infrastructure
+version: "1.0.0"
+
+queue: []
+# Each entry:
+#   - id: "uuid"
+#     tool: "mcp__claude_ai_ClickUp__clickup_update_task"
+#     params: { task_id: "xxx", status: "complete" }
+#     error: "Server not found"
+#     queued_at: "2026-02-26T13:25:00.000Z"
+#     retry_count: 0
+#     max_retries: 3
+#     status: "pending"  # pending | retrying | failed | resolved
+
+policies:
+  clickup:
+    on_failure: "queue"
+    retry_interval_minutes: 30
+    max_retries: 3
+    fallback: "log_to_clickup-sync.yaml"
+  consensus_gemini:
+    on_failure: "fallback"
+    fallback_model: "claude-only"
+    notify: true
+  blind_critic:
+    on_failure: "retry"
+    max_retries: 3
+    retry_interval_minutes: 5
+  emotional_stress_test:
+    on_failure: "retry"
+    max_retries: 3
+    retry_interval_minutes: 5
+  firecrawl:
+    on_failure: "fallback"
+    fallback: "playwright"
+  playwright:
+    on_failure: "fallback"
+    fallback: "websearch"
+
+completed: []
+# Resolved items move here with resolution timestamp

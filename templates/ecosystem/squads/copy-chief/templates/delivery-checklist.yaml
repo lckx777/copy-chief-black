@@ -1,0 +1,61 @@
+# Delivery Checklist Template
+# Used by delivery-gate.js to verify all criteria before final delivery.
+#
+# @atom U-15
+# @version 1.0.0
+
+criteria:
+  # File-based checks
+  - id: vsl_exists
+    name: "VSL script exists"
+    type: file_exists
+    path: "{offer}/production/vsl/"
+    required: true
+
+  - id: lp_exists
+    name: "Landing page copy exists"
+    type: dir_has_files
+    path: "{offer}/production/landing-page/"
+    min_files: 1
+    required: true
+
+  - id: criativos_exist
+    name: "Creatives exist"
+    type: dir_has_files
+    path: "{offer}/production/creatives/"
+    min_files: 3
+    required: true
+
+  # Score-based checks
+  - id: blind_critic_pass
+    name: "Blind Critic score >= 7"
+    type: score_above
+    tool: blind_critic
+    threshold: 7
+    required: true
+
+  - id: est_pass
+    name: "Emotional Stress Test score >= 7"
+    type: score_above
+    tool: emotional_stress_test
+    threshold: 7
+    required: true
+
+  # Gate-based checks
+  - id: production_gate
+    name: "Production gate PASSED"
+    type: gate_passed
+    gate: production
+    required: true
+
+  - id: briefing_gate
+    name: "Briefing gate PASSED"
+    type: gate_passed
+    gate: briefing
+    required: true
+
+  # Human approval
+  - id: final_review
+    name: "Final human review approved"
+    type: human_approved
+    required: false

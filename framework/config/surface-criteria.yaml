@@ -1,0 +1,147 @@
+# Surface Criteria — When to Interrupt Human vs Auto-Execute
+# Adapted from AIOS surface-criteria concept
+# Part of Plan 2: Auto-Activation
+# Created: 2026-02-25
+
+version: "1.0"
+name: surface-criteria
+
+# ═══════════════════════════════════════════
+# INTERRUPTION RULES
+# ═══════════════════════════════════════════
+# Each rule defines when to STOP and ask the human.
+# If no rule matches, the action is AUTO-EXECUTABLE.
+
+interrupt_rules:
+  # ── Human Gates (always interrupt) ──
+  - id: mup_approval
+    description: "MUP/MUS requires human approval"
+    condition:
+      phase: BRIEFING
+      sub_phase_pattern: "fase-0[56]"
+      mecanismo_state: PENDING_VALIDATION
+    action: BLOCK
+    message: "MUP/MUS definido — aguardando aprovação HUMANA antes de avançar."
+
+  - id: final_delivery
+    description: "Final production delivery requires human review"
+    condition:
+      phase: PRODUCTION
+      all_deliverables_exist: true
+      black_validation_passed: true
+    action: BLOCK
+    message: "Produção completa e validada — aguardando aprovação HUMANA para entrega."
+
+  - id: gate_failure
+    description: "Gate validation failed — needs human decision"
+    condition:
+      event: gate_failed
+      retries_exhausted: true
+    action: BLOCK
+    message: "Gate falhou após {retries} tentativas. Decisão humana necessária."
+
+  # ── Safety Checks (interrupt on risk) ──
+  - id: low_confidence_classification
+    description: "Task classification has low confidence"
+    condition:
+      classification_confidence_below: 50
+    action: ASK
+    message: "Não tenho certeza sobre a classificação desta tarefa ({confidence}%). Confirma: {skill}?"
+
+  - id: destructive_action
+    description: "Action would overwrite existing production copy"
+    condition:
+      target_path_pattern: "production/"
+      file_exists: true
+      action: overwrite
+    action: ASK
+    message: "Arquivo de produção existente será sobrescrito: {path}. Confirma?"
+
+  - id: phase_skip
+    description: "Attempting to skip a phase"
+    condition:
+      current_phase_not_in: [target_phase_prerequisites]
+    action: BLOCK
+    message: "Fase {target_phase} requer {prerequisites} completo(s) antes de avançar."
+
+# ═══════════════════════════════════════════
+# AUTO-EXECUTION RULES
+# ═══════════════════════════════════════════
+# Actions that are SAFE to execute without asking.
+
+auto_execute_rules:
+  # ── Research Phase ──
+  - id: start_research
+    description: "Starting research for idle offer"
+    condition:
+      phase: IDLE
+      action: start_research
+    confidence_threshold: 70
+    auto: true
+
+  - id: continue_research
+    description: "Continuing incomplete research"
+    condition:
+      phase: RESEARCH
+      deliverables_incomplete: true
+    auto: true
+
+  # ── Briefing Phase ──
+  - id: advance_helix_phase
+    description: "Advance to next HELIX sub-phase"
+    condition:
+      phase: BRIEFING
+      current_sub_phase_complete: true
+      next_sub_phase_not_human_gate: true
+    auto: true
+
+  - id: run_validation_tools
+    description: "Running required validation tools"
+    condition:
+      phase_in: [BRIEFING, PRODUCTION]
+      tool_is_validation: true
+    auto: true
+
+  # ── Production Phase ──
+  - id: produce_next_deliverable
+    description: "Produce next deliverable in sequence"
+    condition:
+      phase: PRODUCTION
+      previous_deliverable_validated: true
+      next_deliverable_pending: true
+    auto: true
+
+  - id: iterate_on_failure
+    description: "Rewrite copy after validation failure"
+    condition:
+      event: validation_failed
+      iterations_below: 3
+    auto: true
+
+  # ── Gate Advancement ──
+  - id: auto_advance_gate
+    description: "Auto-advance phase when gate passes"
+    condition:
+      event: gate_passed
+      next_phase_has_no_human_gate: true
+    auto: true
+
+# ═══════════════════════════════════════════
+# CONFIDENCE THRESHOLDS
+# ═══════════════════════════════════════════
+
+thresholds:
+  classification_min: 50        # Below this, ASK human
+  classification_auto: 70       # Above this, auto-execute
+  gate_pass_min: 70             # Minimum gate score to pass
+  validation_pass_min: 8        # Minimum validation score (blind_critic, etc)
+
+# ═══════════════════════════════════════════
+# DEFAULT BEHAVIOR
+# ═══════════════════════════════════════════
+
+defaults:
+  unknown_task: ASK             # If task can't be classified
+  unknown_offer: ASK            # If offer can't be detected
+  no_matching_rule: AUTO        # If no rule matches, auto-execute
+  human_gate_behavior: BLOCK    # Human gates always block

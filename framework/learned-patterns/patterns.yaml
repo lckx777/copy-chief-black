@@ -1,0 +1,38 @@
+# Auto-learned patterns from successful tool sequences
+# Promoted to "learned" after 3+ occurrences with success
+
+patterns:
+  PAT-001:
+    title: "VOC antes de blind_critic melhora score"
+    sequence: ["voc_search", "blind_critic"]
+    context: "production"
+    benefit: "blind_critic score +1.2 medio quando voc_search roda antes"
+    failure_reasons: []
+    count: 5
+    status: learned
+    first_seen: "2026-02-23"
+    last_seen: "2026-02-23"
+
+  PAT-002:
+    title: "Consensus antes de MUP naming aumenta aprovacao"
+    sequence: ["consensus", "blind_critic"]
+    context: "briefing.fase05"
+    benefit: "MUP aprovado na primeira tentativa 80% vs 40%"
+    failure_reasons: []
+    count: 4
+    status: learned
+    first_seen: "2026-02-23"
+    last_seen: "2026-02-23"
+
+  PAT-003:
+    title: "Layered review antes de black_validation evita retrabalho"
+    sequence: ["layered_review", "black_validation"]
+    context: "production"
+    benefit: "black_validation score >= 8 na primeira tentativa 70% vs 30%"
+    failure_reasons: []
+    count: 6
+    status: learned
+    first_seen: "2026-02-23"
+    last_seen: "2026-02-23"
+
+next_id: 4

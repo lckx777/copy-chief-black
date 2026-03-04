@@ -1,0 +1,38 @@
+workflow:
+  id: research-pipeline
+  title: "Research Pipeline"
+  description: "VOC extraction, competitor analysis, mechanism research, avatar profiling"
+  gate_required: research
+
+  phases:
+    - id: parallel-research
+      title: "Parallel Research Collection"
+      agents: [vox, cipher]
+      tasks: [voc-extraction, competitor-analysis]
+      parallel: true
+      handoff_prompt: |
+        Vox collects VOC from 5 platforms (YouTube, Instagram, TikTok, Reddit, Amazon).
+        Cipher runs Ads Library Spy (4 levels) and analyzes TOP 5 competitor videos.
+        Both write to {offer}/research/ — no overlap.
+
+    - id: avatar-synthesis
+      title: "Avatar Profiling & Synthesis"
+      agents: [vox]
+      tasks: [voc-extraction]
+      parallel: false
+      depends_on: [parallel-research]
+      handoff_prompt: |
+        With all VOC collected, Vox builds avatar profile and creates synthesis.md.
+        synthesis.md must have confidence >= 70%.
+        DRE must be identified from data, not assumed.
+
+    - id: research-gate
+      title: "Research Gate"
+      agents: [sentinel]
+      tasks: []
+      parallel: false
+      depends_on: [avatar-synthesis]
+      handoff_prompt: |
+        Sentinel runs validate_gate RESEARCH.
+        Required: 4 summaries exist, synthesis.md confidence >= 70%.
+        Mandatory tools: firecrawl_agent, voc_search.

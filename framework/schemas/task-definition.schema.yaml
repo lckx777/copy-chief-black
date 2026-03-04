@@ -1,0 +1,137 @@
+# Task Definition Schema v1.0
+# Define TASKS (acoes a executar) separadas de CHECKLISTS (criterios de aceitacao)
+# Principio: "Persona completa a TASK. Sentinel valida o CHECKLIST."
+# Ref: AIOS-UPGRADE-PLAN-v4.md § S3.1
+# Criado: 2026-02-27
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "Task Definition"
+description: "Define uma task (acao a executar) dentro de um deliverable"
+type: object
+
+required:
+  - id
+  - name
+  - owner
+  - output
+  - phase
+
+properties:
+  # Identificacao
+  id:
+    type: string
+    description: "ID unico da task (ex: vsl-write-cap-01)"
+    pattern: "^[a-z0-9-]+$"
+
+  name:
+    type: string
+    description: "Nome da task no imperativo (ex: 'Escrever capitulo 1 da VSL')"
+
+  description:
+    type: string
+    description: "Descricao detalhada do que fazer"
+
+  # Ownership
+  owner:
+    type: string
+    description: "Handle da persona responsavel (ex: @producer, @critic)"
+    enum:
+      - "@chief"
+      - "@researcher"
+      - "@briefer"
+      - "@producer"
+      - "@critic"
+      - "@creative"
+      - "@lp"
+      - "@vsl"
+      - "@miner"
+      - "@gatekeeper"
+
+  # Inputs e Outputs
+  inputs:
+    type: array
+    description: "Arquivos ou dados necessarios para executar a task"
+    items:
+      type: object
+      properties:
+        path:
+          type: string
+          description: "Path relativo ao diretorio da oferta (ex: briefings/helix-complete.md)"
+        required:
+          type: boolean
+          default: true
+        description:
+          type: string
+
+  output:
+    type: string
+    description: "Path do arquivo produzido (ex: production/vsl/drafts/cap-01.md)"
+
+  # Referencia ao checklist de aceitacao
+  checklist_ref:
+    type: string
+    description: "ID do checklist que valida esta task (ex: vsl-acceptance)"
+
+  # Fase do pipeline
+  phase:
+    type: string
+    description: "Fase do workflow onde a task se encaixa"
+    enum: ["research", "briefing", "production", "review", "delivery"]
+
+  # Ferramentas
+  tools:
+    type: array
+    description: "Ferramentas MCP a usar na execucao"
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Nome da ferramenta MCP (ex: write_chapter, blind_critic)"
+        required:
+          type: boolean
+          default: false
+        params:
+          type: object
+          description: "Parametros default para a ferramenta"
+
+  # Dependencias
+  depends_on:
+    type: array
+    description: "IDs de tasks que devem estar completas antes desta"
+    items:
+      type: string
+
+  # Ordem
+  order:
+    type: integer
+    description: "Ordem de execucao dentro do deliverable (1-based)"
+    minimum: 1
+
+  # Metadata
+  metadata:
+    type: object
+    properties:
+      version: { type: string, default: "1.0.0" }
+      created_at: { type: string, format: date-time }
+      updated_at: { type: string, format: date-time }
+
+# Exemplo de uso:
+#
+# - id: vsl-write-cap-01
+#   name: "Escrever capitulo 1 (Lead) da VSL"
+#   owner: "@vsl"
+#   inputs:
+#     - path: briefings/helix-complete.md
+#       required: true
+#     - path: research/synthesis.md
+#       required: true
+#   output: production/vsl/drafts/cap-01-lead.md
+#   checklist_ref: vsl-acceptance
+#   phase: production
+#   tools:
+#     - name: write_chapter
+#       required: true
+#       params: { chapter_type: "lead" }
+#   depends_on: []
+#   order: 1

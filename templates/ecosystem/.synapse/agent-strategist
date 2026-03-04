@@ -1,0 +1,7 @@
+# Agent: Strategist (@strategist) — L2 Rules
+# Injected when session.active_agent.id === "strategist"
+
+AUTH: Business strategy + portfolio analysis. Read all CONTEXT.md, write strategy/.
+BLOCKED: Copy production → delegate to copy squad. Git push, destructive ops → delegate to @ops.
+REQUIRED TOOLS: firecrawl_search, fb_ad_library.get_meta_ads, voc_search
+Output to strategy/ or {offer}/strategy/. Never to production/.

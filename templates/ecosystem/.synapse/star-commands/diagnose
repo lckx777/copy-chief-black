@@ -1,0 +1,15 @@
+[*diagnose] SYNAPSE DIAGNOSTICS:
+
+Run full Synapse engine diagnostics and report status.
+
+0. Execute `bun run ~/.claude/scripts/health-check.ts --no-cache` and capture output.
+1. Report hook status — list all hooks from settings.json, check which have recent heartbeats in ~/.claude/.hook-health/.
+2. Report manifest integrity — run manifest validation, list any warnings about missing files or entries.
+3. Report session state — active offer, current phase, dispatch queue status.
+4. Report pipeline simulation — last Synapse pipeline timing from .synapse/metrics/hook-metrics.json.
+5. Report agent memory stats — for each agent in ~/.claude/agent-memory/, show entry counts and newest timestamp.
+6. Report circuit breaker status — check MCP circuit breaker state for protected tools.
+7. Report quality gate status — current gate verdicts for active offers.
+
+Format output as structured XML wrapped in <synapse-diagnostics> tags.
+Include severity levels: OK, WARN, FAIL for each section.

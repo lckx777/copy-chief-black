@@ -1,0 +1,7 @@
+# Workflow: Briefing Pipeline — L3 Rules
+# Injected when session.active_workflow.id === "briefing-pipeline"
+
+HELIX 10 phases sequential. get_phase_context before each phase.
+Phase 5 (MUP/MUS) requires: consensus + blind_critic + emotional_stress_test + voc_search.
+Mecanismo Unico must reach VALIDATED before advancing to production.
+Output to briefings/phases/. Gate: validate_gate(briefing)

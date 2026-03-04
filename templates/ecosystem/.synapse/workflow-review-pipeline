@@ -1,0 +1,7 @@
+# Workflow: Review Pipeline — L3 Rules
+# Injected when session.active_workflow.id === "review-pipeline"
+
+layered_review (3 camadas) on each deliverable.
+black_validation >= 8/10 required for delivery.
+consensus (multi-model) for high-stakes decisions.
+Flag specific lines needing revision — no vague feedback.

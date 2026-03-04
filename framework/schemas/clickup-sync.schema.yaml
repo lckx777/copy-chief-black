@@ -1,0 +1,89 @@
+# clickup-sync.schema.yaml — Schema for per-offer ClickUp sync mapping
+# Created: 2026-02-25 (Plan 3: ClickUp Bidirectional)
+
+type: object
+required:
+  - workspace_id
+  - space_id
+  - list_id
+  - parent_task_id
+  - last_synced
+
+properties:
+  workspace_id:
+    type: string
+    description: ClickUp workspace ID
+    example: "90133067831"
+
+  space_id:
+    type: string
+    description: ClickUp space ID (Team Space)
+    example: "901313380205"
+
+  folder_id:
+    type: string
+    description: ClickUp folder ID for the niche
+
+  list_id:
+    type: string
+    description: ClickUp list ID for the offer
+
+  parent_task_id:
+    type: string
+    description: Task ID of the parent offer task
+
+  phase_tasks:
+    type: object
+    description: HELIX phase task IDs
+    properties:
+      fase_01: { type: string }
+      fase_02: { type: string }
+      fase_03: { type: string }
+      fase_04: { type: string }
+      fase_05: { type: string }
+      fase_06: { type: string }
+      fase_07: { type: string }
+      fase_08: { type: string }
+      fase_09: { type: string }
+      fase_10: { type: string }
+
+  gate_tasks:
+    type: object
+    description: Gate task IDs
+    properties:
+      research: { type: string }
+      briefing: { type: string }
+      production: { type: string }
+
+  deliverable_tasks:
+    type: object
+    description: Production deliverable task IDs
+    properties:
+      vsl: { type: string }
+      landing_page: { type: string }
+      creatives: { type: string }
+      emails: { type: string }
+
+  research_tasks:
+    type: object
+    description: Research deliverable task IDs
+    properties:
+      voc: { type: string }
+      competitors: { type: string }
+      mechanism: { type: string }
+      avatar: { type: string }
+      synthesis: { type: string }
+
+  last_synced:
+    type: string
+    format: date-time
+    description: Last successful sync timestamp
+
+  sync_errors:
+    type: array
+    items:
+      type: object
+      properties:
+        timestamp: { type: string }
+        error: { type: string }
+        operation: { type: string }

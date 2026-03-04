@@ -1,0 +1,9 @@
+# Copy Chief Squad — Synapse Manifest (L5)
+# Namespaced by L5 as COPY_CHIEF_{DOMAIN}
+
+ROUTING_STATE=active
+ROUTING_ALWAYS_ON=true
+ROUTING_RECALL=persona,agent,routing,squad,delegar,quem,qual persona
+
+PRODUCTION_RULES_STATE=active
+PRODUCTION_RULES_RECALL=produzir,production,deliverable,vsl,lp,criativo,email

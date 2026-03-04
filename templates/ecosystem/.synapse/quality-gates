@@ -1,0 +1,49 @@
+# Quality Gates — Thresholds per Deliverable
+
+## Gate Flow
+IDLE → RESEARCH → BRIEFING → PRODUCTION → DELIVERED
+Each transition requires validate_gate.
+
+## Thresholds
+
+### VSL
+- blind_critic >= 8 (per chapter)
+- emotional_stress_test genericidade >= 8
+- black_validation >= 8/10
+- Human approves MUP before production
+
+### Landing Page
+- blind_critic >= 8 (per block)
+- emotional_stress_test genericidade >= 8
+- black_validation >= 8/10
+
+### Creative
+- blind_critic >= 8
+- emotional_stress_test genericidade >= 8
+- black_validation >= 8/10
+
+### MUP/MUS
+- consensus: multi-model agreement
+- blind_critic >= 8 (MUP + MUS statements)
+- emotional_stress_test genericidade >= 8
+- voc_search: quotes found
+- HUMAN approval (mandatory)
+
+### Email Sequence
+- blind_critic >= 8 (per email)
+- emotional_stress_test genericidade >= 8
+- black_validation >= 8/10
+
+## Mandatory Tools per Gate
+| Gate | Mandatory | Alternatives |
+|------|-----------|-------------|
+| Research | firecrawl_agent, voc_search | firecrawl_scrape, playwright |
+| Briefing | get_phase_context | — |
+| Production | blind_critic, emotional_stress_test | — |
+
+## Path-Based Blocking
+| Write to | Precondition |
+|----------|-------------|
+| research/ | None |
+| briefings/ | gates.research = true |
+| production/ | gates.briefing = true AND mecanismo VALIDATED/APPROVED |

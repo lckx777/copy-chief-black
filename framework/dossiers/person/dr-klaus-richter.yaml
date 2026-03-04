@@ -1,0 +1,58 @@
+# Dossier: Dr. Klaus Richter
+# Type: person | ID: dr-klaus-richter
+# Created: 2026-03-01 | Updated: 2026-03-01
+# Schema: ~/.claude/schemas/dossier.schema.yaml
+
+id: dr-klaus-richter
+type: person
+canonical_name: Dr. Klaus Richter
+aliases:
+  - Dr Richter
+created_at: 2026-03-01
+updated_at: 2026-03-01
+niches: []
+
+facts:
+  - text: Gastroenterologista na Charité Berlin
+    source: florayla/CONTEXT.md
+    confidence: high
+    added_at: 2026-03-01
+    tags:
+      - role
+      - affiliation
+  - text: Expert principal da oferta Florayla (suplemento intestinal)
+    source: saude/florayla/mecanismo-unico.yaml
+    confidence: high
+    added_at: 2026-03-01
+    tags:
+      - role
+  - text: Pesquisa sobre celulas caliciformes e regeneracao intestinal
+    source: saude/florayla/research/mechanism/summary.md
+    confidence: medium
+    added_at: 2026-03-01
+    tags:
+      - expertise
+      - research
+  - text: Expert da oferta Neuvelys (suplemento tinnitus) — Universidade de Heidelberg
+    source: saude/neuvelys/CONTEXT.md
+    confidence: high
+    added_at: 2026-03-01
+    tags:
+      - role
+      - affiliation
+  - text: Expert em suplementos de saude auditiva
+    source: neuvelys/briefing.md
+    confidence: medium
+    added_at: 2026-03-01
+    tags:
+      - expertise
+
+relationships:
+  - target_id: florayla
+    type: uses
+    note: Expert principal da oferta
+  - target_id: charite-berlin
+    type: works_at
+    note: Gastroenterologista
+
+contradictions: []

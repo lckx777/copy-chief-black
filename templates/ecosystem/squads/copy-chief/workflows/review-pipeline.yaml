@@ -1,0 +1,35 @@
+workflow:
+  id: review-pipeline
+  title: "Review Pipeline"
+  description: "Final adversarial review and delivery gate"
+  gate_required: delivery
+  depends_on_gate: production
+
+  phases:
+    - id: adversarial-review
+      title: "Adversarial Review"
+      agents: [hawk]
+      tasks: [validate-deliverable]
+      parallel: false
+      handoff_prompt: |
+        Hawk runs full adversarial review on all deliverables.
+        5-phase process: Decompose, Stress, Adversarial, Zen/MCP, Verdict.
+        Binary output: PASS or NEEDS_REVISION per deliverable.
+
+    - id: revision-loop
+      title: "Revision Loop (if needed)"
+      agents: [echo, forge, scout, blade]
+      parallel: true
+      conditional: "hawk.verdict == NEEDS_REVISION"
+      handoff_prompt: |
+        If Hawk returns NEEDS_REVISION, route specific issues to responsible persona.
+        Re-validate after revision. Max 3 revision cycles.
+
+    - id: delivery-gate
+      title: "Delivery Gate"
+      agents: [sentinel]
+      parallel: false
+      depends_on: [adversarial-review]
+      handoff_prompt: |
+        Sentinel runs black_validation on all final deliverables.
+        Score >= 8/10 for each. HUMAN approval for final delivery.

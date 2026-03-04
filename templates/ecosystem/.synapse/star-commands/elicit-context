@@ -1,0 +1,11 @@
+*elicit-context — Context Elicitation (U-37)
+
+Guided 14-question flow to create structured CONTEXT.md for a new offer.
+Questions cover: produto, business, avatar, DRE, awareness level.
+
+Usage: *elicit-context <offer-path>
+
+Output: {offer}/CONTEXT.md with all sections populated.
+
+Module: ~/.claude/.aios-core/copy-chief/workflow/elicitation-engine.js
+Set: context (14 questions)

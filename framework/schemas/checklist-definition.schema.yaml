@@ -1,0 +1,172 @@
+# Checklist Definition Schema v1.0
+# Define CHECKLISTS (criterios de aceitacao) separados de TASKS (acoes a executar)
+# Principio: "Persona completa a TASK. Sentinel valida o CHECKLIST."
+# Ref: AIOS-UPGRADE-PLAN-v4.md § S3.2
+# Criado: 2026-02-27
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "Checklist Definition"
+description: "Define criterios de aceitacao para validar um deliverable"
+type: object
+
+required:
+  - id
+  - name
+  - applies_to
+  - criteria
+
+properties:
+  # Identificacao
+  id:
+    type: string
+    description: "ID unico do checklist (ex: vsl-acceptance)"
+    pattern: "^[a-z0-9-]+$"
+
+  name:
+    type: string
+    description: "Nome descritivo do checklist (ex: 'Criterios de Aceitacao — VSL')"
+
+  description:
+    type: string
+    description: "Contexto sobre o que este checklist valida"
+
+  # Escopo
+  applies_to:
+    type: string
+    description: "Tipo de deliverable que este checklist valida"
+    enum: ["vsl", "landing-page", "creative", "email", "mup-mus", "research", "briefing"]
+
+  # Criterios de aceitacao
+  criteria:
+    type: array
+    description: "Lista de criterios que devem ser satisfeitos"
+    items:
+      type: object
+      required:
+        - id
+        - criterion
+        - type
+        - blocking
+      properties:
+        id:
+          type: string
+          description: "ID unico do criterio (ex: bc-score-min)"
+          pattern: "^[a-z0-9-]+$"
+
+        criterion:
+          type: string
+          description: "Descricao do criterio em linguagem clara (ex: 'blind_critic score >= 8 em cada capitulo')"
+
+        type:
+          type: string
+          description: "Tipo de verificacao"
+          enum:
+            - "score"       # Threshold numerico (ex: blind_critic >= 8)
+            - "existence"   # Arquivo ou artefato existe (ex: synthesis.md existe)
+            - "content"     # Conteudo especifico presente (ex: MUP aparece na copy)
+            - "human"       # Requer aprovacao humana (ex: humano aprova MUP)
+            - "process"     # Processo foi seguido (ex: layered_review 3 camadas)
+
+        # Threshold (para tipo "score")
+        tool:
+          type: string
+          description: "Ferramenta MCP que gera o score (ex: blind_critic, emotional_stress_test)"
+
+        threshold:
+          type: number
+          description: "Valor minimo aceitavel (ex: 8)"
+
+        operator:
+          type: string
+          description: "Operador de comparacao"
+          enum: [">=", ">", "==", "<=", "<"]
+          default: ">="
+
+        # Para tipo "existence"
+        path:
+          type: string
+          description: "Path do arquivo que deve existir (relativo a oferta)"
+
+        # Bloqueante?
+        blocking:
+          type: boolean
+          description: "Se true, falhar este criterio BLOQUEIA avanco. Se false, gera WARNING."
+          default: true
+
+        # Peso (para scoring ponderado futuro)
+        weight:
+          type: number
+          description: "Peso relativo do criterio (default 1.0)"
+          default: 1.0
+          minimum: 0
+          maximum: 10
+
+        # Quem valida
+        validator:
+          type: string
+          description: "Handle da persona que valida (default @gatekeeper)"
+          default: "@gatekeeper"
+
+  # Gate associado
+  gate:
+    type: string
+    description: "Gate do pipeline que este checklist protege"
+    enum: ["research", "briefing", "production", "delivery"]
+
+  # Metadata
+  metadata:
+    type: object
+    properties:
+      version: { type: string, default: "1.0.0" }
+      created_at: { type: string, format: date-time }
+      updated_at: { type: string, format: date-time }
+      sources:
+        type: array
+        description: "Documentos fonte dos criterios"
+        items: { type: string }
+
+# Exemplo de uso:
+#
+# id: vsl-acceptance
+# name: "Criterios de Aceitacao — VSL"
+# applies_to: vsl
+# gate: production
+# criteria:
+#   - id: bc-per-chapter
+#     criterion: "blind_critic score >= 8 em cada capitulo"
+#     type: score
+#     tool: blind_critic
+#     threshold: 8
+#     operator: ">="
+#     blocking: true
+#
+#   - id: est-full-vsl
+#     criterion: "emotional_stress_test genericidade >= 8 na VSL completa"
+#     type: score
+#     tool: emotional_stress_test
+#     threshold: 8
+#     operator: ">="
+#     blocking: true
+#
+#   - id: layered-review
+#     criterion: "layered_review aplicado em 3 camadas"
+#     type: process
+#     blocking: true
+#
+#   - id: bv-final
+#     criterion: "black_validation score >= 8"
+#     type: score
+#     tool: black_validation
+#     threshold: 8
+#     operator: ">="
+#     blocking: true
+#
+#   - id: human-mup
+#     criterion: "Humano aprova MUP antes de produzir"
+#     type: human
+#     blocking: true
+#
+# metadata:
+#   sources:
+#     - "tool-usage-matrix.md § Checklist por Deliverable"
+#     - "copy-squad-constitution.md § Checklist de Saida"

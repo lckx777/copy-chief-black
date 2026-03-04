@@ -1,0 +1,175 @@
+# HELIX Pipeline — Full Offer Lifecycle
+# Adapted from AIOS development-cycle.yaml
+# Each phase has: agent, pre-conditions, deliverables, gates, next
+# Created: 2026-02-25 (Plano 1)
+
+version: "1.0"
+name: helix-pipeline
+description: "Full offer lifecycle from research to delivery"
+
+phases:
+  # ═══════════════════════════════════════════
+  # RESEARCH
+  # ═══════════════════════════════════════════
+  research:
+    order: 1
+    agent: audience-research-agent
+    subagent: general-purpose
+    description: "Deep audience research + competitor analysis"
+    pre_conditions: []
+    deliverables:
+      - path: research/voc/summary.md
+        required: true
+      - path: research/voc/trends-analysis.md
+        required: true
+      - path: research/competitors/summary.md
+        required: true
+      - path: research/competitors/processed/ads-library-spy.md
+        required: true
+      - path: research/mechanism/summary.md
+        required: true
+      - path: research/avatar/summary.md
+        required: true
+      - path: research/synthesis.md
+        required: true
+    required_tools:
+      - firecrawl_agent
+      - voc_search
+    recommended_tools:
+      - fb_ad_library.get_meta_ads
+      - fb_ad_library.analyze_ad_video
+    gate:
+      type: validate_gate
+      gate_name: research
+      threshold: 70
+    next: briefing
+    auto_advance: true
+
+  # ═══════════════════════════════════════════
+  # BRIEFING (HELIX 10 phases)
+  # ═══════════════════════════════════════════
+  briefing:
+    order: 2
+    agent: helix-system-agent
+    subagent: general-purpose
+    description: "HELIX System 10-phase strategic briefing"
+    pre_conditions:
+      - gate: research
+        status: passed
+    sub_phases:
+      - id: fase_1
+        name: "Análise de Inputs"
+        deliverable: briefings/phases/fase-01-*.md
+        required_tools: [get_phase_context]
+      - id: fase_2
+        name: "Definição de Avatar"
+        deliverable: briefings/phases/fase-02-*.md
+        required_tools: [get_phase_context, voc_search]
+      - id: fase_3
+        name: "Definição de DRE"
+        deliverable: briefings/phases/fase-03-*.md
+        required_tools: [get_phase_context]
+      - id: fase_4
+        name: "Nível de Consciência"
+        deliverable: briefings/phases/fase-04-*.md
+        required_tools: [get_phase_context]
+      - id: fase_5
+        name: "Problema/Vilão/MUP"
+        deliverable: briefings/phases/fase-05-*.md
+        required_tools: [get_phase_context, consensus, blind_critic]
+        human_gate: mup_approval
+      - id: fase_6
+        name: "Solução/MUS"
+        deliverable: briefings/phases/fase-06-*.md
+        required_tools: [get_phase_context, blind_critic, emotional_stress_test]
+        human_gate: mus_approval
+      - id: fase_7
+        name: "Estrutura da Oferta"
+        deliverable: briefings/phases/fase-07-*.md
+        required_tools: [get_phase_context]
+      - id: fase_8
+        name: "Stack de Valor"
+        deliverable: briefings/phases/fase-08-*.md
+        required_tools: [get_phase_context]
+      - id: fase_9
+        name: "Garantia e Urgência"
+        deliverable: briefings/phases/fase-09-*.md
+        required_tools: [get_phase_context]
+      - id: fase_10
+        name: "Consolidação"
+        deliverable: briefings/phases/fase-10-*.md
+        required_tools: [get_phase_context, validate_gate]
+    gate:
+      type: validate_gate
+      gate_name: briefing
+      threshold: 70
+    mecanismo_required: true
+    mecanismo_min_state: VALIDATED
+    next: production
+    auto_advance: true
+
+  # ═══════════════════════════════════════════
+  # PRODUCTION
+  # ═══════════════════════════════════════════
+  production:
+    order: 3
+    description: "Copy production for all deliverables"
+    pre_conditions:
+      - gate: briefing
+        status: passed
+      - mecanismo_state: [VALIDATED, APPROVED]
+    sub_phases:
+      - id: landing_page
+        name: "Landing Page"
+        agent: landing-page-agent
+        deliverable: production/landing-page/
+        sub_tasks: 11
+        required_tools: [blind_critic, emotional_stress_test, black_validation]
+        human_gate: final_delivery
+      - id: creatives
+        name: "Criativos"
+        agent: criativos-agent
+        deliverable: production/creatives/
+        sub_tasks: 8
+        required_tools: [blind_critic, emotional_stress_test, black_validation]
+      - id: vsl
+        name: "VSL Script"
+        agent: production-agent
+        deliverable: production/vsl/
+        sub_tasks: 15
+        required_tools: [write_chapter, blind_critic, emotional_stress_test, layered_review, black_validation]
+        human_gate: final_delivery
+      - id: emails
+        name: "Email Sequence"
+        agent: production-agent
+        deliverable: production/emails/
+        sub_tasks: 6
+        required_tools: [blind_critic, emotional_stress_test, black_validation]
+    gate:
+      type: black_validation
+      threshold: 8
+    next: delivered
+    auto_advance: false  # Final delivery requires human
+
+  # ═══════════════════════════════════════════
+  # DELIVERED
+  # ═══════════════════════════════════════════
+  delivered:
+    order: 4
+    description: "All deliverables produced and validated"
+    pre_conditions:
+      - gate: production
+        status: passed
+    deliverables: []
+    next: null
+
+# ═══════════════════════════════════════════
+# GLOBAL CONFIG
+# ═══════════════════════════════════════════
+config:
+  max_iterations_per_task: 3
+  timeout_per_task_minutes: 30
+  checkpoint_interval_minutes: 5
+  recovery_strategy: escalation  # retry → rollback → skip → escalate
+  human_gate_default: BLOCK
+  auto_advance_default: true

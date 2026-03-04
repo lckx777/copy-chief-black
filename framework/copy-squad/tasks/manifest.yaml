@@ -1,0 +1,144 @@
+# Copy Squad Tasks Manifest v2.0
+# Shared task library for all production agents
+# Created: 2026-02-23
+
+tasks:
+  # Original 10 tasks
+  - id: headline-testing
+    file: headline-testing.md
+    category: creation
+    primary_expert: John Caples
+    use_in: [production, review]
+
+  - id: bullet-writing
+    file: bullet-writing.md
+    category: creation
+    primary_expert: Gary Halbert
+    use_in: [production]
+
+  - id: offer-stack
+    file: offer-stack.md
+    category: creation
+    primary_expert: Alex Hormozi
+    use_in: [production]
+
+  - id: story-framework
+    file: story-framework.md
+    category: creation
+    primary_expert: Andre Chaperon
+    use_in: [production]
+
+  - id: lead-generation
+    file: lead-generation.md
+    category: creation
+    primary_expert: Gary Bencivenga
+    use_in: [production]
+
+  - id: email-sequence
+    file: email-sequence.md
+    category: creation
+    primary_expert: Andre Chaperon
+    use_in: [production]
+
+  - id: cta-framework
+    file: cta-framework.md
+    category: creation
+    primary_expert: Dan Kennedy
+    use_in: [production]
+
+  - id: guarantee-framework
+    file: guarantee-framework.md
+    category: creation
+    primary_expert: Jay Abraham
+    use_in: [production]
+
+  - id: urgency-framework
+    file: urgency-framework.md
+    category: creation
+    primary_expert: Robert Cialdini
+    use_in: [production]
+
+  # New 10 tasks (Upgrade 2)
+  - id: sensory-scene-builder
+    file: sensory-scene-builder.md
+    category: creation
+    primary_expert: Gary Halbert
+    use_in: [production]
+    description: Build scenes with 5 senses for visceral copy
+
+  - id: dre-escalation
+    file: dre-escalation.md
+    category: creation
+    primary_expert: Gary Halbert
+    use_in: [production, briefing]
+    description: Escalate DRE from level 1 to 5
+
+  - id: mechanism-naming
+    file: mechanism-naming.md
+    category: briefing
+    primary_expert: Todd Brown
+    use_in: [briefing]
+    description: Generate Sexy Cause and Gimmick Name candidates
+
+  - id: future-pacing
+    file: future-pacing.md
+    category: creation
+    primary_expert: Andre Chaperon
+    use_in: [production]
+    description: Create positive and negative future pacing
+
+  - id: tribal-exclusivity
+    file: tribal-exclusivity.md
+    category: creation
+    primary_expert: Robert Cialdini
+    use_in: [production]
+    description: Activate tribal exclusivity and in-group identity
+
+  - id: proof-stacking
+    file: proof-stacking.md
+    category: creation
+    primary_expert: Claude Hopkins
+    use_in: [production]
+    description: Stack proof types in persuasion order
+
+  - id: objection-demolition
+    file: objection-demolition.md
+    category: creation
+    primary_expert: Dan Kennedy
+    use_in: [production]
+    description: Anticipate and demolish objections from VOC
+
+  - id: urgency-injection
+    file: urgency-injection.md
+    category: creation
+    primary_expert: Dan Kennedy
+    use_in: [production]
+    description: Inject natural urgency without marketing speak
+
+  - id: voc-language-check
+    file: voc-language-check.md
+    category: validation
+    primary_expert: Andre Chaperon
+    use_in: [production, review]
+    description: Verify copy language matches VOC
+
+  - id: logo-test-verification
+    file: logo-test-verification.md
+    category: validation
+    primary_expert: David Ogilvy
+    use_in: [review]
+    description: Apply Logo Test to all copy sections
+
+total_tasks: 20
+
+routing: contextual
+routing_note: |
+  v2.0: Tasks now support contextual routing via chefe-de-copy.ts.
+  Each task has multiple experts ranked by nicho, DRE, and historical performance.
+  Primary expert is the default; contextual routing picks the best match.
+  Run: bun run ~/.claude/scripts/chefe-de-copy.ts --task <id> --offer <path>
+
+categories:
+  creation: 16
+  briefing: 1
+  validation: 3

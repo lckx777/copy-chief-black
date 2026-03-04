@@ -1,0 +1,66 @@
+gotchas:
+  ERR-001:
+    title: Confusao busca nome vs keyword
+    description: MCP fb_ad_library busca por NOME de pagina, NAO por keyword de anuncio
+    category: TOOL
+    tags:
+      - fb_ad_library
+      - discovery
+      - keyword
+      - apify
+      - nome
+    fix: Usar Apify para discovery (niveis 1-3), MCP apenas para monitoring (nivel 4)
+    count: 5
+    status: active
+    first_seen: 2026-02-01
+    last_seen: 2026-02-20
+    resolved_at: null
+  ERR-002:
+    title: Custom subagents sem MCPs
+    description: researcher/copywriter/reviewer NAO herdam MCPs - ToolSearch indisponivel
+    category: CONFIG
+    tags:
+      - subagent
+      - mcp
+      - toolsearch
+      - general-purpose
+      - researcher
+    fix: Usar general-purpose para qualquer task que precise de MCP
+    count: 8
+    status: active
+    first_seen: 2026-02-01
+    last_seen: 2026-02-20
+    resolved_at: null
+  ERR-003:
+    title: Copy no terminal
+    description: Copy entregue no terminal em vez de arquivo
+    category: WORKFLOW
+    tags:
+      - copy
+      - terminal
+      - write
+      - production
+    fix: Sempre usar Write tool para salvar em production/
+    count: 3
+    status: active
+    first_seen: 2026-01-30
+    last_seen: 2026-02-15
+    resolved_at: null
+  ERR-004:
+    title: Gate declarado sem validate_gate
+    description: Research/Briefing declarados completos sem rodar MCP validate_gate
+    category: WORKFLOW
+    tags:
+      - validate_gate
+      - research
+      - briefing
+      - gate
+    fix: SEMPRE rodar validate_gate antes de declarar fase completa
+    count: 4
+    status: active
+    first_seen: 2026-02-01
+    last_seen: 2026-02-15
+    resolved_at: null
+promotion_threshold: 3
+max_active_tokens: 500
+expiration_days: 30

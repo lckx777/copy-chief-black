@@ -1,0 +1,221 @@
+# Production Workflow — Sub-workflow for copy production
+# Defines sequential steps per deliverable type with validation chain
+# Created: 2026-02-25 (Plano 1)
+
+version: "1.0"
+name: production-workflow
+parent: helix-pipeline
+phase: production
+
+# ═══════════════════════════════════════════
+# LANDING PAGE (11 sub-tasks)
+# ═══════════════════════════════════════════
+landing_page:
+  agent: landing-page-agent
+  output: production/landing-page/
+  steps:
+    - id: hero_block
+      name: "Hero Block (Above the fold)"
+      validate: blind_critic
+      threshold: 8
+    - id: problem_block
+      name: "Problem/Pain Block"
+      validate: blind_critic
+      threshold: 8
+    - id: mechanism_block
+      name: "Mechanism Reveal Block"
+      validate: blind_critic
+      threshold: 8
+    - id: solution_block
+      name: "Solution Block"
+      validate: blind_critic
+      threshold: 8
+    - id: proof_block
+      name: "Social Proof Block"
+      validate: blind_critic
+      threshold: 8
+    - id: offer_block
+      name: "Offer/Stack Block"
+      validate: blind_critic
+      threshold: 8
+    - id: cta_block
+      name: "CTA Block"
+      validate: blind_critic
+      threshold: 8
+    - id: faq_block
+      name: "FAQ Block"
+      validate: blind_critic
+      threshold: 7
+    - id: review_lp
+      name: "Full LP Review"
+      validate: layered_review
+      layers: 3
+    - id: stress_test
+      name: "Emotional Stress Test"
+      validate: emotional_stress_test
+      threshold: 8
+    - id: final_validation
+      name: "BLACK Validation"
+      validate: black_validation
+      threshold: 8
+      human_gate: true
+
+# ═══════════════════════════════════════════
+# VSL (15 sub-tasks)
+# ═══════════════════════════════════════════
+vsl:
+  agent: production-agent
+  output: production/vsl/
+  steps:
+    - id: chapter_1
+      name: "Chapter 1 — Hook/Lead"
+      tool: write_chapter
+      validate: blind_critic
+      threshold: 8
+    - id: chapter_2
+      name: "Chapter 2 — Problem Amplification"
+      tool: write_chapter
+      validate: blind_critic
+      threshold: 8
+    - id: chapter_3
+      name: "Chapter 3 — Mechanism Reveal"
+      tool: write_chapter
+      validate: blind_critic
+      threshold: 8
+    - id: chapter_4
+      name: "Chapter 4 — Solution/Product"
+      tool: write_chapter
+      validate: blind_critic
+      threshold: 8
+    - id: chapter_5
+      name: "Chapter 5 — Social Proof"
+      tool: write_chapter
+      validate: blind_critic
+      threshold: 8
+    - id: chapter_6
+      name: "Chapter 6 — Offer/CTA"
+      tool: write_chapter
+      validate: blind_critic
+      threshold: 8
+    - id: assembly
+      name: "Full VSL Assembly"
+      type: assemble
+    - id: review_1
+      name: "Layered Review (Layer 1)"
+      validate: layered_review
+      layer: 1
+    - id: review_2
+      name: "Layered Review (Layer 2)"
+      validate: layered_review
+      layer: 2
+    - id: review_3
+      name: "Layered Review (Layer 3)"
+      validate: layered_review
+      layer: 3
+    - id: stress_test
+      name: "Emotional Stress Test"
+      validate: emotional_stress_test
+      threshold: 8
+    - id: specificity_check
+      name: "Specificity Check (Face 1 + Face 2)"
+      validate: blind_critic
+      copy_type: specificity
+      threshold: 8
+    - id: logo_test
+      name: "Logo Test"
+      validate: blind_critic
+      copy_type: logo_test
+      threshold: 8
+    - id: anti_homogeneization
+      name: "Anti-Homogeneização Check"
+      validate: emotional_stress_test
+      copy_type: genericidade
+      threshold: 8
+    - id: final_validation
+      name: "BLACK Validation"
+      validate: black_validation
+      threshold: 8
+      human_gate: true
+
+# ═══════════════════════════════════════════
+# CREATIVES (8 sub-tasks)
+# ═══════════════════════════════════════════
+creatives:
+  agent: criativos-agent
+  output: production/creatives/
+  steps:
+    - id: hooks_5
+      name: "Generate 5 Hook Variations"
+      validate: blind_critic
+      threshold: 7
+    - id: scripts_3
+      name: "Generate 3 Full Scripts"
+      validate: blind_critic
+      threshold: 8
+    - id: ugc_scripts
+      name: "Generate UGC Scripts"
+      validate: blind_critic
+      threshold: 7
+    - id: image_concepts
+      name: "Image Ad Concepts"
+      validate: blind_critic
+      threshold: 7
+    - id: review_creatives
+      name: "Full Creatives Review"
+      validate: layered_review
+      layers: 2
+    - id: stress_test
+      name: "Emotional Stress Test"
+      validate: emotional_stress_test
+      threshold: 8
+    - id: logo_test
+      name: "Logo Test (all creatives)"
+      validate: blind_critic
+      copy_type: logo_test
+      threshold: 8
+    - id: final_validation
+      name: "BLACK Validation"
+      validate: black_validation
+      threshold: 8
+
+# ═══════════════════════════════════════════
+# EMAIL SEQUENCE (6 sub-tasks)
+# ═══════════════════════════════════════════
+emails:
+  agent: production-agent
+  output: production/emails/
+  steps:
+    - id: welcome_sequence
+      name: "Welcome Sequence (3 emails)"
+      validate: blind_critic
+      threshold: 7
+    - id: nurture_sequence
+      name: "Nurture Sequence (5 emails)"
+      validate: blind_critic
+      threshold: 7
+    - id: abandon_sequence
+      name: "Cart Abandon Sequence (3 emails)"
+      validate: blind_critic
+      threshold: 8
+    - id: review_emails
+      name: "Full Email Review"
+      validate: layered_review
+      layers: 2
+    - id: stress_test
+      name: "Emotional Stress Test"
+      validate: emotional_stress_test
+      threshold: 8
+    - id: final_validation
+      name: "BLACK Validation"
+      validate: black_validation
+      threshold: 8
+
+# ═══════════════════════════════════════════
+# CONFIG
+# ═══════════════════════════════════════════
+config:
+  max_iterations_per_step: 3
+  on_threshold_fail: iterate  # iterate | skip | escalate
+  iteration_strategy: fix_and_revalidate
+  checkpoint_after_each_step: true
+  recovery_on_tool_failure: true  # Uses recovery-handler.ts

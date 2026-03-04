@@ -1,0 +1,101 @@
+# copy-surface-criteria.yaml
+# Surface Checker criteria for DR Copy production pipeline
+# Adapted from AIOS bob-surface-criteria.yaml for copywriting context
+# Part of P0: Surface Checker (AIOS Gap Closure)
+# Created: 2026-02-24
+
+version: "1.0.0"
+description: "Criteria defining when AI should surface decisions to human during copy production"
+
+# Evaluation order: most critical first (first-match-wins)
+evaluation_order:
+  - C005_SCOPE_CHANGE
+  - C004_ESCALATION
+  - C001_MUP_SELECTION
+  - C002_MUS_NAMING
+  - C003_FINAL_APPROVAL
+
+criteria:
+  C001_MUP_SELECTION:
+    description: "MUP selection requires human strategic decision"
+    condition: "phase == 'BRIEFING' AND deliverable IN mup_deliverables"
+    action: multiple_choice
+    priority: HIGH
+    blocking: false
+    bypass: false
+    message: "MUP Selection: {candidate_count} candidatos identificados. Escolha o MUP para '{offer_name}'."
+    context_fields:
+      - candidates
+      - consensus_result
+      - scores
+    auto_resolve_after_hours: 24
+    auto_resolve_choice: "highest_score"
+
+  C002_MUS_NAMING:
+    description: "MUS naming (Gimmick Name, Authority Hook) requires human approval"
+    condition: "phase == 'BRIEFING' AND deliverable IN mus_deliverables"
+    action: explicit_confirm
+    priority: HIGH
+    blocking: false
+    bypass: false
+    message: "MUS Naming: Gimmick Name '{gimmick_name}' e Authority Hook '{authority_hook}' para '{offer_name}'. Aprovar?"
+    context_fields:
+      - gimmick_name
+      - authority_hook
+      - origin_story
+      - rmbc_scores
+    auto_resolve_after_hours: 24
+    auto_resolve_choice: "approve"
+
+  C003_FINAL_APPROVAL:
+    description: "Final deliverable approval after black_validation passes"
+    condition: "phase == 'PRODUCTION' AND black_validation_passed == true"
+    action: go_nogo
+    priority: MEDIUM
+    blocking: false
+    bypass: false
+    message: "Entrega Final: '{deliverable_type}' para '{offer_name}' passou black_validation (score: {score}). Entregar?"
+    context_fields:
+      - deliverable_type
+      - score
+      - lentes_scores
+    auto_resolve_after_hours: 48
+    auto_resolve_choice: "go"
+
+  C004_ESCALATION:
+    description: "Auto-production loop failed 3+ times — needs human direction"
+    condition: "loop_failures >= 3"
+    action: help_request
+    priority: CRITICAL
+    blocking: true
+    bypass: false
+    message: "ESCALATION: '{deliverable_type}' para '{offer_name}' falhou {loop_failures}x no auto-production loop. Problema pode ser estrategico (briefing) e nao tatico (copy). Direcao necessaria."
+    context_fields:
+      - deliverable_type
+      - loop_failures
+      - failure_reasons
+      - last_scores
+
+  C005_SCOPE_CHANGE:
+    description: "Scope change detected — requires explicit confirmation"
+    condition: "scope_change_detected == true"
+    action: explicit_confirm
+    priority: CRITICAL
+    blocking: true
+    bypass: false
+    message: "SCOPE CHANGE: Mudanca detectada em '{change_type}' para '{offer_name}'. {change_description}. Confirmar?"
+    context_fields:
+      - change_type
+      - change_description
+      - impact_assessment
+
+# Lists referenced by conditions
+lists:
+  mup_deliverables:
+    - fase05-problema-vilao-mup
+    - mecanismo-unico
+    - mup-selection
+  mus_deliverables:
+    - fase06-solucao-mus
+    - mecanismo-unico
+    - mus-naming

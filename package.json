@@ -1,0 +1,46 @@
+{
+  "name": "@lucapimenta/copy-chief-black",
+  "version": "1.0.0",
+  "description": "Copy Chief BLACK — Direct Response Copywriting Framework for Claude Code",
+  "bin": {
+    "copy-chief-black": "./bin/cli.js"
+  },
+  "main": "lib/platform.js",
+  "scripts": {
+    "install-framework": "node bin/cli.js install",
+    "update-framework": "node bin/cli.js update",
+    "verify": "node bin/cli.js verify",
+    "doctor": "node bin/cli.js doctor",
+    "test": "node -e \"require('./lib/platform'); require('./lib/settings-builder'); require('./installer/transpile'); console.log('All modules OK')\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "files": [
+    "bin/",
+    "installer/",
+    "lib/",
+    "framework/",
+    "templates/"
+  ],
+  "keywords": [
+    "copywriting",
+    "direct-response",
+    "claude-code",
+    "hooks",
+    "framework"
+  ],
+  "author": "Luca Pimenta",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lckx777/copy-chief-black.git"
+  }
+}

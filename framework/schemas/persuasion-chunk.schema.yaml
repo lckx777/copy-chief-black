@@ -1,0 +1,150 @@
+# Persuasion Chunk Schema v1.0
+# Define unidades persuasivas com entrada/saida emocional
+# Principio: "Saida emocional do chunk N = entrada emocional do chunk N+1"
+# Ref: persuasion-chunking.md para framework completo
+# Ref: atomic-design-copy.md § Nivel 3 (Molecula = Unidade Persuasiva)
+# Criado: 2026-02-27
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "Persuasion Chunk"
+description: "Define uma unidade persuasiva com entrada e saida emocional"
+type: object
+
+required:
+  - id
+  - unit_name
+  - emotional_entry
+  - emotional_exit
+  - dre_level
+  - persuasive_function
+
+properties:
+  # Identificacao
+  id:
+    type: string
+    description: "ID unico da unidade persuasiva (ex: vsl-01-identificacao)"
+    pattern: "^[a-z0-9-]+$"
+
+  unit_name:
+    type: string
+    description: "Nome descritivo da unidade (ex: 'Identificacao + Agitacao')"
+
+  # Fluxo Emocional
+  emotional_entry:
+    type: string
+    description: "Estado emocional do leitor ao ENTRAR nesta unidade (ex: 'Curiosidade')"
+
+  emotional_exit:
+    type: string
+    description: "Estado emocional ALVO do leitor ao SAIR desta unidade (ex: 'Reconhecimento + Medo')"
+
+  dre_level:
+    type: number
+    description: "Nivel de escalada emocional da DRE (1-5). 1=Fisico Imediato, 5=Identidade"
+    minimum: 1
+    maximum: 5
+
+  # Funcao
+  persuasive_function:
+    type: string
+    description: "O que esta unidade FAZ na jornada persuasiva (ex: 'Capturar atencao, conectar com dor')"
+
+  # Contexto
+  deliverable_type:
+    type: string
+    description: "Tipo de deliverable a que esta unidade pertence"
+    enum: ["vsl", "landing-page", "creative", "email"]
+
+  position:
+    type: integer
+    description: "Posicao sequencial da unidade no deliverable (1-indexed)"
+    minimum: 1
+
+  # Requisitos de Conteudo
+  voc_tokens_required:
+    type: boolean
+    description: "Se esta unidade precisa de tokens VOC reais (ex: quotes, cenas sensoriais)"
+    default: true
+
+  word_count_target:
+    type: object
+    description: "Faixa de contagem de palavras alvo para esta unidade"
+    properties:
+      min:
+        type: integer
+        description: "Minimo de palavras"
+        minimum: 0
+      max:
+        type: integer
+        description: "Maximo de palavras"
+        minimum: 0
+
+  # Validacao
+  validation:
+    type: object
+    description: "Thresholds de validacao para esta unidade"
+    properties:
+      blind_critic_min:
+        type: number
+        description: "Score minimo do blind_critic (default 8)"
+        default: 8
+        minimum: 1
+        maximum: 10
+      est_min:
+        type: number
+        description: "Score minimo do emotional_stress_test genericidade (default 8)"
+        default: 8
+        minimum: 1
+        maximum: 10
+      flow_coherence_min:
+        type: number
+        description: "Score minimo de coerencia de fluxo emocional (default 8)"
+        default: 8
+        minimum: 1
+        maximum: 10
+
+  # Continuidade
+  previous_unit_exit:
+    type: string
+    description: "Saida emocional da unidade ANTERIOR (para validar continuidade). Null se e a primeira unidade."
+
+  # Mapeamento
+  rmbc_section:
+    type: string
+    description: "Secao RMBC correspondente (para VSL)"
+    enum: ["lead", "background", "ump", "ums", "product-buildup", "close", "faqs"]
+
+  lp_block:
+    type: integer
+    description: "Numero do bloco LP correspondente (1-14, para Landing Page)"
+    minimum: 1
+    maximum: 14
+
+# Metadata
+metadata:
+  version: "1.0.0"
+  sources:
+    - "persuasion-chunking.md"
+    - "atomic-design-copy.md § Nivel 3"
+    - "AIOS-UPGRADE-PLAN-v4.md § S4"
+
+# Exemplo de uso:
+#
+# id: vsl-01-identificacao
+# unit_name: "Identificacao + Agitacao"
+# emotional_entry: "Curiosidade"
+# emotional_exit: "Reconhecimento + Medo"
+# dre_level: 2
+# persuasive_function: "Capturar atencao, conectar com dor"
+# deliverable_type: vsl
+# position: 1
+# voc_tokens_required: true
+# word_count_target:
+#   min: 200
+#   max: 500
+# validation:
+#   blind_critic_min: 8
+#   est_min: 8
+#   flow_coherence_min: 8
+# previous_unit_exit: null
+# rmbc_section: lead

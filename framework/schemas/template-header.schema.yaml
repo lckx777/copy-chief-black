@@ -1,0 +1,151 @@
+# Template Header Schema v1.0
+# Define YAML frontmatter obrigatorio para todos os templates do ecossistema.
+# Enforcement: hooks/template-validator.ts (PostToolUse Write|Edit)
+# Ref: ecosystem.md § Template Enforcement v6.5
+# Criado: 2026-02-28 (Sprint S21.1)
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "Template Header"
+description: "YAML frontmatter schema para templates do Copy Chief BLACK"
+type: object
+
+required:
+  - template_name
+  - template_version
+  - template_type
+  - description
+
+properties:
+  template_name:
+    type: string
+    description: "Nome canonico do template (deve corresponder ao filename sem extensao)"
+    examples:
+      - "criativos-template"
+      - "landing-page-template"
+      - "voc-viral-extraction-template"
+      - "rmbc-ii-workflow"
+
+  template_version:
+    type: string
+    description: "Versao do template no formato semver ou date"
+    pattern: "^(v?\\d+\\.\\d+(\\.\\d+)?|\\d{4}-\\d{2}-\\d{2})$"
+    examples:
+      - "1.0.0"
+      - "v6.0"
+      - "2026-02-28"
+
+  template_type:
+    type: string
+    enum:
+      - production
+      - research
+      - methodology
+      - checklist
+      - agent-prompt
+      - story
+      - niche-pack
+    description: "Categoria do template. Determina regras de validacao e fase de uso."
+
+  phase:
+    type: string
+    enum:
+      - idle
+      - research
+      - briefing
+      - production
+      - delivered
+      - any
+    description: "Fase HELIX onde o template e aplicavel. 'any' para templates cross-phase."
+    default: "any"
+
+  description:
+    type: string
+    description: "Descricao curta (1-2 frases) do proposito do template"
+    maxLength: 200
+
+  required_inputs:
+    type: array
+    items:
+      type: string
+    description: "Lista de inputs obrigatorios para usar o template (ex: synthesis.md, mecanismo-unico.yaml)"
+    default: []
+    examples:
+      - ["synthesis.md", "mecanismo-unico.yaml", "helix-complete.md"]
+      - ["voc/summary.md"]
+
+  output_format:
+    type: string
+    description: "Formato esperado do output gerado a partir deste template"
+    examples:
+      - "markdown"
+      - "yaml"
+      - "markdown com YAML frontmatter"
+
+  deliverable_type:
+    type: string
+    enum:
+      - vsl
+      - landing-page
+      - criativo
+      - email
+      - quiz
+      - checkout
+      - upsell
+      - downsell
+      - thankyou
+      - voc-extraction
+      - ads-spy
+      - trends-analysis
+      - briefing
+      - review
+      - other
+    description: "Tipo de deliverable que este template produz (se aplicavel)"
+
+  validation_tools:
+    type: array
+    items:
+      type: string
+    description: "Ferramentas MCP obrigatorias para validar output deste template"
+    examples:
+      - ["blind_critic", "emotional_stress_test", "black_validation"]
+      - ["validate_gate"]
+
+  acceptance_threshold:
+    type: object
+    description: "Thresholds minimos para aprovacao do output"
+    properties:
+      blind_critic:
+        type: number
+        minimum: 0
+        maximum: 10
+        description: "Score minimo blind_critic"
+      emotional_stress_test:
+        type: number
+        minimum: 0
+        maximum: 10
+        description: "Score minimo EST genericidade"
+      black_validation:
+        type: number
+        minimum: 0
+        maximum: 10
+        description: "Score minimo black_validation"
+
+  related_templates:
+    type: array
+    items:
+      type: string
+    description: "Templates relacionados (complementares ou dependentes)"
+    examples:
+      - ["attribution-header", "copy-validation-checklist"]
+
+# Meta
+_meta:
+  schema_version: "1.0.0"
+  created_by: "S21.1 (Template System Upgrade)"
+  changelog:
+    - version: "1.0.0"
+      date: "2026-02-28"
+      changes:
+        - "Initial creation from AIOS-EXPANSION-PLAN S21.1"
+        - "Defines frontmatter fields for all ecosystem templates"
+        - "Supports 7 template types and 15 deliverable types"

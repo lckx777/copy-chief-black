@@ -1,0 +1,252 @@
+# Workflow Patterns Definition — Copy Chief BLACK
+# Adapted from: aios-core/.aios-core/data/workflow-patterns.yaml
+#
+# Defines HELIX pipeline workflow sequences for context detection
+# and next-action recommendation.
+#
+# Version: 1.0
+# Created: 2026-03-02
+
+workflows:
+  # HELIX Pipeline — Complete offer lifecycle
+  helix_pipeline:
+    description: "Complete offer lifecycle from research to delivery"
+    agent_sequence:
+      - researcher   # VOC + competitors
+      - briefer      # HELIX 10 phases
+      - producer     # VSL + LP + Creatives + Emails
+      - critic       # Quality gates
+    key_commands:
+      - audience-research-agent
+      - voc-research-agent
+      - helix-system-agent
+      - production-agent
+      - landing-page-agent
+      - leads-agent
+      - criativos-agent
+      - validate
+      - pre-delivery
+    trigger_threshold: 2
+    typical_duration: "5-15 days"
+    success_indicators:
+      - "All deliverables produced"
+      - "black_validation >= 8"
+      - "Human approved"
+    transitions:
+      research_started:
+        trigger: "audience-research-agent started"
+        confidence: 0.90
+        greeting_message: "Research iniciada! Coletando VOC e concorrentes."
+        next_steps:
+          - command: voc-research-agent
+            args_template: "${offer_path}"
+            description: "Extrair VOC de YouTube, Reddit, Reclame Aqui"
+            priority: 1
+          - command: audience-research-agent
+            args_template: "${offer_path}"
+            description: "Pesquisa profunda de publico-alvo"
+            priority: 2
+      research_complete:
+        trigger: "validate research"
+        confidence: 0.90
+        greeting_message: "Research completa! Pronto para briefing HELIX."
+        next_steps:
+          - command: helix-system-agent
+            args_template: "${offer_path}"
+            description: "Iniciar briefing HELIX (10 fases)"
+            priority: 1
+          - command: validate
+            args_template: "research"
+            description: "Validar gate de research"
+            priority: 2
+      briefing_complete:
+        trigger: "validate briefing"
+        confidence: 0.85
+        greeting_message: "Briefing HELIX completo! Pronto para producao."
+        next_steps:
+          - command: production-agent
+            args_template: "${offer_path}"
+            description: "Iniciar producao de deliverables"
+            priority: 1
+          - command: validate
+            args_template: "briefing"
+            description: "Validar gate de briefing"
+            priority: 2
+      production_complete:
+        trigger: "validate production"
+        confidence: 0.80
+        greeting_message: "Producao completa! Pronto para review final."
+        next_steps:
+          - command: pre-delivery
+            args_template: "${offer_path}"
+            description: "Gate final de qualidade"
+            priority: 1
+          - command: validate
+            args_template: "production"
+            description: "Validar gate de producao"
+            priority: 2
+
+  # Research Phase Detail
+  research_workflow:
+    description: "Deep research: VOC extraction, competitor analysis, avatar profiling"
+    agent_sequence:
+      - researcher   # VOC
+      - miner        # Competitors
+      - researcher   # Synthesis
+    key_commands:
+      - audience-research-agent
+      - voc-research-agent
+      - helix-parallel
+      - squad-research
+    trigger_threshold: 1
+    transitions:
+      voc_started:
+        trigger: "voc-research-agent started"
+        confidence: 0.90
+        next_steps:
+          - command: audience-research-agent
+            description: "Perfil completo do avatar"
+            priority: 1
+          - command: helix-parallel
+            description: "Executar research em paralelo"
+            priority: 2
+      voc_complete:
+        trigger: "voc-research-agent completed"
+        confidence: 0.85
+        next_steps:
+          - command: validate
+            args_template: "research"
+            description: "Validar gate de research"
+            priority: 1
+
+  # Briefing Phase Detail
+  briefing_workflow:
+    description: "HELIX System 10-phase strategic briefing"
+    agent_sequence:
+      - briefer      # All 10 phases
+      - critic       # MUP/MUS validation
+    key_commands:
+      - helix-system-agent
+      - copy-critic
+      - conclave
+    trigger_threshold: 1
+    transitions:
+      helix_started:
+        trigger: "helix-system-agent started"
+        confidence: 0.90
+        next_steps:
+          - command: helix-system-agent
+            description: "Continuar fases HELIX"
+            priority: 1
+      mup_defined:
+        trigger: "MUP defined"
+        confidence: 0.85
+        next_steps:
+          - command: copy-critic
+            description: "Stress-test do MUP"
+            priority: 1
+          - command: conclave
+            description: "Validacao multi-persona do MUP"
+            priority: 2
+      helix_complete:
+        trigger: "validate briefing"
+        confidence: 0.90
+        next_steps:
+          - command: validate
+            args_template: "briefing"
+            description: "Passar gate de briefing"
+            priority: 1
+
+  # Production Phase Detail
+  production_workflow:
+    description: "Copy production: VSL, Landing Page, Creatives, Emails"
+    agent_sequence:
+      - vsl_producer     # VSL
+      - lp_producer      # Landing Page
+      - creative_producer # Creatives
+      - email_producer   # Emails
+      - critic           # Validation per deliverable
+    key_commands:
+      - production-agent
+      - landing-page-agent
+      - leads-agent
+      - criativos-agent
+      - produce-offer
+    trigger_threshold: 1
+    transitions:
+      production_started:
+        trigger: "production-agent started"
+        confidence: 0.90
+        next_steps:
+          - command: produce-offer
+            description: "Produzir todos os deliverables em paralelo"
+            priority: 1
+          - command: leads-agent
+            description: "Criar lead da VSL"
+            priority: 2
+      vsl_complete:
+        trigger: "VSL complete"
+        confidence: 0.85
+        next_steps:
+          - command: landing-page-agent
+            description: "Criar landing page"
+            priority: 1
+          - command: criativos-agent
+            description: "Criar criativos"
+            priority: 2
+      all_produced:
+        trigger: "validate production"
+        confidence: 0.80
+        next_steps:
+          - command: validate
+            args_template: "production"
+            description: "Gate de producao"
+            priority: 1
+          - command: pre-delivery
+            description: "Review final pre-entrega"
+            priority: 2
+
+  # Review Phase Detail
+  review_workflow:
+    description: "Quality review and final delivery"
+    agent_sequence:
+      - critic       # Quality validation
+      - chief        # Final routing
+    key_commands:
+      - validate
+      - pre-delivery
+      - review-all
+      - validate-batch
+    trigger_threshold: 1
+    transitions:
+      review_started:
+        trigger: "validate production"
+        confidence: 0.90
+        next_steps:
+          - command: review-all
+            description: "Review completo com multi-model"
+            priority: 1
+          - command: validate-batch
+            description: "Validar todos os blocos em paralelo"
+            priority: 2
+      review_complete:
+        trigger: "pre-delivery completed"
+        confidence: 0.95
+        next_steps:
+          - command: status
+            description: "Verificar status final"
+            priority: 1
+
+# State Integration
+state_integration:
+  description: "File-based state persistence for HELIX pipeline"
+  state_file_location: "{offer_path}/.aios/{instance-id}-state.yaml"
+  manager_module: "~/.claude/hooks/lib/aios/workflow-state-manager.ts"
+  behavior:
+    detection_priority:
+      - state_file
+      - command_history
+    session_continuity:
+      - "State persists between sessions via YAML"
+      - "Crash detection after 30min gap"
+      - "Resume with: /resume {offer}"

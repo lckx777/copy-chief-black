@@ -1,0 +1,29 @@
+# HELIX — 10-Phase Briefing System
+
+## Phases
+1. **Cenario** — Market context, trends, opportunities
+2. **Avatar** — Demographics, psychographics, day-in-life
+3. **Nivel de Consciencia** — Unaware → Most Aware spectrum
+4. **DRE** — Dominant Resident Emotion identification
+5. **Problema + Vilao + MUP** — Core problem, villain, Mechanism of Unique Persuasion
+6. **Solucao + MUS** — Solution, Mechanism of Unique Solution
+7. **One Belief** — Single belief that must be installed
+8. **Promessa Central** — Core promise that drives the offer
+9. **Prova** — Evidence stack (scientific, social, authority)
+10. **Oferta** — Pricing, guarantee, bonuses, urgency
+
+## Rules
+- Each phase MUST be completed before advancing
+- Phases 5-6 are HUMAN GATES (require approval)
+- get_phase_context mandatory at start of each phase
+- consensus (zen) mandatory for TOP 3 MUP candidates
+- Mecanismo Unico must be VALIDATED before Phase 7+
+
+## MUP/MUS Validation Sequence
+1. consensus → Select MUP among candidates
+2. blind_critic → Validate MUP Statement (>= 8)
+3. Define MUS based on validated MUP
+4. blind_critic → Validate MUS Statement (>= 8)
+5. emotional_stress_test → Validate MUP+MUS together (>= 8)
+6. voc_search → Confirm language aligned with avatar
+7. HUMAN → Final approval (mandatory)

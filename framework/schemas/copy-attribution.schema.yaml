@@ -1,0 +1,134 @@
+# Copy Attribution Schema v1.0
+# Todo deliverable em production/ DEVE ter este header como YAML frontmatter.
+# Ref: AIOS-UPGRADE-PLAN-v4.md § S1.1
+# Criado: 2026-02-27
+
+attribution:
+  type: object
+  required:
+    - produced_by
+    - created_at
+    - offer
+  properties:
+    produced_by:
+      type: string
+      description: "Persona handle que produziu (@producer, @creative, @lp, @vsl)"
+      examples: ["@producer", "@creative", "@lp", "@vsl"]
+
+    expert_archetype:
+      type: string
+      description: "Expert archetype usado na producao (nome do expert dos 24)"
+      examples: ["Makepeace", "Halbert", "Schwartz", "Bencivenga"]
+
+    validated_by:
+      type: string
+      description: "Persona handle que validou (@critic)"
+      examples: ["@critic"]
+
+    offer:
+      type: string
+      description: "Nome da oferta"
+      examples: ["florayla", "neuvelys", "quimica-amarracao"]
+
+    created_at:
+      type: string
+      format: date
+      description: "Data de criacao (YYYY-MM-DD)"
+
+    updated_at:
+      type: string
+      format: date
+      description: "Data da ultima atualizacao"
+
+    context_tokens:
+      type: number
+      description: "Tokens aproximados consumidos na producao"
+
+    confidence:
+      type: number
+      minimum: 0
+      maximum: 1
+      description: "Auto-avaliacao de confianca (0-1)"
+
+    voc_sources:
+      type: array
+      items:
+        type: string
+      description: "Paths dos arquivos VOC usados como fonte"
+      examples:
+        - "research/voc/summary.md"
+        - "research/voc/processed/youtube-extraction.md"
+
+    briefing_phases:
+      type: array
+      items:
+        type: string
+      description: "Fases HELIX referenciadas na producao"
+      examples:
+        - "fase-01"
+        - "fase-05"
+        - "fase-06"
+
+    scores:
+      type: object
+      properties:
+        blind_critic:
+          type: number
+          description: "Score do blind_critic (0-10)"
+        emotional_stress_test:
+          type: number
+          description: "Score do emotional_stress_test genericidade (0-10)"
+        black_validation:
+          type: number
+          description: "Score do black_validation (0-10)"
+        layered_review:
+          type: string
+          enum: ["PASS", "FAIL", "PENDING"]
+          description: "Resultado do layered_review (3 camadas)"
+
+    iteration:
+      type: number
+      description: "Numero da iteracao (constraint progressivo: 1-4)"
+      default: 1
+
+    status:
+      type: string
+      enum: ["DRAFT", "VALIDATED", "APPROVED", "DELIVERED"]
+      description: "Estado do deliverable"
+      default: "DRAFT"
+
+    fidelity:
+      type: object
+      description: "APEX Fidelity Score — mede fidelidade ao expert archetype (Sprint S7)"
+      properties:
+        expert:
+          type: string
+          description: "Nome do expert avaliado"
+          examples: ["Makepeace", "Halbert", "Schwartz"]
+        apex_score:
+          type: number
+          minimum: 0
+          maximum: 10
+          description: "Score total APEX (media das 4 dimensoes)"
+        breakdown:
+          type: object
+          properties:
+            adherence:
+              type: number
+              description: "A — Segue principios core do expert (1-10)"
+            precision:
+              type: number
+              description: "P — Usa tecnicas assinatura do expert (1-10)"
+            expression:
+              type: number
+              description: "E — Tom, ritmo, vocabulario do expert (1-10)"
+            execution:
+              type: number
+              description: "X — Funciona como DR copy (1-10)"
+        strong_dimension:
+          type: string
+          enum: ["A", "P", "E", "X"]
+          description: "Dimensao mais forte do expert"
+        threshold_met:
+          type: boolean
+          description: "Expert-specific threshold atingido"

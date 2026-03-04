@@ -1,0 +1,403 @@
+# Copy Squad Voice DNA - Manifest v2.0
+# 25 expert copywriters organized by tier with Copy Chief orchestrator
+# Each expert injects ~200-300 tokens of voice patterns
+
+version: "2.0"
+total_experts: 25
+
+# =============================================================================
+# TIER SYSTEM
+# =============================================================================
+
+tiers:
+  T0_DIAGNOSIS:
+    description: "Market analysis and strategic mapping BEFORE writing"
+    experts: [schwartz, collier, ogilvy, cialdini]
+  T1_STRATEGIC:
+    description: "Big idea, mechanism, positioning, campaign architecture"
+    experts: [brown, bencivenga, reeves, makepeace, abraham, hormozi]
+  T2_EXECUTION:
+    description: "Writing the copy itself: hooks, body, bullets, close"
+    experts: [halbert, sugarman, kennedy, caples, carlton, chaperon, kern, agora, sabri, brunson]
+  T3_SPECIALIZED:
+    description: "Specialized formats: launches, cohorts, cross-promos, social"
+    experts: [ry_schwartz, powers, vaynerchuk, marcondes]
+  AUDIT:
+    description: "Final validation, testing frameworks, accountability"
+    experts: [hopkins]
+
+# =============================================================================
+# COPY CHIEF DECISION TREE
+# =============================================================================
+
+copy_chief:
+  file: "copy-chief.md"
+  role: "Orchestrator -- auto-selects expert(s) per task"
+  decision_tree:
+    headline_big_idea: [schwartz, brown]
+    bullets_hooks: [halbert, caples]
+    email_sequence: [chaperon, carlton]
+    vsl_body: [sugarman, kennedy]
+    unique_mechanism: [brown]
+    criativo_ad: [kern, caples, halbert, sabri]
+    launch_cohort: [ry_schwartz, brunson]
+    offer_stack: [brown, kennedy, hormozi]
+    lead_generation: [halbert, collier]
+    story_narrative: [sugarman, chaperon, brunson]
+    guarantee_close: [kennedy]
+    usp_positioning: [reeves, bencivenga]
+    research_testing: [ogilvy, hopkins]
+    review_final: [hopkins]
+    influence_audit: [cialdini]
+    jv_cross_promo: [abraham, ry_schwartz]
+    social_content: [vaynerchuk, kern]
+    financial_promo: [agora, makepeace]
+    grand_slam_offer: [hormozi, brown]
+    webinar_script: [brunson, kern]
+    funnel_architecture: [brunson, ry_schwartz]
+    high_volume_testing: [sabri, caples, hopkins]
+    marketing_juridico: [marcondes]
+    authority_building: [marcondes, vaynerchuk]
+    ia_content: [marcondes]
+    launch_funnel_juridico: [marcondes, brunson, ry_schwartz]
+
+# =============================================================================
+# EXPERT PROFILES (24 total)
+# =============================================================================
+
+experts:
+  # --- T0: DIAGNOSIS ---
+  schwartz:
+    name: "Eugene Schwartz"
+    sections: [headline, awareness_calibration, sophistication]
+    voice: "Mass desire channeling, 5 awareness levels, 5 sophistication levels"
+    inject_tokens: 300
+    tier: T0_DIAGNOSIS
+
+  collier:
+    name: "Robert Collier"
+    sections: [lead, reader_entry, empathy_bridge, letter_opening]
+    voice: "Enter the conversation already in their mind, letter book, desire matching"
+    inject_tokens: 250
+    tier: T0_DIAGNOSIS
+
+  ogilvy:
+    name: "David Ogilvy"
+    sections: [research_brief, brand_response, long_headline, print_ad]
+    voice: "Research-driven, long headlines, facts-first, brand + direct response hybrid"
+    inject_tokens: 250
+    tier: T0_DIAGNOSIS
+
+  # --- T1: STRATEGIC ---
+  brown:
+    name: "Todd Brown"
+    sections: [mecanismo, big_idea, offer_stack, paradigm_shift]
+    voice: "E5 Method, unique mechanism, new opportunity, big marketing idea"
+    inject_tokens: 300
+    tier: T1_STRATEGIC
+
+  bencivenga:
+    name: "Gary Bencivenga"
+    sections: [persuasion_core, implicit_promise, proof_structure, belief_shift]
+    voice: "Persuasion equations, implicit promises, conviction devices, world-class control"
+    inject_tokens: 250
+    tier: T1_STRATEGIC
+
+  reeves:
+    name: "Rosser Reeves"
+    sections: [usp, single_proposition, repetition_strategy]
+    voice: "Unique Selling Proposition, Reality in Advertising, one claim hammered relentlessly"
+    inject_tokens: 200
+    tier: T1_STRATEGIC
+
+  makepeace:
+    name: "Clayton Makepeace"
+    sections: [power_lead, emotional_proof, financial_copy, dr_power_copy]
+    voice: "Emotion-meets-proof, power leads, financial direct response, raw energy"
+    inject_tokens: 250
+    tier: T1_STRATEGIC
+
+  # --- T2: EXECUTION ---
+  halbert:
+    name: "Gary Halbert"
+    sections: [bullets, lead, hook, subject_line]
+    voice: "A-pile energy, specificity, rhythm, tabloid headlines"
+    inject_tokens: 300
+    tier: T2_EXECUTION
+
+  sugarman:
+    name: "Joe Sugarman"
+    sections: [body_copy, story, flow, transitions]
+    voice: "30 Triggers, slippery slope, curiosity seeds, emotional involvement"
+    inject_tokens: 300
+    tier: T2_EXECUTION
+
+  kennedy:
+    name: "Dan Kennedy"
+    sections: [urgency, cta, scarcity, guarantee, close]
+    voice: "No BS, deadline stacking, reason-why, magnetic marketing"
+    inject_tokens: 300
+    tier: T2_EXECUTION
+
+  caples:
+    name: "John Caples"
+    sections: [headline_testing, ad_copy, split_test, proven_headlines]
+    voice: "Tested Advertising Methods, headline testing, A/B pioneer, measurable results"
+    inject_tokens: 250
+    tier: T2_EXECUTION
+
+  carlton:
+    name: "John Carlton"
+    sections: [freelance_copy, street_smart, sales_letter, personality_voice]
+    voice: "Simple Writing System, kick-ass freelance, street-smart, raw honesty"
+    inject_tokens: 250
+    tier: T2_EXECUTION
+
+  chaperon:
+    name: "Andre Chaperon"
+    sections: [email_sequence, soap_opera, autoresponder, nurture]
+    voice: "Email storytelling, soap opera sequences, autoresponder madness, narrative arcs"
+    inject_tokens: 250
+    tier: T2_EXECUTION
+
+  kern:
+    name: "Frank Kern"
+    sections: [launch_copy, personality_driven, conversational_selling, webinar]
+    voice: "Launch sequences, personality-driven, conversational selling, tribe building"
+    inject_tokens: 250
+    tier: T2_EXECUTION
+
+  # --- T3: SPECIALIZED ---
+  ry_schwartz:
+    name: "Ryan Schwartz"
+    sections: [cohort_launch, agora_model, cross_promotion, backend_sequence]
+    voice: "Cohort launches, agora model, cross-promotions, backend monetization"
+    inject_tokens: 200
+    tier: T3_SPECIALIZED
+
+  powers:
+    name: "John E. Powers"
+    sections: [honest_ad, radical_candor, plain_speak, retail_copy]
+    voice: "Honest advertising pioneer, radical candor, plain speak, anti-hype"
+    inject_tokens: 200
+    tier: T3_SPECIALIZED
+
+  # --- T0 ADDITIONAL ---
+  cialdini:
+    name: "Robert Cialdini"
+    sections: [influence_audit, social_proof, reciprocity, commitment_consistency]
+    voice: "7 principles of influence, social proof architecture, ethical persuasion science"
+    inject_tokens: 200
+    tier: T0_DIAGNOSIS
+
+  # --- T1 ADDITIONAL ---
+  abraham:
+    name: "Jay Abraham"
+    sections: [strategy_multiplier, jv_architecture, preeminence, risk_reversal_advanced]
+    voice: "Strategy of Preeminence, 3 multipliers, geometric growth, JV master"
+    inject_tokens: 200
+    tier: T1_STRATEGIC
+
+  hormozi:
+    name: "Alex Hormozi"
+    sections: [grand_slam_offer, value_equation, pricing_psychology, content_selling]
+    voice: "$100M Offers, Value Equation, Grand Slam Offers, premium pricing"
+    inject_tokens: 200
+    tier: T1_STRATEGIC
+
+  # --- T2 ADDITIONAL ---
+  agora:
+    name: "Agora Financial Model"
+    sections: [financial_promo, magalog, advertorial, fear_greed_copy]
+    voice: "Financial promotions, magalogs, fear-greed oscillation, advertorial"
+    inject_tokens: 200
+    tier: T2_EXECUTION
+
+  sabri:
+    name: "Sabri Suby"
+    sections: [ad_creative, funnel_copy, high_volume_testing, scaling_copy]
+    voice: "Sell Like Crazy, HPDA formula, Godfather Offer, volume testing"
+    inject_tokens: 200
+    tier: T2_EXECUTION
+
+  brunson:
+    name: "Russell Brunson"
+    sections: [funnel_architecture, attractive_character, epiphany_bridge, webinar_script]
+    voice: "DotCom Secrets, Epiphany Bridge, Attractive Character, funnel hacking"
+    inject_tokens: 200
+    tier: T2_EXECUTION
+
+  # --- T3 ADDITIONAL ---
+  vaynerchuk:
+    name: "Gary Vaynerchuk"
+    sections: [social_native_copy, platform_adaptation, content_volume, brand_voice]
+    voice: "Jab Jab Jab Right Hook, platform-native, attention arbitrage, social-first"
+    inject_tokens: 200
+    tier: T3_SPECIALIZED
+
+  # --- T3 SPECIALIZED (client-experts) ---
+  marcondes:
+    name: "Leonardo Marcondes Madureira"
+    sections: [marketing_juridico, authority_building, ia_content, launch_funnel, social_selling, case_presentation]
+    voice: "Marketing juridico de alta performance, Metodo AIMJ, autoridade digital com IA, pragmatismo anti-guru"
+    inject_tokens: 300
+    tier: T3_SPECIALIZED
+
+  # --- AUDIT ---
+  hopkins:
+    name: "Claude Hopkins"
+    sections: [audit, testing_framework, metrics, accountability, scientific_review]
+    voice: "Scientific Advertising, testing obsession, measurable results, coupon accountability"
+    inject_tokens: 250
+    tier: AUDIT
+
+# =============================================================================
+# SECTION TO EXPERT MAPPING (Primary Assignment)
+# =============================================================================
+
+section_to_expert:
+  # Diagnosis
+  headline: schwartz
+  awareness_calibration: schwartz
+  sophistication: schwartz
+  lead: halbert
+  reader_entry: collier
+  empathy_bridge: collier
+  letter_opening: collier
+  research_brief: ogilvy
+  brand_response: ogilvy
+  long_headline: ogilvy
+  print_ad: ogilvy
+
+  # Strategic
+  mecanismo: brown
+  big_idea: brown
+  offer_stack: brown
+  paradigm_shift: brown
+  persuasion_core: bencivenga
+  implicit_promise: bencivenga
+  proof_structure: bencivenga
+  belief_shift: bencivenga
+  usp: reeves
+  single_proposition: reeves
+  repetition_strategy: reeves
+  power_lead: makepeace
+  emotional_proof: makepeace
+  financial_copy: makepeace
+  dr_power_copy: makepeace
+
+  # Execution
+  bullets: halbert
+  hook: halbert
+  subject_line: halbert
+  body_copy: sugarman
+  story: sugarman
+  flow: sugarman
+  transitions: sugarman
+  urgency: kennedy
+  cta: kennedy
+  scarcity: kennedy
+  guarantee: kennedy
+  close: kennedy
+  headline_testing: caples
+  ad_copy: caples
+  split_test: caples
+  proven_headlines: caples
+  freelance_copy: carlton
+  street_smart: carlton
+  sales_letter: carlton
+  personality_voice: carlton
+  email_sequence: chaperon
+  soap_opera: chaperon
+  autoresponder: chaperon
+  nurture: chaperon
+  launch_copy: kern
+  personality_driven: kern
+  conversational_selling: kern
+  webinar: kern
+
+  # Specialized
+  cohort_launch: ry_schwartz
+  agora_model: ry_schwartz
+  cross_promotion: ry_schwartz
+  backend_sequence: ry_schwartz
+  honest_ad: powers
+  radical_candor: powers
+  plain_speak: powers
+  retail_copy: powers
+
+  # Diagnosis (additional)
+  influence_audit: cialdini
+  social_proof: cialdini
+  reciprocity: cialdini
+  commitment_consistency: cialdini
+
+  # Strategic (additional)
+  strategy_multiplier: abraham
+  jv_architecture: abraham
+  preeminence: abraham
+  risk_reversal_advanced: abraham
+  grand_slam_offer: hormozi
+  value_equation: hormozi
+  pricing_psychology: hormozi
+  content_selling: hormozi
+
+  # Execution (additional)
+  financial_promo: agora
+  magalog: agora
+  advertorial: agora
+  fear_greed_copy: agora
+  ad_creative: sabri
+  funnel_copy: sabri
+  high_volume_testing: sabri
+  scaling_copy: sabri
+  funnel_architecture: brunson
+  attractive_character: brunson
+  epiphany_bridge: brunson
+  webinar_script: brunson
+
+  # Specialized (additional)
+  social_native_copy: vaynerchuk
+  platform_adaptation: vaynerchuk
+  content_volume: vaynerchuk
+  brand_voice: vaynerchuk
+
+  # Specialized (marcondes)
+  marketing_juridico: marcondes
+  authority_building: marcondes
+  ia_content: marcondes
+  social_selling: marcondes
+  case_presentation: marcondes
+  launch_funnel_juridico: marcondes
+
+  # Audit
+  audit: hopkins
+  testing_framework: hopkins
+  metrics: hopkins
+  accountability: hopkins
+  scientific_review: hopkins
+
+# =============================================================================
+# MULTI-EXPERT COMBOS (For complex deliverables)
+# =============================================================================
+
+combos:
+  vsl_full:
+    experts: [schwartz, brown, sugarman, halbert, kennedy]
+    flow: "Schwartz(headline) > Brown(mechanism) > Sugarman(body) > Halbert(bullets) > Kennedy(close)"
+
+  landing_page:
+    experts: [schwartz, collier, brown, halbert, kennedy]
+    flow: "Schwartz(headline) > Collier(entry) > Brown(mechanism) > Halbert(bullets) > Kennedy(close)"
+
+  email_sequence:
+    experts: [chaperon, sugarman, halbert, kennedy]
+    flow: "Chaperon(arc) > Sugarman(flow) > Halbert(subject+hooks) > Kennedy(close)"
+
+  criativo_ad:
+    experts: [caples, halbert, kern]
+    flow: "Caples(headline+test) > Halbert(hook+specificity) > Kern(personality)"
+
+  launch_funnel:
+    experts: [ry_schwartz, kern, chaperon, kennedy]
+    flow: "RySchwartz(architecture) > Kern(personality) > Chaperon(emails) > Kennedy(close)"

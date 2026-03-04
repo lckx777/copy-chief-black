@@ -1,0 +1,751 @@
+# =====================================================================
+# COPY CHIEF BLACK — System Manifest v1.0
+# Level 4: Arquiteto Autonomo
+# =====================================================================
+#
+# This is the SINGLE SOURCE OF TRUTH for the entire copywriting
+# orchestration system. All agents, workflows, quality gates,
+# feedback loops, self-healing policies, and observability
+# are defined here.
+#
+# Other config files (synapse-manifest.yaml, helix-pipeline.yaml,
+# registry.yaml) are DERIVED from or SUBORDINATE to this manifest.
+# When in conflict, THIS FILE wins.
+#
+# Created: 2026-02-26
+# =====================================================================
+
+system:
+  name: "Copy Chief BLACK"
+  version: "5.0.0"
+  level: 4  # 1=Perguntador, 2=Delegador, 3=Orquestrador, 4=Arquiteto Autonomo
+  description: "Sistema autonomo de orquestracao de copy com feedback loops e cross-offer intelligence"
+  ecosystem_dir: "~/copywriting-ecosystem"
+  constitution: "~/.claude/constitution.md"
+  synapse: "~/.claude/synapse-manifest.yaml"
+
+# ─── AGENTS (Squad) ──────────────────────────────────────────────────
+#
+# Each agent maps to a skill (directory under ~/.claude/skills/) or
+# a script. Triggers are keywords that auto-invoke the agent when
+# found in user prompts. "internal: true" agents are called by
+# other agents, never directly by the user.
+#
+# IMPORTANT: For ANY task requiring MCP tools (Apify, Firecrawl,
+# Playwright, fb_ad_library, copywriting MCP, zen), the subagent
+# MUST be "general-purpose". Custom types do NOT inherit MCPs.
+# ─────────────────────────────────────────────────────────────────────
+
+agents:
+  # ── Core Agents (user-facing) ──────────────────────────────────────
+
+  - id: audience-research-agent
+    role: "Pesquisa de publico, VOC extraction, competitor analysis"
+    triggers: ["pesquisa", "VOC", "publico", "avatar", "dores", "quotes"]
+    phase: research
+    skill_path: "~/.claude/skills/audience-research-agent"
+    subagent_type: general-purpose  # Needs Apify, Firecrawl, Playwright, fb_ad_library
+
+  - id: helix-system-agent
+    role: "Briefing estrategico HELIX (10 fases)"
+    triggers: ["helix", "briefing", "fases", "MUP", "MUS", "mecanismo"]
+    phase: briefing
+    skill_path: "~/.claude/skills/helix-system-agent"
+    subagent_type: general-purpose  # Needs copywriting MCP (get_phase_context, consensus)
+
+  - id: production-agent
+    role: "Producao de copy (VSL, LP, criativos, emails)"
+    triggers: ["produzir copy", "criar VSL", "criar LP", "criativos"]
+    phase: production
+    skill_path: "~/.claude/skills/production-agent"
+    subagent_type: general-purpose  # Needs copywriting MCP (write_chapter, blind_critic, etc)
+
+  - id: copy-critic
+    role: "Validacao adversarial de copy (STAND framework)"
+    triggers: ["validar", "criticar", "stress-test", "STAND", "revisar"]
+    phase: review
+    skill_path: "~/.claude/skills/copy-critic"
+    subagent_type: general-purpose  # Needs copywriting MCP (black_validation, blind_critic)
+
+  - id: ecosystem-guide
+    role: "Navegacao, onboarding e troubleshooting"
+    triggers: ["nova oferta", "qual fase", "onde parei", "troubleshooting"]
+    phase: any
+    skill_path: "~/.claude/skills/ecosystem-guide"
+
+  # ── Internal Agents (called by production-agent, never directly) ───
+
+  - id: landing-page-agent
+    role: "Landing page de alta conversao (14 blocos)"
+    triggers: ["LP", "landing page", "pagina de vendas"]
+    phase: production
+    skill_path: "~/.claude/skills/landing-page-agent"
+    internal: true  # Called by production-agent
+
+  - id: criativos-agent
+    role: "Criativos de Direct Response (video scripts, estaticos, carrossel)"
+    triggers: ["criativo", "anuncio", "ad", "hook"]
+    phase: production
+    skill_path: "~/.claude/skills/criativos-agent"
+    internal: true
+
+  - id: leads-agent
+    role: "Leads de alta retencao para VSL"
+    triggers: ["lead", "abertura de VSL", "retencao"]
+    phase: production
+    skill_path: "~/.claude/skills/leads-agent"
+    internal: true
+
+  - id: voc-research-agent
+    role: "Extracao de VOC por plataforma (subagent de audience-research-agent)"
+    triggers: []  # Never triggered directly
+    phase: research
+    skill_path: "~/.claude/skills/voc-research-agent"
+    internal: true
+
+  # ── Autonomous Agents (Level 4) ────────────────────────────────────
+
+  - id: decision-engine
+    role: "Priorizacao autonoma de ofertas (ROI x effort x urgencia)"
+    triggers: ["next action", "o que fazer", "prioridade"]
+    phase: any
+    script_path: "~/.claude/scripts/decision-engine.ts"
+
+# ─── WORKFLOWS ────────────────────────────────────────────────────────
+#
+# The canonical offer lifecycle. Each step has an agent, a gate to pass,
+# deliverables to produce, and tools that MUST (required) or SHOULD
+# (recommended) be used. Dependencies are explicit.
+#
+# Ref: ~/.claude/workflows/helix-pipeline.yaml for detailed sub-phases.
+# ─────────────────────────────────────────────────────────────────────
+
+workflows:
+  offer_lifecycle:
+    description: "Ciclo completo de uma oferta: research -> briefing -> production -> delivery"
+    ref: "~/.claude/workflows/helix-pipeline.yaml"
+
+    steps:
+      # ── STEP 1: RESEARCH ─────────────────────────────────────────────
+      - id: research
+        agent: audience-research-agent
+        gate: research
+        deliverables:
+          - research/voc/summary.md
+          - research/voc/trends-analysis.md
+          - research/competitors/summary.md
+          - research/competitors/processed/ads-library-spy.md
+          - research/mechanism/summary.md
+          - research/avatar/summary.md
+          - research/synthesis.md
+        tools_required:
+          - firecrawl_agent        # Coleta autonoma de dados (preferencial)
+          - voc_search             # Validar hipoteses com VOC database
+        tools_recommended:
+          - fb_ad_library.get_meta_ads      # Descobrir concorrentes
+          - fb_ad_library.analyze_ad_video  # Analise de videos TOP 5
+          - firecrawl_scrape               # Fallback se agent falhar
+          - playwright                     # Sites que bloqueiam scraping
+        validation:
+          script: "validate_gate(gate_type='research')"
+          min_confidence: 70
+
+      # ── STEP 2: BRIEFING (HELIX 10 phases) ──────────────────────────
+      - id: briefing
+        agent: helix-system-agent
+        gate: briefing
+        depends_on: [research]
+        deliverables:
+          - briefings/phases/fase-01-identificacao.md
+          - briefings/phases/fase-02-pesquisa-mercado.md
+          - briefings/phases/fase-03-avatar-psicologia.md
+          - briefings/phases/fase-04-niveis-consciencia.md
+          - briefings/phases/fase-05-problema-vilao-mup.md
+          - briefings/phases/fase-06-solucao-mus.md
+          - briefings/phases/fase-07-big-offer.md
+          - briefings/phases/fase-08-fechamento-pitch.md
+          - briefings/phases/fase-09-leads-ganchos.md
+          - briefings/phases/fase-10-progressao-emocional.md
+        tools_required:
+          - get_phase_context     # Inicio de cada fase HELIX
+        tools_recommended:
+          - consensus             # Validar TOP 3 MUPs (zen MCP)
+          - voc_search            # Validar hipoteses com VOC
+          - thinkdeep             # Decisoes complexas (zen MCP)
+          - sequential_thinking   # Planejamento multi-step
+        human_gates:
+          phase_5: "MUP approval — mecanismo do problema"
+          phase_6: "MUS approval — mecanismo da solucao"
+        preconditions:
+          mecanismo_required: true
+          mecanismo_min_state: VALIDATED  # or APPROVED
+        validation:
+          script: "validate_gate(gate_type='briefing')"
+          min_phases: 10
+
+      # ── STEP 3: PRODUCTION ───────────────────────────────────────────
+      - id: production
+        agent: production-agent
+        gate: production
+        depends_on: [briefing]
+        precondition: "mecanismo-unico.yaml state in [VALIDATED, APPROVED]"
+        sub_deliverables:
+          landing_page:
+            agent: landing-page-agent
+            path: production/landing-page/
+            tools: [blind_critic, emotional_stress_test, black_validation]
+          creatives:
+            agent: criativos-agent
+            path: production/creatives/
+            tools: [blind_critic, emotional_stress_test, black_validation]
+          vsl:
+            agent: production-agent
+            path: production/vsl/
+            tools: [write_chapter, blind_critic, emotional_stress_test, layered_review, black_validation]
+          emails:
+            agent: production-agent
+            path: production/emails/
+            tools: [blind_critic, emotional_stress_test, black_validation]
+        tools_required:
+          - blind_critic           # Validacao adversarial pos-producao
+          - emotional_stress_test  # Teste de genericidade e impacto
+        tools_recommended:
+          - write_chapter          # VSL: capitulo por capitulo
+          - layered_review         # Refinamento em 3 camadas
+          - challenge              # Questionar decisoes (zen MCP)
+        validation:
+          script: "black_validation(threshold=8.0)"
+
+      # ── STEP 4: REVIEW / DELIVERY ───────────────────────────────────
+      - id: review
+        agent: copy-critic
+        gate: delivery
+        depends_on: [production]
+        deliverables:
+          - production/final/
+        tools_required:
+          - black_validation     # Gate final >=8/10
+        tools_recommended:
+          - consensus            # Validacao multi-modelo
+        threshold:
+          black_validation: 8.0
+        human_gate: "Final delivery approval"
+
+# ─── QUALITY GATES ────────────────────────────────────────────────────
+#
+# Gates are checkpoints that BLOCK phase advancement if not passed.
+# Each gate has required tools (MUST have been used), alternative
+# tools (acceptable substitutes), and a validation method.
+#
+# Enforcement: Hooks pre-tool-use-gate.ts and validate-gate-prereq.ts
+# read this config to block/warn at runtime.
+# ─────────────────────────────────────────────────────────────────────
+
+quality_gates:
+  research:
+    required_tools: [firecrawl_agent, voc_search]
+    alternative_tools: [firecrawl_scrape, firecrawl_search, playwright]
+    validation: "validate_gate(gate_type='research')"
+    min_deliverables: 5  # 4 summaries + synthesis
+    deliverables:
+      - research/voc/summary.md
+      - research/competitors/summary.md
+      - research/mechanism/summary.md
+      - research/avatar/summary.md
+      - research/synthesis.md
+
+  briefing:
+    required_tools: [get_phase_context]
+    recommended_tools: [consensus, thinkdeep, voc_search]
+    validation: "validate_gate(gate_type='briefing')"
+    min_phases: 10
+    mecanismo_required: true
+    mecanismo_min_state: VALIDATED
+
+  production:
+    required_tools: [blind_critic, emotional_stress_test]
+    recommended_tools: [write_chapter, layered_review]
+    validation: "black_validation(threshold=8.0)"
+    per_deliverable: true  # Each deliverable gets its own validation
+
+  delivery:
+    required_tools: [black_validation]
+    threshold: 8.0
+    human_required: true
+
+  # ── MUP/MUS Validation (sub-gate of briefing, phases 5-6) ─────────
+  mup_mus:
+    sequence:
+      - tool: consensus
+        input: "TOP 3 MUP candidates"
+        purpose: "Multi-model agreement on MUP selection"
+      - tool: blind_critic
+        input: "MUP Statement"
+        copy_type: headline
+        threshold: 8
+      - tool: blind_critic
+        input: "MUS Statement"
+        copy_type: headline
+        threshold: 8
+      - tool: emotional_stress_test
+        input: "MUP + MUS concatenated"
+        copy_type: lead
+        threshold: 8
+      - tool: voc_search
+        input: "Validate MUP/MUS language against avatar VOC"
+      - type: human
+        purpose: "Final MUP/MUS approval"
+
+# ─── FEEDBACK SYSTEM (Level 4) ────────────────────────────────────────
+#
+# Captures patterns from validation results and reinjects them into
+# future production runs. This is what makes the system LEARN.
+#
+# feedback-loops.yaml: scored patterns from blind_critic, EST, etc.
+# patterns-by-niche.yaml: niche-specific insights (what works/fails)
+# ─────────────────────────────────────────────────────────────────────
+
+feedback:
+  knowledge_dir: "~/.claude/knowledge"
+  files:
+    feedback_loops: "~/.claude/knowledge/feedback-loops.yaml"
+    patterns_by_niche: "~/.claude/knowledge/patterns-by-niche.yaml"
+    cross_offer_insights: "~/.claude/knowledge/cross-offer-insights.yaml"
+
+  auto_capture:
+    enabled: true
+    hook: post-validation-chain.ts
+    triggers:
+      - blind_critic
+      - emotional_stress_test
+      - black_validation
+      - layered_review
+    capture_fields:
+      - score
+      - feedback_text
+      - offer_niche
+      - deliverable_type
+      - timestamp
+
+  auto_inject:
+    enabled: true
+    when: production_start
+    load:
+      - "feedback-loops.yaml"
+      - "patterns-by-niche.yaml"
+    filter_by: active_offer_niche
+    max_tokens: 2000  # Keep injection lean
+
+  learned_patterns:
+    dir: "~/.claude/learned-patterns"
+    patterns_file: "~/.claude/learned-patterns/patterns.yaml"
+
+# ─── SELF-HEALING ─────────────────────────────────────────────────────
+#
+# When external services fail (ClickUp down, Gemini rate-limited,
+# MCP timeout), the system queues the operation and retries later
+# instead of failing the entire pipeline.
+# ─────────────────────────────────────────────────────────────────────
+
+self_healing:
+  retry_queue: "~/.claude/knowledge/retry-queue.yaml"
+  log: "~/.claude/knowledge/self-healing-log.yaml"
+
+  policies:
+    clickup:
+      on_failure: queue
+      retry_interval_minutes: 30
+      max_retries: 3
+      description: "ClickUp sync is non-blocking; queue and retry"
+
+    consensus_gemini:
+      on_failure: fallback
+      fallback: "claude-only evaluation"
+      description: "If Gemini unavailable, consensus uses Claude alone"
+
+    mcp_tools:
+      on_failure: retry
+      max_retries: 3
+      retry_interval_minutes: 5
+      escalation: "After 3 retries, skip tool and warn user"
+
+    apify_actors:
+      on_failure: retry
+      max_retries: 2
+      retry_interval_minutes: 10
+      fallback: "firecrawl_scrape or playwright"
+      description: "Apify actors can timeout; fallback to direct scraping"
+
+    firecrawl:
+      on_failure: retry
+      max_retries: 2
+      retry_interval_minutes: 5
+      fallback: "playwright"
+
+# ─── HOOKS REGISTRY ──────────────────────────────────────────────────
+#
+# All hooks that execute at runtime, organized by event type.
+# This is the authoritative list. settings.json hook entries
+# should match this registry.
+#
+# Hook resolution: hooks/ directory, .ts preferred over .sh
+# ─────────────────────────────────────────────────────────────────────
+
+hooks:
+  session_start:
+    - auto-activate.ts          # Detect active offer from cwd
+    - synapse-inject.ts         # Load phase-appropriate rules (8-layer)
+    - gotcha-inject.ts          # Load gotchas for active context
+    - discover-offer-context.sh # Show available offers on start
+    - setup-environment.sh      # Set env vars
+    - memory-context.sh         # Load memory context
+    - dashboard-emit-start.ts   # Signal dashboard session started
+
+  pre_tool_use:
+    - validate-gate-prereq.ts   # Check required tools used before gate
+    - phase-gate.ts             # Block Write without prior gate
+    - pre-tool-use-gate.ts      # General pre-tool validation
+    - mecanismo-validation.ts   # Block production/ without validated mecanismo
+    - filter-bash-output.sh     # Filter sensitive output
+    - mcp-query-validator.sh    # Validate MCP query parameters
+
+  post_tool_use:
+    - gate-tracker.ts           # Record gate results (validate_gate, black_validation)
+    - record-tool-in-offer.ts   # Record tool usage in helix-state.yaml
+    - post-production-validate.ts   # Post-production validation chain
+    - post-validation-chain.ts      # Capture feedback for knowledge system
+    - post-gate-auto-advance.ts     # Auto-advance phase after gate passes
+    - post-mcp-mecanismo-update.ts  # Update mecanismo after MCP validation
+    - clickup-gate-sync.ts          # Sync gate status to ClickUp
+    - clickup-deliverable-sync.ts   # Sync deliverable completion to ClickUp
+    - dashboard-emit.ts             # Emit metrics to dashboard
+
+  stop:
+    - tool-enforcement-gate.ts  # Validate all required tools were used
+    - stop-copy-validation.ts   # Validate copy quality before exit
+
+  pre_compact:
+    - curation.ts               # Curate context before compaction
+    - session-digest-save.ts    # Save session digest
+    - pre-compact-save.sh       # Remind to save RLM chunks
+
+  user_prompt_submit:
+    - analyze-production-task.sh  # Detect production intent
+    - detect-clear-protect.sh     # Protect against accidental /clear
+
+  subagent:
+    - subagent-start-log.sh     # Log subagent start
+    - subagent-stop-validate.sh # Validate subagent output
+    - subagent-type-warning.sh  # Warn if wrong subagent type
+    - subagent-output-audit.sh  # Audit subagent output quality
+    - agent-output-capture.ts   # Capture agent output for learning
+
+  session_end:
+    - sync-repos-on-stop.sh     # Sync git repos
+    - sync-site.sh              # Sync dashboard site
+    - save-session-state.ts     # Persist session state
+    - journey-log.ts            # Log session journey
+
+# ─── CONTEXT ENGINE (SYNAPSE) ─────────────────────────────────────────
+#
+# Controls which rules/files are loaded based on context consumption.
+# 8-layer architecture with bracket-aware loading.
+# Ref: ~/.claude/synapse-manifest.yaml for full layer definitions.
+# ─────────────────────────────────────────────────────────────────────
+
+context_engine:
+  ref: "~/.claude/synapse-manifest.yaml"
+
+  brackets:
+    FRESH:    { max_pct: 30, layers: [0,1,2,3,4,5,6,7] }
+    MODERATE: { max_pct: 50, layers: [0,1,2,3,4,5] }
+    DEPLETED: { max_pct: 70, layers: [0,1,2,3] }
+    CRITICAL: { max_pct: 85, layers: [0,1] }
+
+  compact_trigger: 60  # Percentage at which /compact is recommended
+  compact_hard: 75     # Percentage at which /compact is forced
+
+  phase_rules:
+    IDLE:       [constitution.md]
+    RESEARCH:   [constitution.md, voc-research.md, anti-homogeneization.md, tool-usage-matrix.md]
+    BRIEFING:   [constitution.md, briefings-helix.md, mecanismo-unico.md, tool-usage-matrix.md]
+    PRODUCTION: [constitution.md, copy-production.md, copy-chief.md, anti-homogeneization.md, tool-usage-matrix.md]
+    REVIEW:     [constitution.md, copy-chief.md, tool-usage-matrix.md]
+
+# ─── NICHES ───────────────────────────────────────────────────────────
+#
+# Niche configuration. Offers are auto-discovered by finding
+# helix-state.yaml files within each niche directory.
+# roi_weight influences decision-engine prioritization.
+# ─────────────────────────────────────────────────────────────────────
+
+niches:
+  concursos:
+    library: "concursos/biblioteca_nicho_concursos_CONSOLIDADA.md"
+    roi_weight: 6
+    offers: auto_discover  # find */helix-state.yaml in concursos/
+    description: "Concursos publicos — front-ends e SaaS (CONCURSA.AI)"
+
+  saude:
+    library: null  # To be created after first offer research
+    roi_weight: 9
+    offers: auto_discover
+    description: "Saude — suplementos, tinnitus (Neuvelys)"
+
+  relacionamento:
+    library: null  # To be created after first offer research
+    roi_weight: 8
+    offers: auto_discover
+    description: "Relacionamento — reconquista, amarracao cientifica"
+
+# ─── TEMPLATES ────────────────────────────────────────────────────────
+#
+# Every deliverable MUST use the corresponding template.
+# Template enforcement: header with template name + version is required.
+# ─────────────────────────────────────────────────────────────────────
+
+templates:
+  dir: "~/.claude/templates"
+  enforcement: true  # Block deliverables without template header
+
+  mapping:
+    voc_extraction: voc-viral-extraction-template.md
+    trends_analysis: trends-analysis-template.md
+    ads_library_spy: ads-library-spy-template.md
+    research_checklist: research-deliverables-checklist.md
+    mup_mus_discovery: mup-mus-discovery.md
+    vsl_structure: rmbc-ii-workflow.md
+    criativos: criativos-template.md
+    landing_page: landing-page-template.md
+    email_sequence: email-sequence-template.md
+    unique_mechanism: mecanismo-unico-template.md
+    briefing_complete: briefing-complete-template.md
+    copy_validation: copy-validation-checklist.md
+    vsl_template: vsl-template.md
+
+# ─── COPY SQUAD (Expert Knowledge) ───────────────────────────────────
+#
+# 25 copywriting experts loaded on-demand during production.
+# Each expert file contains principles, techniques, and style rules.
+# The synapse engine selects the relevant expert for each deliverable.
+# ─────────────────────────────────────────────────────────────────────
+
+copy_squad:
+  dir: "~/.claude/copy-squad"
+  count: 25  # Auto-discovered from directory
+  experts:
+    # DR Masters
+    - { id: schwartz, specialty: "Market Awareness Levels, Sophistication" }
+    - { id: halbert, specialty: "Storytelling, Lead Types" }
+    - { id: carlton, specialty: "Street-smart DR, Fascinations" }
+    - { id: bencivenga, specialty: "Sophistication, Controls" }
+    - { id: hopkins, specialty: "Scientific Advertising, Testing" }
+    - { id: caples, specialty: "Headlines, Testing" }
+    - { id: collier, specialty: "Conversational Copy" }
+    - { id: kennedy, specialty: "No BS Marketing, DM" }
+    - { id: makepeace, specialty: "Financial Copy, Big Ideas" }
+    - { id: sugarman, specialty: "Psychological Triggers" }
+    - { id: ogilvy, specialty: "Research-Driven, Long Copy" }
+    - { id: reeves, specialty: "USP, TV Advertising" }
+    - { id: powers, specialty: "Reason-Why, Authenticity" }
+    # Modern DR
+    - { id: ry-schwartz, specialty: "One Belief, Epiphany Bridge" }
+    - { id: sabri, specialty: "VSL Structure, Scaling" }
+    - { id: hormozi, specialty: "Grand Slam Offers, Value Equation" }
+    - { id: brunson, specialty: "Funnel Architecture, Storytelling" }
+    - { id: kern, specialty: "Product Launches, Story Selling" }
+    - { id: brown, specialty: "Conversational Selling" }
+    # Agencies/Frameworks
+    - { id: agora, specialty: "Financial DR, RMBC" }
+    - { id: chaperon, specialty: "Launch Copy, Event Selling" }
+    - { id: abraham, specialty: "Strategy of Preeminence" }
+    # Behavioral
+    - { id: cialdini, specialty: "Influence, Persuasion Psychology" }
+    - { id: vaynerchuk, specialty: "Social-First, Content Strategy" }
+    # Chief
+    - { id: copy-chief, specialty: "Orchestration, Quality, DRE-First" }
+
+# ─── SLASH COMMANDS ───────────────────────────────────────────────────
+#
+# User-facing commands available via / in the CLI.
+# Each maps to a .md file in ~/.claude/commands/
+# ─────────────────────────────────────────────────────────────────────
+
+commands:
+  # Core workflow
+  - { id: pipeline, description: "Execute autonomous HELIX pipeline", file: pipeline.md }
+  - { id: status, description: "Show system-wide status", file: status.md }
+  - { id: next-action, description: "Get highest-priority next action", file: next-action.md }
+
+  # Offer management
+  - { id: create-offer, description: "Scaffold a new offer", file: create-offer.md }
+  - { id: diagnose-offer, description: "Diagnose offer health", file: diagnose-offer.md }
+
+  # Production
+  - { id: produce-offer, description: "4 parallel production tasks", file: produce-offer.md }
+  - { id: review-all, description: "Multi-model review of all deliverables", file: review-all.md }
+  - { id: debate, description: "Expert debate on copy decisions", file: debate.md }
+
+  # HELIX
+  - { id: helix-parallel, description: "Parallel HELIX phase execution", file: helix-parallel.md }
+
+  # Ecosystem
+  - { id: sync-ecosystem, description: "Sync ecosystem state", file: sync-ecosystem.md }
+  - { id: sync-project, description: "Sync project to Claude.ai", file: sync-project.md }
+  - { id: update-ecosystem, description: "Update ecosystem components", file: update-ecosystem.md }
+
+  # Specialized
+  - { id: clone-expert, description: "Clone expert personality for production", file: clone-expert.md }
+  - { id: expert, description: "Invoke expert for ad-hoc consultation", file: expert.md }
+  - { id: clickup-setup, description: "Setup ClickUp integration", file: clickup-setup.md }
+
+# ─── OBSERVABILITY ────────────────────────────────────────────────────
+#
+# Metrics, dashboards, and monitoring for the orchestration system.
+# Dashboard scripts are in ~/.claude/dashboard/ and ~/.claude/dashboard-v2/
+# ─────────────────────────────────────────────────────────────────────
+
+observability:
+  dashboard:
+    enabled: true
+    dir: "~/.claude/dashboard-v2"
+    script: "~/.claude/scripts/pipeline-viz.ts"
+
+  metrics:
+    - id: offers_active
+      description: "Number of offers in non-IDLE state"
+      source: "count helix-state.yaml where phase != IDLE"
+
+    - id: avg_blind_critic
+      description: "Mean blind_critic score across all validated copy"
+      source: "aggregate blind_critic results"
+
+    - id: avg_est
+      description: "Mean emotional_stress_test score"
+      source: "aggregate EST results"
+
+    - id: pipeline_throughput
+      description: "Offers moved to DELIVERED per week"
+      source: "count phase transitions to DELIVERED"
+
+    - id: token_efficiency
+      description: "Tokens spent per deliverable produced"
+      source: "session token usage / deliverables count"
+
+    - id: gate_pass_rate
+      description: "Percentage of gates passed on first attempt"
+      source: "gate-tracker results"
+
+    - id: self_healing_queue
+      description: "Items currently in retry queue"
+      source: "~/.claude/knowledge/retry-queue.yaml"
+
+  telemetry:
+    dir: "~/.claude/telemetry"
+    journey_log: "~/.claude/hooks/journey-log.ts"
+
+# ─── ANTI-HOMOGENEIZATION ────────────────────────────────────────────
+#
+# Rules to prevent AI-generated copy from converging to generic patterns.
+# Ref: ~/.claude/rules/anti-homogeneization.md for full cliche lists.
+# ─────────────────────────────────────────────────────────────────────
+
+anti_homogeneization:
+  ref: "~/.claude/rules/anti-homogeneization.md"
+
+  specificity_threshold: 8  # Score < 8 = REFAZER immediately
+  logo_test: required       # Copy must fail logo test (unique enough)
+  competitor_swap: required  # Competitor cannot use without changes
+
+  tests:
+    - logo_test
+    - competitor_swap_test
+    - specificity_score_face_1  # Data: >= 6/8
+    - specificity_score_face_2  # Narrative: >= 3/5
+
+# ─── MEMORY SYSTEMS ──────────────────────────────────────────────────
+#
+# Dual memory: claude-mem (automatic) + RLM Server (manual/critical).
+# Both MUST be consulted at session start and saved before /compact.
+# ─────────────────────────────────────────────────────────────────────
+
+memory:
+  systems:
+    claude_mem:
+      type: automatic
+      search_on_start: true
+      tools: [search, timeline, get_observations]
+
+    rlm_server:
+      type: manual
+      tools: [rlm_chunk, rlm_list_chunks, rlm_peek, rlm_grep, rlm_recall]
+      chunk_before_compact: true  # MANDATORY before /compact
+
+  session_state:
+    dir: "~/.claude/session-state"
+    file: "~/.claude/session-state/current-session.json"
+    volatile: true  # Expires in 2h
+
+  offer_state:
+    file_per_offer: "{offer}/helix-state.yaml"
+    persistent: true  # Source of truth for tool tracking
+
+# ─── OFFER STATE SCHEMA ──────────────────────────────────────────────
+#
+# Each offer has a helix-state.yaml that tracks phase, tools used,
+# gates passed, and mecanismo state. This is the PERSISTENT source
+# of truth (not session state).
+# ─────────────────────────────────────────────────────────────────────
+
+offer_state:
+  schema: "~/.claude/schemas/helix-state.schema.yaml"
+  template: "~/.claude/templates/helix-state-template.yaml"
+  phases: [IDLE, RESEARCH, BRIEFING, PRODUCTION, DELIVERED]
+  transitions:
+    IDLE: [RESEARCH]
+    RESEARCH: [BRIEFING]
+    BRIEFING: [PRODUCTION]
+    PRODUCTION: [DELIVERED]
+    DELIVERED: []
+
+# ─── SCRIPTS ──────────────────────────────────────────────────────────
+#
+# Key scripts for system operations.
+# ─────────────────────────────────────────────────────────────────────
+
+scripts:
+  pipeline_executor: "~/.claude/scripts/pipeline-executor.ts"
+  pipeline_daemon: "~/.claude/scripts/pipeline-daemon.ts"
+  decision_engine: "~/.claude/scripts/decision-engine.ts"
+  skill_dispatcher: "~/.claude/scripts/skill-dispatcher.ts"
+  task_classifier: "~/.claude/scripts/task-classifier.ts"
+  copy_chief_router: "~/.claude/scripts/copy-chief-router.ts"
+  health_check: "~/.claude/scripts/health-check.ts"
+  clickup_sync: "~/.claude/scripts/clickup-sync-engine.ts"
+  agent_context: "~/.claude/scripts/agent-context.ts"
+  generate_manifest: "~/.claude/scripts/generate-manifest.sh"
+  generate_registry: "~/.claude/scripts/generate-registry.sh"
+
+# ─── META ─────────────────────────────────────────────────────────────
+
+meta:
+  created: "2026-02-26"
+  updated: "2026-02-26"
+  author: "Copy Chief BLACK"
+  purpose: |
+    Single source of truth for the entire Copy Chief BLACK orchestration
+    system. Replaces distributed config across 15+ files with one
+    centralized, human-readable, machine-parseable manifest.
+
+    Other files that reference this manifest:
+    - CLAUDE.md (operational config — reads agent triggers from here)
+    - synapse-manifest.yaml (context engine — phase rules defined here)
+    - helix-pipeline.yaml (workflow detail — steps summarized here)
+    - registry.yaml (auto-generated inventory — agents listed here)
+    - settings.json (hook config — hook registry defined here)
+
+  subordinate_configs:
+    - "~/.claude/synapse-manifest.yaml"    # Context engine layers
+    - "~/.claude/workflows/helix-pipeline.yaml"  # Detailed sub-phases
+    - "~/.claude/registry.yaml"            # Auto-generated inventory
+    - "~/.claude/.version"                 # Ecosystem version

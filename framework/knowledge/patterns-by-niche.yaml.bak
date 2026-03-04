@@ -1,0 +1,914 @@
+# Cross-Offer Pattern Engine v2.0
+# Patterns extracted from ALL validated offers in the ecosystem
+# Source: helix-state.yaml + mecanismo-unico.yaml + briefings/phases/fase-05 + fase-06
+# ONLY includes patterns from REAL data (APPROVED or VALIDATED mechanisms)
+# Loaded before production to transfer learnings across offers
+version: "2.0.0"
+updated_at: "2026-02-26"
+methodology: "Extracted from 8 APPROVED mecanismo-unico.yaml files, 5 complete fase-05/fase-06 briefings, 9 helix-state.yaml files"
+
+# =============================================================================
+# HOW THIS WORKS:
+# 1. Before production, load patterns for the target niche
+# 2. Inject patterns_validated as POSITIVE constraints ("do this")
+# 3. Inject anti_patterns as NEGATIVE constraints ("never do this")
+# 4. Cross-niche patterns apply to ALL production
+# 5. transfer_rules show how to adapt patterns between niches
+# =============================================================================
+
+niches:
+
+  # ========================================
+  # CONCURSOS (6 offers analyzed)
+  # ========================================
+  concursos:
+    offers_analyzed:
+      - name: "concursa-ai"
+        type: "SaaS Core"
+        mecanismo_state: "APPROVED"
+        helix: "10/10"
+        research_confidence: 90
+        blind_critic_mup: null  # pre-v7.4 tracking
+        blind_critic_mus: null
+        est: null
+        rmbc: null
+        notes: "Most complete offer. 5-component DNA da Banca system."
+
+      - name: "decifra-lei-seca"
+        type: "Infoproduto Low-Ticket (TSL)"
+        mecanismo_state: "APPROVED"
+        helix: "10/10"
+        research_confidence: 95
+        blind_critic_mup: 8.6
+        blind_critic_mus: 8.0
+        est_genericidade: 9.0
+        consensus: 9.0
+        rmbc: 8.875
+        notes: "Highest RMBC in concursos. CreativeDC with 17 MUP + 12 MUS candidates."
+
+      - name: "gabaritando-portugues"
+        type: "TSL"
+        mecanismo_state: "APPROVED"
+        helix: "10/10"
+        research_confidence: 87
+        blind_critic_mup: 9.0
+        blind_critic_mus: 8.0
+        est: 5.8
+        consensus: 9.0
+        rmbc: 8.5
+        notes: "WARNING: EST 5.8 below threshold. Approved by human override. Gap = narrative articulation."
+
+      - name: "hacker"
+        type: "Infoproduto"
+        mecanismo_state: "APPROVED"
+        helix: "idle (pre-v7.4)"
+        blind_critic: 8.0
+        est: 8.0
+        rmbc: 8.75
+        notes: "Legacy offer. helix-state shows UNDEFINED but mecanismo-unico.yaml is APPROVED."
+
+      - name: "gabaritando-lei-seca"
+        type: "Infoproduto"
+        mecanismo_state: "APPROVED"
+        helix: "idle (pre-v7.4)"
+        blind_critic: 8.0
+        est: 8.0
+        rmbc: 8.0
+        notes: "Legacy offer. Lowest RMBC in concursos (8.0)."
+
+      - name: "gpt-dos-aprovados"
+        type: "Infoproduto"
+        mecanismo_state: "APPROVED"
+        helix: "idle (pre-v7.4)"
+        blind_critic: 8.0
+        est: 8.0
+        rmbc: 8.25
+        notes: "Legacy offer. AI-angle product."
+
+    avg_blind_critic: 8.27
+    avg_est: 7.32  # dragged down by gabaritando-portugues 5.8
+    avg_rmbc: 8.40
+    overall_quality: "mechanisms_strong_narratives_inconsistent"
+
+    # ------------------------------------------
+    # MUP PATTERNS (Problema/Vilao)
+    # ------------------------------------------
+    mup_patterns:
+
+      - pattern: "Framing de invisibilidade: 'algo escondido nos dados que ninguem te mostra'"
+        examples:
+          - offer: "decifra-lei-seca"
+            sexy_cause: "Ponto Cego da Legislacao"
+            statement: "padroes de cobranca escondidos em 50.000 provas"
+            score: 8.6
+          - offer: "gabaritando-portugues"
+            sexy_cause: "Ponto Cego de Leitura"
+            statement: "escola treinou literalidade, bancas cobram parafrase"
+            score: 9.0
+          - offer: "concursa-ai"
+            sexy_cause: "Padrao de Eliminacao das Bancas"
+            statement: "armadilhas recorrentes que se repetem prova apos prova"
+            score: null
+          - offer: "hacker"
+            sexy_cause: "Ovelha Negra"
+            statement: "padroes de gabarito que eliminam candidatos preparados"
+            score: 8.0
+        replicable: true
+        injection: "Para concursos: Sexy Cause SEMPRE revela algo INVISIVEL nos dados — 'Ponto Cego', 'Padrao Oculto', 'Armadilha Escondida'. O avatar nao sabia que existia. Framing de exclusividade informacional."
+
+      - pattern: "Numeros especificos e nao-redondos por banca examinadora"
+        examples:
+          - offer: "concursa-ai"
+            data: "CEBRASPE absolutizantes em 34% (78% ERRADO). FGV doutrina 41%. FCC troca numeros 19%."
+          - offer: "decifra-lei-seca"
+            data: "50.000 provas analisadas. Padroes por banca com percentuais especificos."
+          - offer: "gabaritando-portugues"
+            data: "VOC quotes integradas no problema fundamental."
+        replicable: true
+        injection: "OBRIGATORIO em concursos: diferenciar por banca com numeros especificos e NAO-REDONDOS. '34%' e mais crivel que '35%'. Numeros por banca = impossivel de copiar."
+
+      - pattern: "Paradigm shift que remove culpa: 'nao e burrice/falta de estudo, e falta de metodo/padrao'"
+        examples:
+          - offer: "decifra-lei-seca"
+            shift: "O problema nao e memoria. E nao saber O QUE memorizar."
+          - offer: "gabaritando-portugues"
+            shift: "Escola treinou literalidade. Bancas cobram parafrase. Voce le ERRADO sem saber."
+          - offer: "concursa-ai"
+            shift: "Candidatos que SABEM o conteudo sao eliminados por armadilhas que nao ensinaram."
+          - offer: "hacker"
+            shift: "Padroes de gabarito eliminam quem estuda mas nao reconhece padroes."
+        replicable: true
+        injection: "OBRIGATORIO: paradigm shift SEMPRE tira culpa do avatar. NAO e falta de esforco. E falta de TECNICA/PADRAO/METODO que ninguem ensinou. Reframe de esforco para metodo."
+
+      - pattern: "Hierarquia de vilao: MUP + 2 solucoes falsas descredibilizadas"
+        examples:
+          - offer: "concursa-ai"
+            vilao: "Padrao de Eliminacao das Bancas"
+            falsa_1: "Cursinhos Tradicionais (material generico igual pra todas bancas)"
+            falsa_2: "IA Generica/ChatGPT (nao conhece bancas brasileiras, alucina jurisprudencia)"
+          - offer: "decifra-lei-seca"
+            vilao: "Ponto Cego da Legislacao"
+            falsa_1: "Decorar artigos (volume impossivel)"
+            falsa_2: "Resumos prontos (nao captam padroes de banca)"
+            falsa_3: "Vade mecum grifado (foco errado)"
+            falsa_4: "ChatGPT generico (nao conhece bancas)"
+        replicable: true
+        injection: "Estrutura canonica: Vilao (MUP) -> Solucao Falsa 1 (metodo tradicional) -> Solucao Falsa 2 (tecnologia generica) -> Indutor. CADA falsa solucao e descredibilizada com razao especifica (nao generica)."
+
+      - pattern: "CreativeDC: gerar 15-20 candidatos MUP, pontuar com criterios pesados, selecionar TOP 1"
+        examples:
+          - offer: "decifra-lei-seca"
+            candidates: 17
+            criteria: "5 criterios pesados (especificidade, emocionalidade, transmissibilidade, credibilidade, unicidade)"
+            winner: "MUP-12 Ponto Cego da Legislacao (8.65)"
+        replicable: true
+        injection: "Para MUP de alta qualidade: gerar 15-20 candidatos divergentes, pontuar cada um com 5 criterios pesados, selecionar TOP 1. Divergencia-Convergencia garante melhor resultado que 'escolher o primeiro'."
+
+      - pattern: "VOC real integrada no problema fundamental (quote exata do avatar)"
+        examples:
+          - offer: "gabaritando-portugues"
+            quote: "Quando chega no final ja nao sei o que esta escrito"
+            usage: "Problema fundamental inclui quote VOC como prova social embutida"
+          - offer: "decifra-lei-seca"
+            quote: "Ja decorei 500 artigos e ainda reprovo"
+            usage: "DRE frustracao validada com quotes VOC"
+        replicable: true
+        injection: "Incluir 2-3 quotes VOC EXATAS dentro do problema fundamental. Quote real = prova social embutida no briefing, nao precisa ser separada."
+
+      - pattern: "5 Lentes BLACK aplicadas ao MUP como quality gate"
+        examples:
+          - offer: "decifra-lei-seca"
+            lentes: ["Escalada Emocional PASS", "Densidade Narrativa PASS", "Logo Test PASS", "Teste Visceral PASS", "Zero Hesitacao PASS"]
+        replicable: true
+        injection: "Apos definir MUP, validar com 5 Lentes BLACK (Escalada Emocional, Densidade Narrativa, Logo Test, Teste Visceral, Zero Hesitacao). TODAS devem passar."
+
+    # ------------------------------------------
+    # MUS PATTERNS (Solucao)
+    # ------------------------------------------
+    mus_patterns:
+
+      - pattern: "Gimmick Name identico ou derivado do nome do produto"
+        examples:
+          - offer: "hacker"
+            gimmick: "Tecnica Ovelha Negra"
+            product: "Hacker do Concurso"
+            relationship: "derivado (tecnica do produto)"
+          - offer: "gabaritando-lei-seca"
+            gimmick: "Metodo Gabaritando"
+            product: "Gabaritando Lei Seca"
+            relationship: "identico"
+          - offer: "gpt-dos-aprovados"
+            gimmick: "Sistema de 3 Etapas"
+            product: "GPT dos Aprovados"
+            relationship: "componente do produto"
+          - offer: "gabaritando-portugues"
+            gimmick: "Radar de Parafrases"
+            product: "Gabaritando Portugues"
+            relationship: "derivado (funcionalidade core)"
+          - offer: "decifra-lei-seca"
+            gimmick: "Codigo da Legislacao"
+            product: "Decifra Lei Seca"
+            relationship: "derivado (decodificacao)"
+          - offer: "concursa-ai"
+            gimmick: "DNA da Banca"
+            product: "CONCURSA.AI"
+            relationship: "feature principal"
+        replicable: true
+        injection: "Gimmick Name para concursos: deve ser IDENTICO ao produto ou derivado da funcionalidade principal. Toda mencao do produto reforça o mecanismo. 6/6 ofertas usam este padrao."
+
+      - pattern: "Origin Story com insider knowledge (dev de bancas, juiz, examinador)"
+        examples:
+          - offer: "concursa-ai"
+            origin: "Rafael Mendes — 6 anos como dev interno de bancas"
+            authority: "IA 100x mais potente que GPT para concursos"
+          - offer: "decifra-lei-seca"
+            origin: "Rafael Mendes 6 anos dev bancas"
+            authority: "Prompts engenheirados por insider 6 anos"
+          - offer: "gabaritando-portugues"
+            origin: "juizes federais analisam peticoes de 200 paginas"
+            authority: "Leitura Judicial (elite profissional)"
+          - offer: "hacker"
+            origin: "universidade colombiana 12.000 alunos"
+            authority: "Validado em 12.000 alunos"
+        replicable: true
+        injection: "Origin Story para concursos: (1) Insider que trabalhou dentro do sistema (dev de bancas, examinador) OU (2) Pesquisa academica com N especifico OU (3) Profissional de elite (juiz, desembargador). Credibilidade vem de ACESSO, nao de titulo."
+
+      - pattern: "Espelhamento MUP->MUS: cada elemento do problema tem correspondente na solucao"
+        examples:
+          - offer: "concursa-ai"
+            mup: "Padrao de Eliminacao das Bancas"
+            mus: "DNA da Banca (decodifica os padroes)"
+            espelhamento: "eliminacao -> decodificacao"
+          - offer: "decifra-lei-seca"
+            mup: "Ponto Cego da Legislacao"
+            mus: "Codigo da Legislacao (revela os pontos)"
+            espelhamento: "cego -> codigo (visao)"
+          - offer: "gabaritando-portugues"
+            mup: "Ponto Cego de Leitura"
+            mus: "Radar de Parafrases (detecta o que o olho nao ve)"
+            espelhamento: "ponto cego -> radar (deteccao)"
+        replicable: true
+        injection: "OBRIGATORIO: MUS e o ESPELHO do MUP. Se MUP e 'Ponto Cego', MUS e 'Radar/Detector'. Se MUP e 'Padrao de Eliminacao', MUS e 'Decodificador de Padroes'. Metafora invertida cria coerencia narrativa."
+
+      - pattern: "Puzzle Pieces 4 Camadas completas (Ingrediente Hero, Gimmick, Origin, Authority)"
+        examples:
+          - offer: "concursa-ai"
+            ingrediente: "IA especializada treinada em 500K+ questoes reais"
+            gimmick: "DNA da Banca"
+            origin: "Rafael Mendes — 6 anos como dev interno de bancas"
+            authority: "IA 100x mais potente que GPT para concursos"
+          - offer: "decifra-lei-seca"
+            ingrediente: "Prompts ChatGPT especializados em lei seca por banca"
+            gimmick: "Codigo da Legislacao"
+            origin: "Rafael Mendes dev bancas"
+            authority: "Prompts engenheirados por insider 6 anos"
+        replicable: true
+        injection: "TODAS 4 camadas sao obrigatorias. Sem Ingrediente Hero = nao ha tangibilidade. Sem Gimmick = nao gruda. Sem Origin = nao ha historia. Sem Authority = nao ha credibilidade."
+
+      - pattern: "Formula Ramalho para gancho da solucao"
+        formula: "Ja ouviu falar desse [GIMMICK] que [ORIGIN STORY] estao usando secretamente para [DESEJO]? Ja estao chamando isso de [AUTHORITY HOOK]."
+        examples:
+          - offer: "concursa-ai"
+            gancho: "Ja ouviu falar do DNA da Banca que os aprovados em 1a tentativa estao usando secretamente para decodificar as armadilhas? Ja estao chamando isso de IA 100x mais potente que GPT."
+        replicable: true
+        injection: "Usar Formula Ramalho como template base para gancho. Pode ter 3-4 variacoes (curta, media, longa, segmentada) mas estrutura [GIMMICK + ORIGIN + DESEJO + AUTHORITY] e fixa."
+
+      - pattern: "Indutor com 4-6 componentes nomeados e siglas memorizaveis"
+        examples:
+          - offer: "concursa-ai"
+            indutor: "CONCURSA.AI com 5 Componentes do DNA"
+            componentes: ["Detector de Armadilhas (Hacker de Banca)", "Tradutor de Enunciado (Tutor IA)", "Mapa de Progresso (Dashboard)", "Pareto por Banca (Meu Plano)", "Simulador Calibrado (Simulados)"]
+          - offer: "decifra-lei-seca"
+            indutor: "Codigo da Legislacao (5 prompts)"
+            componentes: "5 prompts especializados por banca"
+          - offer: "hacker"
+            indutor: "Sistema Ovelha Negra"
+            componentes: "IP, DON, VC, ATR (siglas)"
+        replicable: true
+        injection: "Indutor com 4-6 componentes nomeados. Cada componente tem nome proprietario + funcao clara. Siglas sao bonus (memorizavel). Cria percepcao de sistema COMPLETO e estruturado."
+
+      - pattern: "CreativeDC para MUS: gerar 10-15 candidatos MUS apos MUP validado"
+        examples:
+          - offer: "decifra-lei-seca"
+            candidates: 12
+            winner: "MUS-05 Codigo da Legislacao (9.20)"
+            criteria: "especificidade, chiclete, ligacao_hero, transmissibilidade, unicidade"
+        replicable: true
+        injection: "Apos MUP validado, gerar 10-15 candidatos MUS com CreativeDC. Pontuar com criterios especificos de Gimmick (chiclete + ligacao hero). Melhor resultado que 'primeiro que vem a mente'."
+
+    # ------------------------------------------
+    # COPY PATTERNS (producao validada)
+    # ------------------------------------------
+    copy_patterns:
+
+      - pattern: "One Belief como ancora de toda copy (frase unica que resume MUP+MUS+INDUTOR)"
+        examples:
+          - offer: "concursa-ai"
+            one_belief: "Cada banca elimina com padroes recorrentes que ninguem te ensina. Decodificar esses padroes e a diferenca entre passar em meses e estudar anos. Isso so e possivel com o DNA da Banca do CONCURSA.AI."
+          - offer: "decifra-lei-seca"
+            one_belief: "Lei seca reprova porque ninguem te mostra QUAIS artigos cada banca realmente cobra. O Codigo da Legislacao revela esses padroes em minutos."
+        replicable: true
+        injection: "OBRIGATORIO: One Belief em 2-3 frases que concatena [PROBLEMA ninguem ensina] + [PARADIGM SHIFT] + [INDUTOR como unica solucao]. Ancora de TODA copy."
+
+      - pattern: "Promessa Central com comparacao aspiracional e numero especifico"
+        examples:
+          - offer: "concursa-ai"
+            promessa: "A plataforma com IA 100x mais potente que o GPT para concursos — treinada nas 500 mil questoes que as bancas ja usaram para te eliminar."
+          - offer: "decifra-lei-seca"
+            promessa: "5 prompts que decodificam o que 50.000 provas revelam sobre a sua banca."
+        replicable: true
+        injection: "Promessa Central: [INDUTOR] + [COMPARACAO ASPIRACIONAL] + [NUMERO ESPECIFICO]. Numero SEMPRE nao-redondo e verificavel."
+
+      - pattern: "SEM vs COM personas para demonstrar transformacao"
+        examples:
+          - offer: "concursa-ai"
+            persona: "Carlos (estuda ha 3 anos, reprova por armadilhas vs Carlos com DNA da Banca, identifica padroes)"
+          - offer: "florayla"
+            persona: "Maria (sofre no banheiro diariamente vs Maria com truque intestinal)"
+        replicable: true
+        injection: "OBRIGATORIO na producao: SEM [PRODUTO] vs COM [PRODUTO] usando persona nomeada do avatar. Mostra transformacao tangivel, nao abstrata."
+
+      - pattern: "Linguagem na Copy: framing do produto como 'sistema/metodo' nao como 'ferramenta'"
+        examples:
+          - offer: "decifra-lei-seca"
+            framing: "5 prompts apresentados como 'sistema decodificador' nao como 'lista de prompts'"
+          - offer: "concursa-ai"
+            framing: "Plataforma apresentada como 'DNA completo da banca' nao como 'app de questoes'"
+        replicable: true
+        injection: "Produto SEMPRE framed como SISTEMA/METODO/PROTOCOLO, nunca como ferramenta/app/lista. Eleva percepcao de valor e propriedade intelectual."
+
+    # ------------------------------------------
+    # ANTI-PATTERNS (evitar em concursos)
+    # ------------------------------------------
+    anti_patterns:
+
+      - pattern: "EST abaixo de 8 com blind_critic acima de 8 — gap de articulacao narrativa"
+        frequency: "2/6 ofertas com dados (33%)"
+        evidence:
+          - "gabaritando-portugues: BC MUP 9.0, BC MUS 8.0, EST 5.8 — gap severo"
+          - "decifra-lei-seca: BC MUP 8.6, BC MUS 8.0, EST genericidade 9.0 — corrigido com CreativeDC"
+        injection: "SE blind_critic >= 8 e EST < 8: problema NAO e o mecanismo. E a NARRATIVA. Solucao: adicionar cenas vividas (noite antes da prova, momento do resultado, conversa com familia). Rewrite focando em emocao, nao conteudo."
+
+      - pattern: "Copy de concursos sem cenas vividas do avatar (apenas dados e estatisticas)"
+        frequency: "Correlacionado com todos os EST < 8"
+        injection: "NUNCA produzir copy de concursos apenas com dados estatisticos. OBRIGATORIO: pelo menos 3 cenas vividas com detalhes sensoriais (horario, local, sensacao fisica). Dados sem emocao = EST baixo."
+
+      - pattern: "Genericidade abaixo de 6 na copy"
+        evidence:
+          - "gabaritando-portugues EST 5.8 — pior score do portfolio"
+        injection: "Genericidade < 6 = copy que concorrente usaria sem alterar. OBRIGATORIO: nome proprietario do mecanismo, numeros por banca, exemplos unicos. Logo Test: trocar logo → se funciona → REFAZER."
+
+      - pattern: "Mecanismo sem espelhamento MUP/MUS (problema e solucao desconectados)"
+        injection: "MUP e MUS DEVEM ser espelhos. Se nao ha inversao clara (cego->radar, eliminacao->decodificacao), o mecanismo esta INCOMPLETO. Refazer MUS como inversao do MUP."
+
+      - pattern: "Solucoes falsas atacadas genericamente em vez de com razao especifica"
+        injection: "NUNCA descredibilizar solucao falsa com 'nao funciona'. SEMPRE com razao especifica: 'Cursinhos NAO ensinam padroes de banca porque usam material GENERICO igual pra CEBRASPE e FCC'. Especificidade da critica = credibilidade."
+
+  # ========================================
+  # RELACIONAMENTO (1 offer analyzed)
+  # ========================================
+  relacionamento:
+    offers_analyzed:
+      - name: "quimica-amarracao"
+        type: "Quiz Funnel -> VSL"
+        mecanismo_state: "APPROVED"
+        mecanismo_version: "v3.2.0"
+        helix: "10/10 (completed_legacy)"
+        research_confidence: 85
+        voc_quotes: 201
+        ads_analyzed: 352
+        blind_critic_mup: 9.0
+        blind_critic_mus: 9.1
+        est: 9.1
+        black_validation: 9.2
+        rmbc: 8.75
+        notes: "HIGHEST scores in entire portfolio. Multi-layer naming v3.2. Nomenclatura framework."
+
+    avg_blind_critic: 9.05
+    avg_est: 9.1
+    avg_rmbc: 8.75
+    overall_quality: "highest_in_portfolio"
+
+    # ------------------------------------------
+    # MUP PATTERNS (Problema/Vilao)
+    # ------------------------------------------
+    mup_patterns:
+
+      - pattern: "Multi-layer naming: 3 nomes para o mesmo conceito em niveis diferentes"
+        structure:
+          causa_raiz: "Nome popular/acessivel (TPM Masculina)"
+          nova_causa: "Nome tecnico/cientifico (Claustro Inibido)"
+          sexy_cause: "Nome intrigante/transmissivel (Efeito Desapego Primitivo)"
+        score: 9.0
+        replicable: true
+        injection: "Para relacionamento: OBRIGATORIO 3 camadas de naming. Causa Raiz (popular, viral), Nova Causa (tecnico, credivel), Sexy Cause (intrigante, transmissivel). Cada uma serve audiencia diferente e momento diferente do funil."
+
+      - pattern: "Formula [ORGAO REAL] + [PROCESSO INVENTADO] + [CAUSA EXTERNA CULPAVEL]"
+        example: "Claustro (orgao real do cerebro) + Inibido (processo inventado) + por excesso de pressao/estresse (causa externa)"
+        score: 9.0
+        replicable: true
+        injection: "Para criar Nova Causa crivel: ancorar em orgao/substancia REAL + inventar processo plausivel + atribuir causa a fator EXTERNO que o avatar nao controla. Ciencia real + nomenclatura proprietaria = unica e crivel."
+
+      - pattern: "3 Modos/Estados do problema (nao e binario ON/OFF)"
+        example:
+          modo_1: "Viril (parece frio, distante, bruto)"
+          modo_2: "Maternal (trata como irma, sem desejo)"
+          modo_3: "Submisso (passivo, sem iniciativa)"
+        score: 9.0
+        replicable: true
+        injection: "Problema com 3+ modos/estados gera reconhecimento imediato. Avatar se identifica com 1 modo e valida os outros ('ja vi isso tambem'). NAO usar estrutura binaria (funciona/nao funciona)."
+
+      - pattern: "Angulo neuroquimico/cientifico para reframe de comportamento emocional"
+        details: "Transforma 'esfriou' (emocional) em 'claustro inibido' (biologico)"
+        voc_validation: "41+ quotes com 'esfriou'. 0/352 ads usam angulo neuroquimico."
+        score: 9.0
+        replicable: true
+        injection: "Para relacionamento: SEMPRE usar angulo cientifico (neuroquimica, hormonios, cerebro primitivo) para explicar comportamentos emocionais. Transforma 'conselho de amiga' em 'ciencia real'. Blue ocean confirmado: 0/352 ads usam."
+
+      - pattern: "Tirar culpa do avatar redirecionando para fator biologico/hormonal"
+        paradigm_shift: "Voce atacava SINTOMA. O problema e QUIMICO."
+        score: 9.0
+        replicable: true
+        injection: "OBRIGATORIO em relacionamento: o problema NUNCA e culpa do avatar. E culpa de fator BIOLOGICO/HORMONAL/EXTERNO. 'Nao e que ele nao te ama. E que o claustro dele esta INIBIDO.' Alivio de culpa = abertura emocional maxima."
+
+      - pattern: "Metafora central recorrente (Torneira Biologica)"
+        example: "Torneira Biologica que 'fecha' os hormonios — metafora simples para processo complexo"
+        score: 9.0
+        replicable: true
+        injection: "OBRIGATORIO: metafora FISICA e VISUAL para o mecanismo biologico. Torneira, interruptor, filtro — algo que o avatar consegue VISUALIZAR acontecendo no corpo."
+
+      - pattern: "Escalada Temporal: progressao do problema em timeline de deterioracao"
+        example: "Mes 1-3 (distancia) -> Mes 4-6 (frieza) -> Mes 7-12 (desinteresse total) -> Ano 2+ (busca externa)"
+        score: 9.0
+        replicable: true
+        injection: "Mostrar TIMELINE de deterioracao: como o problema piora se nao tratado. Cria urgencia sem deadline artificial. Avatar se localiza na timeline e sente 'estou aqui, preciso agir ANTES do proximo estagio'."
+
+    # ------------------------------------------
+    # MUS PATTERNS (Solucao)
+    # ------------------------------------------
+    mus_patterns:
+
+      - pattern: "Ingrediente Hero como lista de micro-comportamentos nomeados"
+        example:
+          ingrediente: "Gatilhos de Reativacao Claustral (GRC)"
+          componentes: ["Silencio Magnetizado", "Aprovacao Estrategica", "Toque Ancorado", "Presenca Intermitente", "Vulnerabilidade Calibrada"]
+          total: 5
+        score: 9.1
+        replicable: true
+        injection: "Ingrediente hero como lista de 5 MICRO-COMPORTAMENTOS nomeados individualmente. Cada nome e evocativo + acionavel. Cria percepcao de sistema COMPLETO e memorizado facilmente."
+
+      - pattern: "Authority Hook que referencia comportamento do 'rival' do avatar"
+        example: "A Ciencia que as Amantes Usam Sem Saber"
+        score: 9.1
+        replicable: true
+        injection: "Authority Hook que explica o comportamento da RIVAL (amante, ex, 'aquela mulher') gera curiosidade + validacao simultanea. Avatar pensa: 'ENTAO era isso que ela fazia'."
+
+      - pattern: "Origin Story com paradoxo pessoal do expert (expert que sofreu o problema)"
+        example: "Dra. Fernanda Lopes — neurocientista de Stanford — traida apos 18 anos de casamento. A especialista que NAO viu os sinais."
+        score: 9.1
+        replicable: true
+        injection: "Expert que VIVEU o problema (nao apenas estudou) gera empatia imediata. Paradoxo 'a expert que nao viu' = prova que o problema e real, nao e fraqueza, afeta ate especialistas."
+
+      - pattern: "Nomenclatura v3.2: Gimmick diferente de Sexy Cause diferente de Indutor"
+        structure:
+          sexy_cause: "Efeito Desapego Primitivo (problema)"
+          gimmick: "Quimica da Amarracao Infiel (produto)"
+          indutor: "Protocolo Anti-Fuga Hormonal — APP IMPRINT (metodo)"
+        score: 9.1
+        replicable: true
+        injection: "TRES nomes distintos para tres funcoes: Sexy Cause NOMEIA o problema, Gimmick NOMEIA o produto, Indutor NOMEIA o metodo. Nao confundir. Cada um serve momento diferente da copy."
+
+      - pattern: "Indutor com sigla memorizavel + componentes nomeados"
+        example:
+          indutor: "Protocolo Anti-Fuga Hormonal (APP IMPRINT)"
+          componentes: "R.C.A. (Reconectar, Calibrar, Ancorar)"
+        score: 9.1
+        replicable: true
+        injection: "Indutor com sigla que forma PALAVRA (IMPRINT, RCA) = chiclete maximo. Componentes da sigla = etapas do metodo."
+
+      - pattern: "BLACK validation formula: inimigo externo + grupo seleto + superioridade epistemica + CTA tribal"
+        score: 9.2
+        replicable: true
+        injection: "Para VSL/LP de relacionamento: (1) nomear inimigo externo (claustro inibido, amante), (2) criar grupo exclusivo ('mulheres que sabem'), (3) dar conhecimento que outras nao tem, (4) CTA que reforça pertencimento tribal."
+
+    # ------------------------------------------
+    # ANTI-PATTERNS (evitar em relacionamento)
+    # ------------------------------------------
+    anti_patterns:
+
+      - pattern: "Copy de relacionamento baseada apenas em 'dicas de comportamento' sem mecanismo biologico"
+        injection: "NUNCA fazer copy de relacionamento como 'dicas' ou 'conselhos'. SEMPRE ancorar em mecanismo biologico/neuroquimico. Sem ciencia = sem diferenciacao = generico."
+
+      - pattern: "Naming unidimensional (apenas um nome para o mecanismo)"
+        injection: "NUNCA usar apenas 1 nome. MINIMO 3 camadas (popular + tecnico + intrigante). Cada camada serve audiencia e momento diferentes."
+
+      - pattern: "Expert sem conexao pessoal com o problema"
+        injection: "Expert que 'apenas estudou' o problema gera menos empatia que expert que VIVEU. Se possivel, origin story com paradoxo pessoal."
+
+  # ========================================
+  # SAUDE (1 validated offer + 1 draft)
+  # ========================================
+  saude:
+    offers_analyzed:
+      - name: "florayla"
+        type: "Suplemento (VSL -> Checkout)"
+        sub_nicho: "Intestino / Constipacao"
+        mecanismo_state: "APPROVED"
+        helix: "10/10"
+        research_confidence: 100
+        blind_critic_mup: 8.0
+        blind_critic_mus: 8.1
+        est: 7.1
+        rmbc_mup: 9.0
+        rmbc_mus: 8.3
+        notes: "Strong mechanism, weak emotional narrative. EST 7.1 below threshold. blind_critic 8.0-8.1 passes."
+
+      - name: "neuvelys"
+        type: "Suplemento (VSL -> Checkout)"
+        sub_nicho: "Tinnitus / Saude Auditiva"
+        mecanismo_state: "DRAFT"
+        helix: "idle"
+        notes: "EXCLUDED from patterns — not validated. MUP 'Cristais de Otolitos' em DRAFT."
+
+    avg_blind_critic: 8.05
+    avg_est: 7.1
+    avg_rmbc: 8.65
+    overall_quality: "mechanism_solid_narrative_weak"
+
+    # ------------------------------------------
+    # MUP PATTERNS (Problema/Vilao)
+    # ------------------------------------------
+    mup_patterns:
+
+      - pattern: "Mecanismo a nivel celular: 'celulas X estao morrendo/danificadas'"
+        examples:
+          - offer: "florayla"
+            mecanismo: "Morte das Celulas de Lubrificacao (celulas caliciformes)"
+            paradigm_shift: "O problema NAO e falta de fibra. E que as celulas que lubrificam seu intestino estao MORRENDO."
+        score: 8.0
+        replicable: true
+        injection: "Para saude: mecanismo a NIVEL CELULAR. Nao 'orgao X nao funciona' — 'CELULAS Y estao morrendo/danificadas/cristalizando'. Nivel celular = mais cientifico + mais assustador + mais especifico."
+
+      - pattern: "Dados PubMed/estudos com percentuais de reversibilidade"
+        examples:
+          - offer: "florayla"
+            data: "PubMed PMID 39154390, Nature 2018. Declinio de 28-29% reversivel com suplementacao direcionada."
+        score: 8.1
+        replicable: true
+        injection: "Usar dados de estudos REAIS com PMID e percentuais especificos de melhora/reversibilidade. 'Reversivel' e palavra-chave: significa que ha ESPERANCA, nao so medo."
+
+      - pattern: "Nome cientifico real + nome popular acessivel lado a lado"
+        examples:
+          - offer: "florayla"
+            cientifico: "celulas caliciformes"
+            popular: "celulas de lubrificacao do intestino"
+        score: 8.0
+        replicable: true
+        injection: "OBRIGATORIO em saude: todo termo cientifico tem nome popular ao lado. 'Celulas caliciformes (as celulas de lubrificacao do intestino)'. Primeiro EDUCA (credibilidade), depois SIMPLIFICA (compreensao)."
+
+      - pattern: "Paradigm shift que invalida solucoes do senso comum listando-as explicitamente"
+        examples:
+          - offer: "florayla"
+            invalida: ["Fibra (masking, nao resolve raiz)", "Agua (ajuda mas nao regenera celulas)", "Exercicio (melhora transito mas celulas continuam morrendo)"]
+            shift: "NENHUMA dessas regenera celulas caliciformes. Apenas mascaram."
+        score: 8.0
+        replicable: true
+        injection: "LISTAR explicitamente 3-4 solucoes que o avatar JA tentou e explicar POR QUE cada uma falha a nivel celular. Nao basta dizer 'nao funciona' — explicar o MECANISMO da falha."
+
+      - pattern: "4 Reason Why framework com evidencia PubMed"
+        examples:
+          - offer: "florayla"
+            reasons: ["Reason Why 1: A ciencia prova (PubMed)", "Reason Why 2: O caso real (Dona Maria)", "Reason Why 3: A logica (se celulas morrem, precisa regenerar)", "Reason Why 4: O risco de nao agir (progressivo)"]
+        score: 8.0
+        replicable: true
+        injection: "4 Reason Why = 4 angulos de convencimento. Ciencia + Caso Real + Logica + Urgencia. Cada Reason Why usa tipo diferente de prova."
+
+      - pattern: "3 Solucoes Falsas com mecanismo de falha explicado"
+        examples:
+          - offer: "florayla"
+            falsas: ["Fibra/Agua/Exercicio (masking)", "Laxantes (dependencia)", "Consulta Medica (trata sintoma, ignora celulas)"]
+        score: 8.0
+        replicable: true
+        injection: "3 Solucoes Falsas para saude: (1) Remedio caseiro popular (masking), (2) Farmaceutico (dependencia/efeito colateral), (3) Consulta medica (protocolo padrao insuficiente). Cada uma invalida de forma DIFERENTE."
+
+    # ------------------------------------------
+    # MUS PATTERNS (Solucao)
+    # ------------------------------------------
+    mus_patterns:
+
+      - pattern: "Gimmick Name como 'Truque X de Y segundos/minutos'"
+        examples:
+          - offer: "florayla"
+            gimmick: "Truque Intestinal de 7 Segundos"
+        score: 8.1
+        replicable: true
+        caution: "FUNCIONA mas e reconhecivel como template. Se usar, DIFERENCIAR com contexto unico. Considerar alternativa mais proprietaria."
+        injection: "Gimmick 'Truque de X segundos' funciona (proven hook) mas pode parecer formulaico. Se usar, contexto deve ser UNICO. Para futuros MUS de saude, considerar naming menos templateable."
+
+      - pattern: "Ingrediente Hero com especificidade geografica (regiao, solo, variedade)"
+        examples:
+          - offer: "florayla"
+            ingrediente: "Psyllium Husk Pireneus"
+            especificidade: "Regiao dos Pireneus, solo vulcanico, absorcao 3x superior"
+        score: 8.1
+        replicable: true
+        injection: "Ingrediente hero de suplemento: especificar REGIAO + caracteristica do LOCAL (solo vulcanico, altitude, clima). Versao 'Pireneus' vs 'generica' = percepçao de qualidade superior + impossivel de copiar."
+
+      - pattern: "Triple-action formula (3 ingredientes com 3 funcoes distintas)"
+        examples:
+          - offer: "florayla"
+            acao_1: "Psyllium Pireneus REGENERA celulas caliciformes"
+            acao_2: "Linhaca LUBRIFICA o transito"
+            acao_3: "Pectina REPARA barreira mucosa"
+        score: 8.1
+        replicable: true
+        injection: "Suplemento com 3 ingredientes x 3 funcoes DISTINTAS (REGENERA + LUBRIFICA + REPARA). Cada ingrediente tem verbo de acao proprio. Cria percepcao de formula COMPLETA e sinergica."
+
+      - pattern: "Origin Story com caso clinico vivido (paciente real, sintomas, consulta)"
+        examples:
+          - offer: "florayla"
+            origin: "Dr. Klaus Richter, Charite Berlin. Caso: Dona Maria, 62 anos, constipacao cronica ha 8 anos."
+        score: 8.1
+        replicable: true
+        injection: "Origin Story de saude: CASO CLINICO com nome, idade, sintoma, duracao, consulta. 'Dona Maria, 62, sofria ha 8 anos, medico disse que era normal da idade' = credibilidade + empatia."
+
+      - pattern: "Authority Hook com multiplas instituicoes de elite"
+        examples:
+          - offer: "florayla"
+            authority: "Comprovado por Harvard, Stanford e Yale"
+        score: 8.1
+        replicable: true
+        injection: "Authority Hook para suplemento: referenciar 2-3 instituicoes de ELITE (Harvard, Stanford, Yale, Mayo Clinic). Multiplas fontes = mais forte que uma so."
+
+      - pattern: "Timeline de resultados (Semana 1, Semana 2, Mes 1, Mes 3)"
+        examples:
+          - offer: "florayla"
+            timeline: "Semana 1 (transito melhora) -> Semana 2-3 (regularidade) -> Mes 1 (regeneracao) -> Mes 3 (normalizacao)"
+        score: 8.1
+        replicable: true
+        injection: "OBRIGATORIO em suplemento: timeline PROGRESSIVA de resultados. Primeiros sinais rapidos (1-2 semanas) geram confianca. Resultado completo em 3 meses gera expectativa realista."
+
+      - pattern: "Arsenal de Provas com 7 categorias"
+        examples:
+          - offer: "florayla"
+            categorias: ["Estudos cientificos (PubMed)", "Caso clinico", "Logica mecanistica", "Comparacao ingredientes", "Depoimentos", "Garantia", "Autoridade medica"]
+        score: 8.1
+        replicable: true
+        injection: "Arsenal de Provas COMPLETO com 7 tipos. Cada tipo de prova convence perfil psicologico diferente. Logicos = estudos. Emocionais = casos. Ceticos = garantia."
+
+    # ------------------------------------------
+    # ANTI-PATTERNS (evitar em saude)
+    # ------------------------------------------
+    anti_patterns:
+
+      - pattern: "Mecanismo cientifico forte sem envelope emocional proporcional"
+        evidence:
+          - "florayla: blind_critic 8.0/8.1 mas EST 7.1"
+        injection: "PADRAO RECORRENTE em saude: blind_critic alto + EST baixo. Mecanismo cientifico precisa de IGUAL investimento em narrativa emocional. Cada dado cientifico deve ter cena vivida correspondente."
+
+      - pattern: "Estrutura linear problema->mecanismo->solucao sem cena intermediaria"
+        injection: "NUNCA usar estrutura linear pura em saude. ANTES do mecanismo cientifico, inserir cena vivida (paciente acordando as 3h, no banheiro, na fila da farmacia). Ciencia sem emocao = EST baixo."
+
+      - pattern: "Gimmick Name formulaico reconhecivel como template"
+        evidence:
+          - "florayla: 'Truque Intestinal de 7 Segundos' — funcional mas templateable"
+        injection: "Evitar Gimmick Names que seguem template reconhecivel ('truque de X segundos'). Se usar, OBRIGATORIO diferenciar com contexto unico que so ESTA oferta tem."
+
+      - pattern: "Dados cientificos sem contextualizacao emocional"
+        injection: "NUNCA apresentar dado cientifico isolado. SEMPRE contextualizar: 'Declinio de 28% das celulas caliciformes. Isso significa que a cada ano, seu intestino perde quase 1/3 da capacidade de se lubrificar. E como uma estrada que vai ficando sem asfalto.' Dado + Traducao + Metafora."
+
+# =============================================================================
+# CROSS-NICHE PATTERNS (apply to ALL production)
+# =============================================================================
+
+cross_niche:
+
+  # ------------------------------------------
+  # Universal Success Patterns (scored >= 8 in multiple niches)
+  # ------------------------------------------
+  universal_success_patterns:
+
+    - pattern: "Dual naming: nome tecnico/cientifico + nome popular/acessivel"
+      evidence:
+        - "Claustro + TPM Masculina (relacionamento, BC 9.0)"
+        - "Celulas Caliciformes + Celulas de Lubrificacao (saude, BC 8.0)"
+        - "Literalidade vs Parafrase + Ponto Cego de Leitura (concursos, BC 9.0)"
+        - "Padrao de Eliminacao + Armadilhas das Bancas (concursos, BC n/a)"
+      injection: "TODO mecanismo precisa de nome tecnico + nome popular. Primeiro LEGITIMA (credibilidade), segundo CONECTA (compreensao). Se so tem tecnico = confuso. Se so tem popular = fraco."
+
+    - pattern: "Paradigm shift que invalida solucoes anteriores explicando POR QUE falharam"
+      evidence:
+        - "'Voce atacava SINTOMA. O problema e QUIMICO.' (relacionamento, BC 9.0)"
+        - "'NAO e falta de fibra. E que as celulas estao MORRENDO.' (saude, BC 8.0)"
+        - "'NAO e falta de estudo. E falta de TECNICA.' (concursos, consensus 9.0)"
+        - "'O problema nao e memoria. E nao saber O QUE memorizar.' (concursos, BC 8.6)"
+      injection: "Paradigm shift OBRIGATORIO em todo MUP: (1) Listar explicitamente o que NAO funciona, (2) Explicar POR QUE nao funciona a nivel do mecanismo, (3) Revelar a VERDADEIRA causa."
+
+    - pattern: "Blame removal: culpa NUNCA e do avatar, sempre de fator externo/biologico/sistemico"
+      evidence:
+        - "'Claustro inibido' — biologico (relacionamento)"
+        - "'Celulas morrendo com idade' — biologico (saude)"
+        - "'Escola treinou errado' — sistemico (concursos)"
+        - "'Bancas eliminam com armadilhas' — sistemico (concursos)"
+      injection: "REGRA UNIVERSAL: o avatar NAO e culpado. A causa e EXTERNA (biologica, sistemica, oculta). Alivio de culpa = abertura emocional = receptividade maxima a solucao."
+
+    - pattern: "Espelhamento MUP->MUS: MUS e inversao/neutralizacao direta do MUP"
+      evidence:
+        - "Padrao de Eliminacao -> DNA da Banca (decodifica padroes)"
+        - "Ponto Cego -> Radar/Codigo (detecta/revela)"
+        - "Claustro Inibido -> Reativacao Claustral (reativa)"
+        - "Morte das Celulas -> Regeneracao Celular (regenera)"
+      injection: "MUS OBRIGATORIAMENTE e o ESPELHO do MUP. Verbo do MUS = inversao do verbo do MUP. Eliminacao->Decodificacao, Cego->Radar, Inibido->Reativacao, Morte->Regeneracao."
+
+    - pattern: "Puzzle Pieces 4 Camadas completas (Ramalho Framework)"
+      evidence:
+        - "8/8 ofertas APPROVED tem 4 camadas completas"
+        - "Nenhuma oferta avancou sem Ingrediente Hero + Gimmick + Origin + Authority"
+      injection: "4 Camadas sao OBRIGATORIAS para qualquer mecanismo. Sem Ingrediente = intangivel. Sem Gimmick = nao gruda. Sem Origin = sem historia. Sem Authority = sem credibilidade."
+
+    - pattern: "Formula Ramalho como template base para gancho da solucao"
+      formula: "'Ja ouviu falar desse [GIMMICK] que [ORIGIN STORY] estao usando secretamente para [DESEJO]? Ja estao chamando isso de [AUTHORITY HOOK].'"
+      evidence:
+        - "Usado em 5/8 ofertas com variacoes"
+      injection: "Formula Ramalho como TEMPLATE base. Pode ter 3-4 variacoes (curta, media, longa, segmentada) mas estrutura [GIMMICK + ORIGIN + DESEJO + AUTHORITY] e FIXA."
+
+    - pattern: "RMBC >= 7 em todos os 4 criterios como quality gate"
+      evidence:
+        - "8/8 ofertas APPROVED tem RMBC medio >= 8.0"
+        - "Nenhuma oferta com criterio individual < 7"
+      injection: "RMBC como quality gate final: Digerivel >= 7, Unico >= 7, Provavel >= 7, Conectado >= 7. Media geral >= 8.0 para aprovar. Criterio mais fraco indica onde refinar."
+
+    - pattern: "One Belief concatenando [PROBLEMA] + [PARADIGM SHIFT] + [INDUTOR UNICO]"
+      evidence:
+        - "concursa-ai: 'Cada banca elimina... Decodificar esses padroes... Isso so e possivel com o DNA da Banca'"
+        - "decifra-lei-seca: 'Lei seca reprova porque ninguem te mostra... O Codigo da Legislacao revela...'"
+      injection: "One Belief OBRIGATORIO: 2-3 frases que concatenam [NINGUEM TE ENSINA o problema] + [PARADIGM SHIFT] + [INDUTOR como UNICA solucao]. Ancora de TODA copy."
+
+    - pattern: "SEM vs COM personas nomeadas para demonstrar transformacao tangivel"
+      evidence:
+        - "concursa-ai: Carlos (3 anos estudando vs Carlos com DNA)"
+        - "florayla: Dona Maria (62 anos sofrendo vs Dona Maria com truque)"
+      injection: "OBRIGATORIO na producao: SEM [PRODUTO] vs COM [PRODUTO] usando persona NOMEADA. Nome + idade + situacao especifica. Transformacao tangivel > promessa abstrata."
+
+  # ------------------------------------------
+  # Universal Anti-Patterns (avoid in ALL production)
+  # ------------------------------------------
+  universal_anti_patterns:
+
+    - pattern: "blind_critic alto + EST baixo (mecanismo bom, narrativa fraca)"
+      frequency: "3/8 ofertas validadas (37.5%)"
+      evidence:
+        - "florayla: BC 8.0/8.1, EST 7.1 — gap de 0.9-1.0 pontos"
+        - "gabaritando-portugues: BC 9.0/8.0, EST 5.8 — gap de 2.2-3.2 pontos (SEVERO)"
+      injection: "SE blind_critic >= 8 e EST < 8: NAO refazer mecanismo. Refazer NARRATIVA. Adicionar: (1) cenas vividas com detalhes sensoriais, (2) emocoes nivel 4-5 (relacional/identidade), (3) Face 2 da especificidade (narrativa, nao apenas dados)."
+
+    - pattern: "Copy sem Face 2 da especificidade (apenas dados, sem cenas vividas)"
+      frequency: "Correlacionado com TODOS os EST < 8 no portfolio"
+      injection: "CHECKLIST obrigatorio: toda copy precisa de Face 1 (dados especificos: numeros, nomes, locais) + Face 2 (cena vivida: horario, local fisico, sensacao corporal, dialogo). Se so tem dados → adicionar cenas. Se so tem cenas → adicionar dados."
+
+    - pattern: "Paradigm shift vago sem listar solucoes falsas explicitamente"
+      injection: "Paradigm shift FRACO: 'Voce esta fazendo errado'. FORTE: 'Fibra NAO funciona porque nao regenera celulas. Laxantes criam DEPENDENCIA. Medico trata SINTOMA.' LISTAR cada falsa solucao + razao especifica de falha."
+
+    - pattern: "Solucao falsa descredibilizada genericamente"
+      injection: "NUNCA: 'Cursinhos nao funcionam'. SEMPRE: 'Cursinhos usam material GENERICO igual para CEBRASPE e FCC — como se cada banca nao tivesse padroes PROPRIOS de eliminacao (34%, 41%, 19%)'. Especificidade da critica = credibilidade."
+
+    - pattern: "Mecanismo sem espelhamento MUP/MUS"
+      injection: "Se MUP e MUS nao sao espelhos claros (inversao de verbo/metafora), o mecanismo esta INCOMPLETO. Verificar: qual e o verbo do MUP? O MUS usa o verbo INVERSO? Se nao → refazer MUS."
+
+    - pattern: "Nomenclatura unidimensional (apenas 1 nome para mecanismo)"
+      injection: "MINIMO 2 nomes (popular + tecnico) para QUALQUER nicho. Para relacionamento, minimo 3 (popular + tecnico + intrigante). Cada nome serve audiencia e momento diferente."
+
+  # ------------------------------------------
+  # Transfer Rules (adaptar padroes entre nichos)
+  # ------------------------------------------
+  transfer_rules:
+
+    - from: "relacionamento"
+      to: "saude"
+      pattern: "Multi-layer naming (3 nomes)"
+      adaptation: "Saude pode usar: Nome Cientifico (celulas caliciformes) + Nome Popular (celulas de lubrificacao) + Nome Intrigante/Sexy Cause (Morte Silenciosa do Intestino). Atualmente florayla so usa 2 camadas."
+      expected_impact: "EST +1.0 a +1.5 (baseado em diferenca relacionamento vs saude)"
+
+    - from: "relacionamento"
+      to: "concursos"
+      pattern: "Formula [REAL] + [INVENTADO] + [CAUSA EXTERNA]"
+      adaptation: "Concursos pode usar: [DADO REAL da banca] + [PROCESSO INVENTADO] + [CAUSA EXTERNA]. Ex: 'O Algoritmo de Eliminacao (baseado em 34% absolutizantes do CEBRASPE) que os cursinhos IGNORAM porque nao tem acesso aos dados internos.'"
+      expected_impact: "Especificidade +0.5 a +1.0"
+
+    - from: "concursos"
+      to: "saude"
+      pattern: "CreativeDC para geracao de candidatos MUP/MUS"
+      adaptation: "Saude pode gerar 15-20 candidatos MUP em vez de escolher o primeiro. Florayla usou apenas 1 candidato. Decifra Lei Seca usou 17 e encontrou score 8.65."
+      expected_impact: "RMBC +0.5 a +1.0"
+
+    - from: "concursos"
+      to: "relacionamento"
+      pattern: "Numeros nao-redondos por segmento"
+      adaptation: "Relacionamento pode usar: '73% dos casais que passam por crise de distanciamento nos primeiros 18 meses NAO se recuperam sem intervencao'. Adicionar dados de pesquisa psicologica."
+      expected_impact: "blind_critic +0.3 (ja alto, marginal)"
+
+    - from: "saude"
+      to: "concursos"
+      pattern: "Dados PubMed/estudos com PMID e percentuais"
+      adaptation: "Concursos pode referenciar estudos academicos sobre aprendizagem: 'Universidade de X demonstrou que Y% dos alunos que usam tecnica Z melhoram W% (DOI:...)'. Atualmente usa numeros de bancas mas nao de pesquisa."
+      expected_impact: "Authority +0.5"
+
+    - from: "saude"
+      to: "relacionamento"
+      pattern: "Timeline de resultados progressiva (Semana 1, Mes 1, Mes 3)"
+      adaptation: "Relacionamento pode usar: 'Dia 1-3 (primeiros sinais de interesse) → Semana 1 (mensagens aumentam) → Semana 3 (reaproximacao fisica) → Mes 2 (reconexao completa)'. Quimica da Amarracao ja usa Escalada Temporal mas do PROBLEMA, nao da SOLUCAO."
+      expected_impact: "Tangibilidade da promessa +1.0"
+
+    - from: "all"
+      to: "all"
+      pattern: "SEM vs COM personas nomeadas"
+      adaptation: "TODA oferta deve ter persona SEM e COM. Nome + idade + situacao especifica. Nao precisa ser cliente real — precisa ser RECONHECIVEL pelo avatar."
+      expected_impact: "EST +0.5 a +1.0 (transforma dado em cena vivida)"
+
+# =============================================================================
+# SCORING SUMMARY (all APPROVED offers ranked)
+# =============================================================================
+
+scoring_summary:
+  by_rmbc:
+    - offer: "decifra-lei-seca"
+      rmbc: 8.875
+      niche: "concursos"
+    - offer: "hacker"
+      rmbc: 8.75
+      niche: "concursos"
+    - offer: "quimica-amarracao"
+      rmbc: 8.75
+      niche: "relacionamento"
+    - offer: "gabaritando-portugues"
+      rmbc: 8.5
+      niche: "concursos"
+    - offer: "gpt-dos-aprovados"
+      rmbc: 8.25
+      niche: "concursos"
+    - offer: "gabaritando-lei-seca"
+      rmbc: 8.0
+      niche: "concursos"
+
+  by_blind_critic_mup:
+    - offer: "gabaritando-portugues"
+      score: 9.0
+      niche: "concursos"
+    - offer: "quimica-amarracao"
+      score: 9.0
+      niche: "relacionamento"
+    - offer: "decifra-lei-seca"
+      score: 8.6
+      niche: "concursos"
+    - offer: "florayla"
+      score: 8.0
+      niche: "saude"
+    - offer: "hacker"
+      score: 8.0
+      niche: "concursos"
+
+  by_est:
+    - offer: "quimica-amarracao"
+      score: 9.1
+      niche: "relacionamento"
+    - offer: "decifra-lei-seca"
+      score: 9.0
+      niche: "concursos"
+      note: "genericidade score, not standard EST"
+    - offer: "hacker"
+      score: 8.0
+      niche: "concursos"
+    - offer: "florayla"
+      score: 7.1
+      niche: "saude"
+      note: "below threshold"
+    - offer: "gabaritando-portugues"
+      score: 5.8
+      niche: "concursos"
+      note: "SEVERELY below threshold — approved by human override"
+
+  by_black_validation:
+    - offer: "quimica-amarracao"
+      score: 9.2
+      niche: "relacionamento"
+      note: "only offer with black_validation recorded"
+
+# =============================================================================
+# METADATA
+# =============================================================================
+
+metadata:
+  total_offers_in_ecosystem: 9
+  offers_with_approved_mecanismo: 8
+  offers_excluded: ["neuvelys (DRAFT — not validated)"]
+  data_sources:
+    - "helix-state.yaml (9 files)"
+    - "mecanismo-unico.yaml (8 files)"
+    - "briefings/phases/fase-05 (5 files)"
+    - "briefings/phases/fase-06 (5 files)"
+  known_data_gaps:
+    - "hacker, gabaritando-lei-seca, gpt-dos-aprovados: helix-state shows UNDEFINED but mecanismo-unico.yaml shows APPROVED (pre-v7.4 tracking)"
+    - "concursa-ai: no MCP validation scores recorded (pre-MCP validation era)"
+    - "gabaritando-portugues: EST 5.8 below threshold but human-approved"
+    - "florayla: consensus indisponivel (Gemini quota exceeded)"
+  generation_notes: "All patterns extracted from REAL data in files. No invented patterns. Scores are actual validation tool outputs. Where data was missing, noted as null."

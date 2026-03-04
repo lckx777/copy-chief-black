@@ -1,0 +1,24 @@
+---
+template_name: processing-registry
+template_version: "1.0.0"
+template_type: research
+description: "Per-offer registry tracking processed materials to prevent redundant extraction"
+phase: research
+schema: "~/.claude/schemas/processing-registry.schema.yaml"
+---
+
+# Processing Registry — {OFFER_NAME}
+# Auto-populated by: ~/copywriting-ecosystem/scripts/processing-registry.ts
+# Schema: ~/.claude/schemas/processing-registry.schema.yaml
+# Sprint: S44 — Incremental Processing Registry
+#
+# DO NOT edit manually — use the CLI script:
+#   bun run scripts/processing-registry.ts add <path> --source <type> --offer <name> --type <type>
+#   bun run scripts/processing-registry.ts list --offer <name>
+#   bun run scripts/processing-registry.ts check <hash_or_path>
+
+offer: "{OFFER_NAME}"
+created_at: "{TIMESTAMP}"
+updated_at: "{TIMESTAMP}"
+
+entries: []

@@ -1,0 +1,71 @@
+# Copy Chief BLACK — Synapse Manifest
+# Format: KEY=VALUE (CARL-compatible)
+
+DEVMODE=false
+
+# Domain States
+DRE_STATE=active
+DRE_ALWAYS_ON=true
+DRE_NON_NEGOTIABLE=true
+DRE_RECALL=dre,emocao,visceral,sentir,corpo,reacao
+
+HELIX_STATE=active
+HELIX_RECALL=helix,briefing,fase,fases,mup,mus,mecanismo
+
+MECANISMO_STATE=active
+MECANISMO_RECALL=mecanismo,puzzle,rmbc,gimmick,origin,indutor
+
+QUALITY_GATES_STATE=active
+QUALITY_GATES_ALWAYS_ON=true
+QUALITY_GATES_RECALL=gate,threshold,blind_critic,emotional_stress_test,black_validation,validate
+
+ANTI_HOMOG_STATE=active
+ANTI_HOMOG_ALWAYS_ON=true
+ANTI_HOMOG_NON_NEGOTIABLE=true
+ANTI_HOMOG_RECALL=cliche,generico,logo test,homogeneizacao,banned
+
+TOOL_MATRIX_STATE=active
+TOOL_MATRIX_RECALL=ferramenta,tool,obrigatorio,mcp,firecrawl,apify,playwright
+
+CRAFT_STATE=active
+CRAFT_RECALL=produzir,escrever,copy,criativo,vsl,landing,email,escrita,psicologia,checklist,tom,sinestesia,ritmo,fluff
+
+# Agent Triggers (L2 — active when session.active_agent.id matches)
+VOX_AGENT_TRIGGER=vox
+VOX_STATE=active
+ATLAS_AGENT_TRIGGER=atlas
+ATLAS_STATE=active
+ECHO_AGENT_TRIGGER=echo
+ECHO_STATE=active
+HAWK_AGENT_TRIGGER=hawk
+HAWK_STATE=active
+SCOUT_AGENT_TRIGGER=scout
+SCOUT_STATE=active
+FORGE_AGENT_TRIGGER=forge
+FORGE_STATE=active
+BLADE_AGENT_TRIGGER=blade
+BLADE_STATE=active
+CIPHER_AGENT_TRIGGER=cipher
+CIPHER_STATE=active
+OPS_AGENT_TRIGGER=ops
+OPS_STATE=active
+STRATEGIST_AGENT_TRIGGER=strategist
+STRATEGIST_STATE=active
+
+# Workflow Triggers (L3 — active when session.active_workflow.id matches)
+RESEARCH_PIPELINE_WORKFLOW_TRIGGER=research-pipeline
+RESEARCH_PIPELINE_STATE=active
+BRIEFING_PIPELINE_WORKFLOW_TRIGGER=briefing-pipeline
+BRIEFING_PIPELINE_STATE=active
+PRODUCTION_PIPELINE_WORKFLOW_TRIGGER=production-pipeline
+PRODUCTION_PIPELINE_STATE=active
+REVIEW_PIPELINE_WORKFLOW_TRIGGER=review-pipeline
+REVIEW_PIPELINE_STATE=active
+
+# Offer-specific domains (auto-detected by L6)
+FLORAYLA_STATE=active
+FLORAYLA_RECALL=florayla,intestinal,constipacao,caliciformes,psyllium
+NEUVELYS_STATE=active
+NEUVELYS_RECALL=neuvelys,tinnitus,zumbido,otolitos,auditiva
+QUIMICA_AMARRACAO_STATE=active
+QUIMICA_AMARRACAO_RECALL=amarracao,reconquista,quimica,neuroquimica,relacionamento

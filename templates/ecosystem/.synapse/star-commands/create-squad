@@ -1,0 +1,17 @@
+*create-squad — Squad Creator (U-33)
+
+Guided squad creation flow. Generates complete squad structure:
+- squad.yaml with metadata
+- Agent .md files with frontmatter
+- Workflow YAML definitions
+- Data directories
+
+Usage: *create-squad <domain-name>
+
+Steps:
+1. Define domain and purpose
+2. Specify agents (id, role, style, tier)
+3. Define workflows
+4. Generate all files
+
+Module: ~/.claude/.aios-core/copy-chief/workflow/squad-creator.js

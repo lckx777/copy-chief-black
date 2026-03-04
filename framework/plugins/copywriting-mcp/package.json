@@ -1,0 +1,44 @@
+{
+  "name": "copywriting-mcp",
+  "version": "1.0.0",
+  "description": "MCP Plugin for Direct Response Copywriting - HELIX System Integration",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "bun build src/server.ts --outdir dist --target node",
+    "dev": "bun run src/server.ts",
+    "start": "node dist/server.js",
+    "db:init": "bun run src/db/init.ts",
+    "index:voc": "bun run src/indexers/voc-indexer.ts",
+    "index:swipes": "bun run src/indexers/swipe-indexer.ts",
+    "index:memory": "bun run src/indexers/memory-indexer.ts",
+    "index:all": "bun run src/indexers/index-all.ts",
+    "consolidate": "bun run src/scripts/consolidate-memory.ts",
+    "test:embedding": "bun run src/db/embedding-service.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "better-sqlite3": "^11.0.0",
+    "fastembed": "^1.0.0",
+    "glob": "^10.0.0",
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.1",
+    "sqlite-vec": "^0.1.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Luca Pimenta",
+  "license": "MIT",
+  "trustedDependencies": [
+    "better-sqlite3",
+    "onnxruntime-node"
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "tool_usage": [
+    {
+      "tool": "blind_critic",
+      "hour": 23,
+      "day": "Mon",
+      "timestamp": 1771899636012
+    },
+    {
+      "tool": "voc_search",
+      "hour": 23,
+      "day": "Mon",
+      "timestamp": 1771899636013
+    },
+    {
+      "tool": "layered_review",
+      "hour": 23,
+      "day": "Mon",
+      "timestamp": 1771899636013
+    },
+    {
+      "tool": "mcp__copywriting__black_validation",
+      "hour": 14,
+      "day": "Thu",
+      "timestamp": 1772125367718
+    },
+    {
+      "tool": "mcp__copywriting__layered_review",
+      "hour": 14,
+      "day": "Thu",
+      "timestamp": 1772125475667
+    },
+    {
+      "tool": "mcp__copywriting__layered_review",
+      "hour": 14,
+      "day": "Thu",
+      "timestamp": 1772125612453
+    },
+    {
+      "tool": "mcp__copywriting__black_validation",
+      "hour": 14,
+      "day": "Thu",
+      "timestamp": 1772125733981
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 15,
+      "day": "Thu",
+      "timestamp": 1772130961629
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 15,
+      "day": "Thu",
+      "timestamp": 1772130985713
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 15,
+      "day": "Thu",
+      "timestamp": 1772130992546
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 15,
+      "day": "Thu",
+      "timestamp": 1772131000894
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 9,
+      "day": "Fri",
+      "timestamp": 1772194912541
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 9,
+      "day": "Fri",
+      "timestamp": 1772195082589
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 9,
+      "day": "Fri",
+      "timestamp": 1772195117690
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 9,
+      "day": "Fri",
+      "timestamp": 1772195288127
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 13,
+      "day": "Fri",
+      "timestamp": 1772211164170
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 13,
+      "day": "Fri",
+      "timestamp": 1772211164500
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 13,
+      "day": "Fri",
+      "timestamp": 1772211567871
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 13,
+      "day": "Fri",
+      "timestamp": 1772211568175
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 14,
+      "day": "Fri",
+      "timestamp": 1772212016310
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 14,
+      "day": "Fri",
+      "timestamp": 1772212016700
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 10,
+      "day": "Sat",
+      "timestamp": 1772285108339
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 10,
+      "day": "Sat",
+      "timestamp": 1772285108616
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 10,
+      "day": "Sat",
+      "timestamp": 1772286079613
+    },
+    {
+      "tool": "mcp__copywriting__emotional_stress_test",
+      "hour": 10,
+      "day": "Sat",
+      "timestamp": 1772286093198
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772486957513
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487023121
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487053006
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487090528
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487128083
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487341866
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487352896
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487388249
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487396704
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487435164
+    },
+    {
+      "tool": "mcp__copywriting__blind_critic",
+      "hour": 18,
+      "day": "Mon",
+      "timestamp": 1772487444100
+    }
+  ],
+  "suggestions": [
+    {
+      "pattern_id": "PAT-001",
+      "suggested_at": 1771899636013,
+      "followed": true,
+      "outcome_score": 8.5
+    },
+    {
+      "pattern_id": "PAT-001",
+      "suggested_at": 1771977743733,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-003",
+      "suggested_at": 1771978048464,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-002",
+      "suggested_at": 1772111166781,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-001",
+      "suggested_at": 1772124267361,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-003",
+      "suggested_at": 1772124314265,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-003",
+      "suggested_at": 1772125008191,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-003",
+      "suggested_at": 1772125733512,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-001",
+      "suggested_at": 1772130823823,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-003",
+      "suggested_at": 1772130825007,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-001",
+      "suggested_at": 1772210759155,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-003",
+      "suggested_at": 1772211000707,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-001",
+      "suggested_at": 1772461706777,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-003",
+      "suggested_at": 1772461770704,
+      "followed": null
+    },
+    {
+      "pattern_id": "PAT-001",
+      "suggested_at": 1772473068721,
+      "followed": null
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+# Mecanismo Unico — Framework
+
+## Puzzle Pieces (4 Layers)
+1. **Sexy Cause** — Transmissible explanation ("The problem is X, not what you think")
+2. **Gimmick Name** — Sticky name tied to hero ingredient
+3. **Origin Story** — Credible, verifiable origin
+4. **Authority Hook** — References recognized structure (institution, study, elite)
+
+## RMBC Validation (all names)
+| Criterion | Score 1-10 | Threshold |
+|-----------|-----------|-----------|
+| **Digerivel** | Explicavel em 1-2 frases? | >= 7 |
+| **Unico** | Gera "nunca ouvi isso antes"? | >= 7 |
+| **Provavel** | Faz sentido intuitivo? | >= 7 |
+| **Conectado** | Liga com emocao do avatar? | >= 7 |
+
+## States
+UNDEFINED → DRAFT → PENDING → VALIDATED → APPROVED
+
+## Enforcement
+- mecanismo-unico.yaml MUST exist per offer
+- State must be VALIDATED or APPROVED before production/
+- Hook mecanismo-validation.ts blocks writes to production/ without validated mechanism
+
+## Paradigm Shift Pattern
+"O problema NAO e [o que voce pensa]. E [mecanismo unico]."
+This reframe is the core of the MUP — it must create an "aha moment."

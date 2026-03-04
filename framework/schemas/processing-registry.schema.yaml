@@ -1,0 +1,143 @@
+# Processing Registry Schema — S44
+# Tracks processed materials to prevent redundant VOC/swipe/competitor extraction
+# Version: 1.0.0
+# Created: 2026-03-01
+
+$schema: "http://json-schema.org/draft-07/schema#"
+schema_name: processing-registry
+version: "1.0.0"
+description: "Hash-based tracking of processed VOC, swipes, and materials per offer"
+
+# ─── States ───────────────────────────────────────────────────────────────────
+
+valid_sources:
+  - youtube
+  - instagram
+  - tiktok
+  - reddit
+  - amazon
+  - web
+  - file
+
+valid_types:
+  - voc            # VOC extraction (comments, reviews, quotes)
+  - swipe          # Swipe file / competitor copy
+  - mechanism      # Mechanism research
+  - competitor     # Competitor analysis
+  - product_material  # Product materials (VSL, LP, docs)
+
+valid_phases:
+  - research
+  - production
+
+valid_confidence:
+  - HIGH
+  - MEDIUM
+  - LOW
+
+# ─── Schema Definition ────────────────────────────────────────────────────────
+
+type: object
+required:
+  - offer
+  - created_at
+  - updated_at
+  - entries
+
+properties:
+  offer:
+    type: string
+    description: "Offer name (e.g. florayla, neuvelys)"
+
+  created_at:
+    type: string
+    format: date-time
+    description: "Registry creation timestamp"
+
+  updated_at:
+    type: string
+    format: date-time
+    description: "Last update timestamp"
+
+  entries:
+    type: array
+    description: "List of processed material entries"
+    items:
+      type: object
+      required:
+        - hash
+        - path
+        - date
+        - source
+        - offer
+        - type
+      properties:
+        # ── Required fields ──────────────────────────────────────────────────
+        hash:
+          type: string
+          description: "SHA-256 of content or URL (dedup key)"
+          example: "a1b2c3d4..."
+
+        path:
+          type: string
+          description: "Source path (file) or URL (web/social)"
+          example: "https://youtube.com/watch?v=abc123"
+
+        date:
+          type: string
+          format: date-time
+          description: "Processing timestamp (ISO 8601)"
+          example: "2026-03-01T10:30:00.000Z"
+
+        source:
+          type: string
+          enum: [youtube, instagram, tiktok, reddit, amazon, web, file]
+          description: "Platform or source type"
+
+        offer:
+          type: string
+          description: "Offer this material belongs to"
+          example: "florayla"
+
+        type:
+          type: string
+          enum: [voc, swipe, mechanism, competitor, product_material]
+          description: "Material type"
+
+        # ── Optional fields ──────────────────────────────────────────────────
+        processing_phase:
+          type: string
+          enum: [research, production]
+          description: "Which pipeline phase processed this"
+
+        extracted_count:
+          type: integer
+          minimum: 0
+          description: "Number of items extracted (quotes, ads, etc.)"
+          example: 47
+
+        confidence:
+          type: string
+          enum: [HIGH, MEDIUM, LOW]
+          description: "Extraction confidence level"
+
+        ttl_days:
+          type: integer
+          minimum: 1
+          default: 30
+          description: "Days before re-extraction is allowed. Default: 30"
+
+        notes:
+          type: string
+          description: "Optional notes about this extraction"
+
+# ─── Metadata ─────────────────────────────────────────────────────────────────
+
+metadata:
+  schema_version: "1.0.0"
+  sprint: "S44"
+  created_at: "2026-03-01"
+  description: |
+    Per-offer registry file lives at: {offer_path}/processing-registry.yaml
+    Script: ~/copywriting-ecosystem/scripts/processing-registry.ts
+    Hook:   ~/.claude/hooks/processing-check.ts

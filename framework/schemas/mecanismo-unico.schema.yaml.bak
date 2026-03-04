@@ -1,0 +1,249 @@
+# Schema: Mecanismo Unico da Oferta
+# Version: 2.0.0
+# Based on: Framework Ramalho (Puzzle Pieces) + Copy Chief BLACK
+# Usage: Cada oferta DEVE ter um arquivo mecanismo-unico.yaml na raiz
+# Migration: v2.0.0 — PT-BR keys migrated to EN (S12.3)
+#   Preserved: sexy_cause, gimmick_name (Ramalho framework terms)
+
+---
+# META
+version: "2.0.0"
+schema_name: "mecanismo-unico"
+description: |
+  Schema canonico para o Mecanismo Unico da Oferta.
+  Baseado no Framework Ramalho com 3 partes:
+  1. MUP (Mecanismo Unico do Problema)
+  2. MUS (Mecanismo Unico da Solucao)
+  3. INDUTOR (Metodo/Produto)
+
+# ESTADOS VALIDOS
+valid_states:
+  - UNDEFINED    # Ainda nao iniciado
+  - DRAFT        # Em construcao (parcialmente preenchido)
+  - PENDING_VALIDATION  # Completo, aguardando validacao MCP
+  - VALIDATED    # Validado via consensus + blind_critic + emotional_stress_test
+  - APPROVED     # Humano aprovou apos validacao
+
+# THRESHOLDS DE VALIDACAO
+validation_thresholds:
+  consensus: "multi-model agreement"
+  blind_critic: 8  # Score minimo para aprovacao
+  emotional_stress_test: 8  # Genericidade minima
+  rmbc_average: 7  # Media minima dos 4 criterios
+
+---
+# SCHEMA DEFINITION
+
+unique_mechanism:
+  # ============================================
+  # PARTE 1: MUP (Mecanismo Unico do Problema)
+  # ============================================
+  mup:
+    # 1.1 Nova Causa
+    # S12.3: EN keys added. PT alias kept for backward compat — do not remove until all offers migrated.
+    new_cause:
+      description: "O que REALMENTE causa o problema do avatar?"
+      required: true
+      example: "Baixos niveis de GLP fazem o cerebro sentir mais fome"
+      validation:
+        - "E diferente do que o mercado ja fala?"
+        - "Tira a culpa do avatar?"
+        - "Explica por que outras solucoes falharam?"
+    # PT-BR alias (deprecated — use new_cause in new offers)
+    nova_causa:
+      _alias_of: new_cause
+      _deprecated: true
+      description: "ALIAS PT-BR de new_cause. Usar new_cause em novas ofertas."
+
+    # 1.2 Sexy Cause (Nome Intrigante) — PRESERVED (Ramalho framework term)
+    sexy_cause:
+      name: ""
+      required: true
+      description: "Nome SEXY que faz a pessoa pensar 'UAU, isso explica TUDO'"
+      example: "Hungry Brain Syndrome"
+      validation:
+        test: "A pessoa vai querer CONTAR para alguem?"
+        threshold: "transmissible = SIM"
+      candidates:
+        - name: ""
+          transmissible: false
+          score: 0
+        - name: ""
+          transmissible: false
+          score: 0
+        - name: ""
+          transmissible: false
+          score: 0
+
+    # 1.3 Problema Fundamental
+    core_problem:
+      description: "Como a nova causa se aplica TANGIVELMENTE na vida do avatar?"
+      required: true
+      example: "Isso quer dizer que como tem poucas bacterias boas, seu intestino nao consegue processar as calorias e comeca a acumular em forma de gordura."
+
+    # 1.4 Causa Raiz (Historia)
+    root_cause:
+      description: "Qual e a HISTORIA por tras de por que o avatar tem esse problema?"
+      required: false
+      example: "A dieta americana que era focada em gordura, comecou a focar muito em acucar desde 1950..."
+
+  # ============================================
+  # PARTE 2: MUS (Mecanismo Unico da Solucao)
+  # ============================================
+  mus:
+    # 2.1 Nova Oportunidade
+    # S12.3: EN keys added. PT alias kept for backward compat — do not remove until all offers migrated.
+    new_opportunity:
+      description: "Qual e o INVERSO da nova causa?"
+      required: true
+      example: "Aumentar niveis de GLP naturalmente"
+      validation: "Espelha diretamente o MUP?"
+    # PT-BR alias (deprecated — use new_opportunity in new offers)
+    nova_oportunidade:
+      _alias_of: new_opportunity
+      _deprecated: true
+      description: "ALIAS PT-BR de new_opportunity. Usar new_opportunity em novas ofertas."
+
+    # 2.2 Ingrediente Hero
+    hero_ingredient:
+      name: ""
+      required: true
+      description: "Componente PRINCIPAL que resolve a nova causa"
+      nicho_mapping:
+        suplemento: "Substancia (Pink Salt, Banana)"
+        educacao_concursos: "Tecnica Core (Decodificador de Parafrases)"
+        relacionamento: "Protocolo Principal (Tecnica do Espelho)"
+        riqueza: "Estrategia Principal (Metodo dos 3 Potes)"
+
+    # 2.3 Gimmick Name (Nome Chiclete do INGREDIENTE) — PRESERVED (Ramalho framework term)
+    gimmick_name:
+      name: ""
+      required: true
+      description: "Nome chiclete ligado ao INGREDIENTE HERO (nao ao sistema!)"
+      formula: "[Substantivo do Ingrediente] + [Trick/Hack/Truque/Protocolo]"
+      example: "Pink Salt Trick"
+      validation:
+        linked_to_hero: false
+        sticky: false
+      candidates:
+        - name: ""
+          linked_to_hero: false
+          sticky: false
+          score: 0
+        - name: ""
+          linked_to_hero: false
+          sticky: false
+          score: 0
+        - name: ""
+          linked_to_hero: false
+          sticky: false
+          score: 0
+
+    # 2.4 Origin Story (De Onde Veio)
+    origin_story:
+      description: "Historia de COMO o mecanismo foi descoberto"
+      required: true
+      structure:
+        - "Expert/fonte estava no mesmo contexto (identificacao)"
+        - "Contexto especial ou exclusivo (diferenciacao)"
+        - "Descobriu padrao que ninguem mais viu (revelacao)"
+        - "Resultado que prova que funciona (validacao)"
+      example: "Depois de reprovar 3 vezes, analisei 10.000 questoes. Descobri que 78% seguiam 17 padroes que ninguem ensina."
+      validation:
+        credibilidade: false
+        curiosidade: false
+
+    # 2.5 Authority Hook (Validacao via Super Estrutura)
+    authority_hook:
+      name: ""
+      required: true
+      description: "Nome/rotulo que VALIDA o mecanismo via super estrutura"
+      distinction: "Ligado a SUPER ESTRUTURA, nao ao ingrediente!"
+      types:
+        referencia_medicamento:
+          forca: 5
+          examples: ["Monjaro Natural", "Ozempic Natural"]
+        instituicao_reconhecida:
+          forca: 5
+          examples: ["Truque do FBI", "Metodo Harvard"]
+        celebridade_elite:
+          forca: 4
+          examples: ["Segredo de Hollywood", "Protocolo dos Bilionarios"]
+        terceiro_validando:
+          forca: 5
+          examples: ["O neurologista ligou perguntando"]
+        numero_especifico:
+          forca: 4
+          examples: ["Testado em 12.847 pessoas"]
+
+  # ============================================
+  # PARTE 3: INDUTOR DO MECANISMO (Metodo/Produto)
+  # ============================================
+  indutor:
+    # 3.1 Nome do Sistema/Metodo
+    system_name:
+      name: ""
+      required: true
+      validation:
+        memorable: false
+        distinct_from_competitor: false
+        communicates_result: false
+
+    # 3.2 Componentes do Metodo
+    components:
+      required: false
+      items:
+        - name: ""
+          acronym: ""
+          what_it_solves: ""
+
+    # 3.3 Como o Produto Ativa o Mecanismo
+    activation:
+      description: "Como o cliente usa o produto para ativar o mecanismo"
+      required: false
+
+  # ============================================
+  # GANCHO COMPLETO (Formula Ramalho)
+  # ============================================
+  solution_hook:
+    formula: |
+      "Ja ouviu falar desse [GIMMICK NAME] que [ORIGIN STORY] estao usando
+      secretamente para [DESEJO]? Ja estao chamando isso de [AUTHORITY HOOK]."
+    completo: ""
+    required: false
+
+  # ============================================
+  # VALIDACAO FINAL
+  # ============================================
+  validation:
+    rmbc_scores:
+      digestible: 0  # Explicavel em 1-2 frases? (1-10)
+      unique: 0       # Gera "nunca ouvi isso antes"? (1-10)
+      believable: 0   # Faz sentido intuitivo? (1-10)
+      connected: 0    # Liga com emocao do avatar? (1-10)
+    rmbc_average: 0
+    rmbc_passed: false  # true se media >= 7
+
+    mcp_validation:
+      consensus_passed: false
+      blind_critic_mup_score: 0
+      blind_critic_mus_score: 0
+      emotional_stress_test_score: 0
+      all_passed: false
+
+    human_approved: false
+    approved_by: ""
+    approved_at: ""
+
+    # Estado geral
+    state: "UNDEFINED"  # UNDEFINED | DRAFT | PENDING_VALIDATION | VALIDATED | APPROVED
+
+  # ============================================
+  # METADATA
+  # ============================================
+  metadata:
+    offer_name: ""
+    nicho: ""
+    created_at: ""
+    updated_at: ""
+    version: "2.0.0"

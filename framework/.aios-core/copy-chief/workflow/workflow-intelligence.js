@@ -1,0 +1,290 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var workflow_intelligence_exports = {};
+__export(workflow_intelligence_exports, {
+  analyzePhaseProductivity: () => analyzePhaseProductivity,
+  analyzeWaves: () => analyzeWaves,
+  getProductivityReport: () => getProductivityReport,
+  getScoredSuggestions: () => getScoredSuggestions,
+  getWaveSummary: () => getWaveSummary,
+  loadWIEData: () => loadWIEData,
+  parsePatterns: () => parsePatterns,
+  recordFollowed: () => recordFollowed,
+  recordSuggestion: () => recordSuggestion,
+  recordToolUsage: () => recordToolUsage,
+  scoreConfidence: () => scoreConfidence
+});
+module.exports = __toCommonJS(workflow_intelligence_exports);
+var import_fs = require("fs");
+var import_path = require("path");
+const HOME = process.env.HOME || "";
+const WIE_DIR = (0, import_path.join)(HOME, ".claude/learned-patterns");
+const WIE_DATA = (0, import_path.join)(WIE_DIR, "wie-data.json");
+const PATTERNS_PATH = (0, import_path.join)(WIE_DIR, "patterns.yaml");
+const WEIGHTS = {
+  PATTERN_COUNT: 0.3,
+  // How often the pattern was observed
+  RECENCY: 0.25,
+  // When was it last seen
+  CONTEXT_MATCH: 0.25,
+  // Does current context match
+  QA_FEEDBACK: 0.2
+  // Did following the suggestion improve scores?
+};
+function scoreConfidence(pattern, recentTools, currentTool, feedback) {
+  const countScore = Math.min(Math.log2(pattern.count + 1) / Math.log2(11), 1);
+  const relevantRecent = recentTools.filter(
+    (t) => pattern.sequence.some((s) => t.includes(s))
+  );
+  const recencyScore = relevantRecent.length > 0 ? 0.8 : 0.3;
+  let contextScore = 0;
+  if (pattern.sequence.some((s) => currentTool.includes(s))) contextScore = 1;
+  else if (pattern.sequence.some((s) => recentTools.some((t) => t.includes(s)))) contextScore = 0.5;
+  const patternFeedback = feedback.filter((f) => f.pattern_id === pattern.id);
+  let qaScore = 0.5;
+  if (patternFeedback.length > 0) {
+    const followed = patternFeedback.filter((f) => f.followed === true);
+    const notFollowed = patternFeedback.filter((f) => f.followed === false);
+    const followedAvg = followed.length > 0 ? followed.reduce((sum, f) => sum + (f.outcome_score || 7), 0) / followed.length : 0;
+    const notFollowedAvg = notFollowed.length > 0 ? notFollowed.reduce((sum, f) => sum + (f.outcome_score || 5), 0) / notFollowed.length : 0;
+    if (followed.length > 0 && notFollowed.length > 0) {
+      qaScore = followedAvg > notFollowedAvg ? 0.9 : 0.3;
+    } else if (followed.length > 0) {
+      qaScore = followedAvg >= 8 ? 0.9 : 0.6;
+    }
+  }
+  const raw = countScore * WEIGHTS.PATTERN_COUNT + recencyScore * WEIGHTS.RECENCY + contextScore * WEIGHTS.CONTEXT_MATCH + qaScore * WEIGHTS.QA_FEEDBACK;
+  return Math.max(0, Math.min(1, raw));
+}
+function analyzeWaves(data) {
+  const hourCounts = {};
+  const dayCounts = {};
+  for (const entry of data.tool_usage) {
+    hourCounts[entry.hour] = (hourCounts[entry.hour] || 0) + 1;
+    dayCounts[entry.day] = (dayCounts[entry.day] || 0) + 1;
+  }
+  const sortedHours = Object.entries(hourCounts).sort(([, a], [, b]) => b - a).slice(0, 3).map(([h]) => parseInt(h));
+  const sortedDays = Object.entries(dayCounts).sort(([, a], [, b]) => b - a).slice(0, 3).map(([d]) => d);
+  return {
+    peak_hours: sortedHours,
+    peak_days: sortedDays,
+    total_sessions: data.tool_usage.length
+  };
+}
+function recordSuggestion(patternId) {
+  const data = loadWIEData();
+  data.suggestions.push({
+    pattern_id: patternId,
+    suggested_at: Date.now(),
+    followed: null
+  });
+  if (data.suggestions.length > 100) {
+    data.suggestions = data.suggestions.slice(-100);
+  }
+  saveWIEData(data);
+}
+function recordFollowed(patternId, followed, score) {
+  const data = loadWIEData();
+  for (let i = data.suggestions.length - 1; i >= 0; i--) {
+    if (data.suggestions[i].pattern_id === patternId && data.suggestions[i].followed === null) {
+      data.suggestions[i].followed = followed;
+      data.suggestions[i].outcome_score = score;
+      break;
+    }
+  }
+  saveWIEData(data);
+}
+function recordToolUsage(toolName) {
+  const data = loadWIEData();
+  const now = /* @__PURE__ */ new Date();
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  data.tool_usage.push({
+    tool: toolName,
+    hour: now.getHours(),
+    day: days[now.getDay()],
+    timestamp: Date.now()
+  });
+  if (data.tool_usage.length > 1e3) {
+    data.tool_usage = data.tool_usage.slice(-1e3);
+  }
+  data.wave_cache = void 0;
+  saveWIEData(data);
+}
+function loadWIEData() {
+  try {
+    if ((0, import_fs.existsSync)(WIE_DATA)) {
+      return JSON.parse((0, import_fs.readFileSync)(WIE_DATA, "utf8"));
+    }
+  } catch {
+  }
+  return { tool_usage: [], suggestions: [] };
+}
+function saveWIEData(data) {
+  (0, import_fs.mkdirSync)(WIE_DIR, { recursive: true });
+  (0, import_fs.writeFileSync)(WIE_DATA, JSON.stringify(data, null, 2));
+}
+function parsePatterns() {
+  if (!(0, import_fs.existsSync)(PATTERNS_PATH)) return [];
+  const content = (0, import_fs.readFileSync)(PATTERNS_PATH, "utf8");
+  const patterns = [];
+  let current = null;
+  for (const line of content.split("\n")) {
+    const idMatch = line.match(/^\s{2}(PAT-\d+):/);
+    if (idMatch) {
+      if (current?.id) patterns.push(current);
+      current = { id: idMatch[1], title: "", sequence: [], count: 0, status: "", benefit: "" };
+      continue;
+    }
+    if (!current) continue;
+    const t = line.match(/^\s+title:\s*"(.+)"/);
+    if (t) {
+      current.title = t[1];
+      continue;
+    }
+    const s = line.match(/^\s+sequence:\s*\[(.+)\]/);
+    if (s) {
+      current.sequence = s[1].split(",").map((x) => x.trim().replace(/['"]/g, ""));
+      continue;
+    }
+    const c = line.match(/^\s+count:\s*(\d+)/);
+    if (c) {
+      current.count = parseInt(c[1]);
+      continue;
+    }
+    const st = line.match(/^\s+status:\s*(\w+)/);
+    if (st) {
+      current.status = st[1];
+      continue;
+    }
+    const b = line.match(/^\s+benefit:\s*"(.+)"/);
+    if (b) {
+      current.benefit = b[1];
+      continue;
+    }
+  }
+  if (current?.id) patterns.push(current);
+  return patterns;
+}
+function getScoredSuggestions(currentTool, recentTools) {
+  const patterns = parsePatterns().filter((p) => p.status === "learned");
+  if (patterns.length === 0) return [];
+  const data = loadWIEData();
+  return patterns.map((pattern) => {
+    const confidence = scoreConfidence(pattern, recentTools, currentTool, data.suggestions);
+    return {
+      pattern,
+      confidence,
+      message: `[WIE ${(confidence * 100).toFixed(0)}%] ${pattern.id}: ${pattern.title} \u2014 ${pattern.benefit}`
+    };
+  }).filter((s) => s.confidence > 0.3).sort((a, b) => b.confidence - a.confidence);
+}
+function getWaveSummary() {
+  const data = loadWIEData();
+  if (data.tool_usage.length < 10) return "";
+  const waves = analyzeWaves(data);
+  const hours = waves.peak_hours.map((h) => `${h}h`).join(", ");
+  const days = waves.peak_days.join(", ");
+  return `Peak hours: ${hours} | Peak days: ${days} | ${waves.total_sessions} tool calls tracked`;
+}
+function analyzePhaseProductivity() {
+  const data = loadWIEData();
+  if (data.tool_usage.length < 20) return [];
+  const phaseToolMap = {
+    firecrawl: "RESEARCH",
+    playwright: "RESEARCH",
+    fb_ad_library: "RESEARCH",
+    voc_search: "RESEARCH",
+    get_phase_context: "BRIEFING",
+    consensus: "BRIEFING",
+    thinkdeep: "BRIEFING",
+    write_chapter: "PRODUCTION",
+    blind_critic: "PRODUCTION",
+    emotional_stress_test: "PRODUCTION",
+    black_validation: "REVIEW",
+    layered_review: "PRODUCTION"
+  };
+  const phaseData = {};
+  for (const entry of data.tool_usage) {
+    let phase = "OTHER";
+    for (const [key, ph] of Object.entries(phaseToolMap)) {
+      if (entry.tool.includes(key)) {
+        phase = ph;
+        break;
+      }
+    }
+    if (!phaseData[phase]) phaseData[phase] = { hours: [], tools: 0, sessions: /* @__PURE__ */ new Set() };
+    phaseData[phase].hours.push(entry.hour);
+    phaseData[phase].tools++;
+    const sessionKey = `${entry.day}-${entry.hour}`;
+    phaseData[phase].sessions.add(sessionKey);
+  }
+  let phaseScores = {};
+  try {
+    const learningPath = (0, import_path.join)(HOME, ".claude/learning/validation-events.json");
+    if ((0, import_fs.existsSync)(learningPath)) {
+      const events = JSON.parse((0, import_fs.readFileSync)(learningPath, "utf-8"));
+      if (Array.isArray(events)) {
+        for (const ev of events) {
+          const ph = ev.phase || "OTHER";
+          if (!phaseScores[ph]) phaseScores[ph] = [];
+          if (typeof ev.score === "number") phaseScores[ph].push(ev.score);
+        }
+      }
+    }
+  } catch {
+  }
+  return Object.entries(phaseData).map(([phase, pd]) => {
+    const hourCounts = {};
+    for (const h of pd.hours) hourCounts[h] = (hourCounts[h] || 0) + 1;
+    const peakHours = Object.entries(hourCounts).sort(([, a], [, b]) => b - a).slice(0, 2).map(([h]) => parseInt(h));
+    const scores = phaseScores[phase] || [];
+    const avgScore = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+    return {
+      phase,
+      avg_tools_per_session: pd.sessions.size > 0 ? pd.tools / pd.sessions.size : 0,
+      peak_hours: peakHours,
+      avg_score: Math.round(avgScore * 10) / 10,
+      total_sessions: pd.sessions.size
+    };
+  }).sort((a, b) => b.total_sessions - a.total_sessions);
+}
+function getProductivityReport() {
+  const phases = analyzePhaseProductivity();
+  if (phases.length === 0) return "Insufficient data for productivity analysis.";
+  const lines = ["=== Productivity by Phase ==="];
+  for (const p of phases) {
+    const hours = p.peak_hours.map((h) => `${h}h`).join(",");
+    const score = p.avg_score > 0 ? ` | Avg Score: ${p.avg_score}` : "";
+    lines.push(`${p.phase}: ${p.avg_tools_per_session.toFixed(1)} tools/session | Peak: ${hours} | Sessions: ${p.total_sessions}${score}`);
+  }
+  return lines.join("\n");
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  analyzePhaseProductivity,
+  analyzeWaves,
+  getProductivityReport,
+  getScoredSuggestions,
+  getWaveSummary,
+  loadWIEData,
+  parsePatterns,
+  recordFollowed,
+  recordSuggestion,
+  recordToolUsage,
+  scoreConfidence
+});

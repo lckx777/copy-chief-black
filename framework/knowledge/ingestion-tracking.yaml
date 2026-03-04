@@ -1,0 +1,19 @@
+# Ingestion Tracking — System Cloning Quality Threshold (S37.5)
+# Threshold: 100h of content for SUFFICIENT_DATA
+# Updated: 2026-03-01T22:25:38.210Z
+
+last_updated: "2026-03-01T22:25:38.210Z"
+total_words: 140
+total_minutes: 1
+total_hours: 0
+threshold_hours: 100
+percent_complete: 0
+status: INSUFFICIENT_DATA
+
+entries:
+  - id: "105ac919"
+    source: "test-content.md"
+    ingested_at: "2026-03-01T22:25:38.210Z"
+    word_count: 140
+    estimated_minutes: 1
+    estimated_hours: 0

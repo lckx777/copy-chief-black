@@ -1,0 +1,532 @@
+# Production Pipeline — DAG Definition
+# Sprint S40.3 — DAG Pipeline Engine
+# Schema: ~/.claude/schemas/pipeline-dag.schema.yaml
+# Created: 2026-03-01
+
+id: production-pipeline
+name: "Production Pipeline"
+version: "1.0"
+description: "Copy production pipeline for all deliverables: VSL, Landing Page, Criativos, Emails. All 4 deliverable tracks run in parallel after the entry gate. Each track has its own internal validation chain."
+
+nodes:
+  # ═══════════════════════════════════════════
+  # ENTRY GATE
+  # ═══════════════════════════════════════════
+  - id: production-gate
+    label: "Production Gate"
+    type: gate
+    persona: "@gatekeeper"
+    tools:
+      - validate_gate
+    status: pending
+    threshold: 70
+    description: "Entry gate: briefing gate PASSED + mecanismo-unico.yaml in VALIDATED or APPROVED state"
+
+  # ═══════════════════════════════════════════
+  # PARALLEL GROUP — All deliverables
+  # ═══════════════════════════════════════════
+  - id: production-parallel
+    label: "Production (Parallel)"
+    type: parallel_group
+    status: pending
+    parallel_members:
+      - vsl-track
+      - lp-track
+      - creatives-track
+      - emails-track
+    description: "All 4 production tracks execute concurrently. Each has independent validation chain."
+
+  # ═══════════════════════════════════════════
+  # VSL TRACK (6 chapters + validation)
+  # ═══════════════════════════════════════════
+  - id: vsl-track
+    label: "VSL Track"
+    type: parallel_group
+    persona: "@vsl"
+    status: pending
+    parallel_members:
+      - vsl-chapter-1
+      - vsl-chapter-2
+      - vsl-chapter-3
+      - vsl-chapter-4
+      - vsl-chapter-5
+      - vsl-chapter-6
+    description: "VSL script production: 6 chapters written and validated individually, then assembled"
+
+  - id: vsl-chapter-1
+    label: "VSL Ch.1 — Hook/Lead"
+    type: task
+    persona: "@vsl"
+    tools:
+      - write_chapter
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate Chapter 1: Hook, identification, agitation (DRE levels 1-2)"
+    deliverable: "production/vsl/drafts/chapter-01.md"
+
+  - id: vsl-chapter-2
+    label: "VSL Ch.2 — Problem Amplification"
+    type: task
+    persona: "@vsl"
+    tools:
+      - write_chapter
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate Chapter 2: Problem escalation to DRE level 4"
+    deliverable: "production/vsl/drafts/chapter-02.md"
+
+  - id: vsl-chapter-3
+    label: "VSL Ch.3 — Mechanism Reveal"
+    type: task
+    persona: "@vsl"
+    tools:
+      - write_chapter
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate Chapter 3: MUP reveal (paradigm shift)"
+    deliverable: "production/vsl/drafts/chapter-03.md"
+
+  - id: vsl-chapter-4
+    label: "VSL Ch.4 — Solution/Product"
+    type: task
+    persona: "@vsl"
+    tools:
+      - write_chapter
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate Chapter 4: MUS reveal, Gimmick Name, product presentation"
+    deliverable: "production/vsl/drafts/chapter-04.md"
+
+  - id: vsl-chapter-5
+    label: "VSL Ch.5 — Social Proof"
+    type: task
+    persona: "@vsl"
+    tools:
+      - write_chapter
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate Chapter 5: testimonials, studies, authority"
+    deliverable: "production/vsl/drafts/chapter-05.md"
+
+  - id: vsl-chapter-6
+    label: "VSL Ch.6 — Offer/CTA"
+    type: task
+    persona: "@vsl"
+    tools:
+      - write_chapter
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate Chapter 6: offer stack, guarantee, urgency, CTA"
+    deliverable: "production/vsl/drafts/chapter-06.md"
+
+  - id: vsl-assembly
+    label: "VSL Assembly"
+    type: task
+    persona: "@vsl"
+    tools: []
+    status: pending
+    description: "Assemble all 6 chapters into complete VSL script"
+    deliverable: "production/vsl/drafts/vsl-complete.md"
+
+  - id: vsl-layered-review
+    label: "VSL Layered Review (3 layers)"
+    type: task
+    persona: "@critic"
+    tools:
+      - layered_review
+    status: pending
+    description: "3-layer review: cut excess, increase viscerality, read aloud test"
+
+  - id: vsl-stress-test
+    label: "VSL Emotional Stress Test"
+    type: gate
+    persona: "@critic"
+    tools:
+      - emotional_stress_test
+    status: pending
+    threshold: 8
+    description: "Full VSL emotional stress test: genericidade >= 8"
+
+  - id: vsl-black-validation
+    label: "VSL BLACK Validation"
+    type: gate
+    persona: "@critic"
+    tools:
+      - black_validation
+    status: pending
+    threshold: 8
+    human_gate: true
+    description: "Final VSL validation gate. Score >= 8 required. Human approval before delivery."
+    deliverable: "production/vsl/final/vsl-approved.md"
+
+  # ═══════════════════════════════════════════
+  # LANDING PAGE TRACK (14 blocks)
+  # ═══════════════════════════════════════════
+  - id: lp-track
+    label: "Landing Page Track"
+    type: parallel_group
+    persona: "@lp"
+    status: pending
+    parallel_members:
+      - lp-blocks-1-7
+      - lp-blocks-8-14
+    description: "LP production: 14 blocks written block-by-block, each validated individually"
+
+  - id: lp-blocks-1-7
+    label: "LP Blocks 1-7 (Header → Proof)"
+    type: task
+    persona: "@lp"
+    tools:
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate blocks 1-7: header, lead, problem, villain, mechanism, solution, benefits"
+    deliverable: "production/landing-page/blocks/"
+
+  - id: lp-blocks-8-14
+    label: "LP Blocks 8-14 (Proof → CTA)"
+    type: task
+    persona: "@lp"
+    tools:
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate blocks 8-14: proof, authority, value stack, guarantee, price, FAQ, final CTA"
+    deliverable: "production/landing-page/blocks/"
+
+  - id: lp-assembly
+    label: "LP Assembly"
+    type: task
+    persona: "@lp"
+    tools: []
+    status: pending
+    description: "Assemble all 14 blocks into complete landing page"
+    deliverable: "production/landing-page/lp-complete.md"
+
+  - id: lp-stress-test
+    label: "LP Emotional Stress Test"
+    type: gate
+    persona: "@critic"
+    tools:
+      - emotional_stress_test
+    status: pending
+    threshold: 8
+    description: "Full LP emotional stress test: genericidade >= 8"
+
+  - id: lp-black-validation
+    label: "LP BLACK Validation"
+    type: gate
+    persona: "@critic"
+    tools:
+      - black_validation
+    status: pending
+    threshold: 8
+    human_gate: true
+    description: "Final LP validation gate. Score >= 8. Human approval before delivery."
+    deliverable: "production/landing-page/final/lp-approved.md"
+
+  # ═══════════════════════════════════════════
+  # CREATIVES TRACK (5 pieces)
+  # ═══════════════════════════════════════════
+  - id: creatives-track
+    label: "Criativos Track"
+    type: task
+    persona: "@creative"
+    status: pending
+    description: "Creative production: 5+ ad variations (hooks, scripts, UGC)"
+
+  - id: creatives-hooks
+    label: "Creative Hooks (5+ variations)"
+    type: task
+    persona: "@creative"
+    tools:
+      - blind_critic
+    status: pending
+    threshold: 7
+    description: "Generate 5+ hook variations for different formats (UGC, expert, pattern interrupt)"
+    deliverable: "production/creatives/hooks/"
+
+  - id: creatives-scripts
+    label: "Creative Scripts (3 full)"
+    type: task
+    persona: "@creative"
+    tools:
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write 3 complete creative scripts with hook+body+CTA"
+    deliverable: "production/creatives/scripts/"
+
+  - id: creatives-stress-test
+    label: "Creatives Emotional Stress Test"
+    type: gate
+    persona: "@critic"
+    tools:
+      - emotional_stress_test
+    status: pending
+    threshold: 8
+    description: "Creative stress test: genericidade >= 8"
+
+  - id: creatives-black-validation
+    label: "Creatives BLACK Validation"
+    type: gate
+    persona: "@critic"
+    tools:
+      - black_validation
+    status: pending
+    threshold: 8
+    description: "Final creatives validation. Score >= 8."
+    deliverable: "production/creatives/final/"
+
+  # ═══════════════════════════════════════════
+  # EMAILS TRACK (7 emails)
+  # ═══════════════════════════════════════════
+  - id: emails-track
+    label: "Email Sequence Track"
+    type: task
+    persona: "@producer"
+    status: pending
+    description: "Email sequence production: welcome, nurture, cart abandon sequences"
+
+  - id: emails-welcome
+    label: "Welcome Sequence (3 emails)"
+    type: task
+    persona: "@producer"
+    tools:
+      - blind_critic
+    status: pending
+    threshold: 7
+    description: "Write and validate 3-email welcome sequence"
+    deliverable: "production/emails/welcome/"
+
+  - id: emails-nurture
+    label: "Nurture Sequence (3 emails)"
+    type: task
+    persona: "@producer"
+    tools:
+      - blind_critic
+    status: pending
+    threshold: 7
+    description: "Write and validate nurture sequence emails"
+    deliverable: "production/emails/nurture/"
+
+  - id: emails-cart-abandon
+    label: "Cart Abandon Sequence (1 email)"
+    type: task
+    persona: "@producer"
+    tools:
+      - blind_critic
+    status: pending
+    threshold: 8
+    description: "Write and validate cart abandonment email"
+    deliverable: "production/emails/cart-abandon/"
+
+  - id: emails-stress-test
+    label: "Emails Emotional Stress Test"
+    type: gate
+    persona: "@critic"
+    tools:
+      - emotional_stress_test
+    status: pending
+    threshold: 8
+    description: "Full email sequence stress test"
+
+  - id: emails-black-validation
+    label: "Emails BLACK Validation"
+    type: gate
+    persona: "@critic"
+    tools:
+      - black_validation
+    status: pending
+    threshold: 8
+    description: "Final email sequence validation. Score >= 8."
+    deliverable: "production/emails/final/"
+
+  # ═══════════════════════════════════════════
+  # EXIT GATE
+  # ═══════════════════════════════════════════
+  - id: delivery-gate
+    label: "Delivery Gate"
+    type: gate
+    persona: "@gatekeeper"
+    tools:
+      - black_validation
+    status: pending
+    threshold: 8
+    human_gate: true
+    description: "Final delivery gate: all deliverables have black_validation >= 8. Human approves before going live."
+
+edges:
+  # Entry gate → parallel group
+  - from: production-gate
+    to: production-parallel
+    type: gates
+    condition: "status == 'completed'"
+
+  # Parallel group → all tracks
+  - from: production-parallel
+    to: vsl-track
+    type: requires
+
+  - from: production-parallel
+    to: lp-track
+    type: requires
+
+  - from: production-parallel
+    to: creatives-track
+    type: requires
+
+  - from: production-parallel
+    to: emails-track
+    type: requires
+
+  # VSL track internal flow
+  - from: vsl-track
+    to: vsl-chapter-1
+    type: requires
+
+  - from: vsl-track
+    to: vsl-chapter-2
+    type: requires
+
+  - from: vsl-track
+    to: vsl-chapter-3
+    type: requires
+
+  - from: vsl-track
+    to: vsl-chapter-4
+    type: requires
+
+  - from: vsl-track
+    to: vsl-chapter-5
+    type: requires
+
+  - from: vsl-track
+    to: vsl-chapter-6
+    type: requires
+
+  - from: vsl-chapter-1
+    to: vsl-assembly
+    type: produces
+
+  - from: vsl-chapter-2
+    to: vsl-assembly
+    type: produces
+
+  - from: vsl-chapter-3
+    to: vsl-assembly
+    type: produces
+
+  - from: vsl-chapter-4
+    to: vsl-assembly
+    type: produces
+
+  - from: vsl-chapter-5
+    to: vsl-assembly
+    type: produces
+
+  - from: vsl-chapter-6
+    to: vsl-assembly
+    type: produces
+
+  - from: vsl-assembly
+    to: vsl-layered-review
+    type: requires
+
+  - from: vsl-layered-review
+    to: vsl-stress-test
+    type: requires
+
+  - from: vsl-stress-test
+    to: vsl-black-validation
+    type: gates
+    condition: "score >= 8"
+
+  # LP track internal flow
+  - from: lp-track
+    to: lp-blocks-1-7
+    type: requires
+
+  - from: lp-track
+    to: lp-blocks-8-14
+    type: requires
+
+  - from: lp-blocks-1-7
+    to: lp-assembly
+    type: produces
+
+  - from: lp-blocks-8-14
+    to: lp-assembly
+    type: produces
+
+  - from: lp-assembly
+    to: lp-stress-test
+    type: requires
+
+  - from: lp-stress-test
+    to: lp-black-validation
+    type: gates
+    condition: "score >= 8"
+
+  # Creatives track internal flow
+  - from: creatives-track
+    to: creatives-hooks
+    type: requires
+
+  - from: creatives-hooks
+    to: creatives-scripts
+    type: requires
+
+  - from: creatives-scripts
+    to: creatives-stress-test
+    type: produces
+
+  - from: creatives-stress-test
+    to: creatives-black-validation
+    type: gates
+    condition: "score >= 8"
+
+  # Emails track internal flow
+  - from: emails-track
+    to: emails-welcome
+    type: requires
+
+  - from: emails-welcome
+    to: emails-nurture
+    type: requires
+
+  - from: emails-nurture
+    to: emails-cart-abandon
+    type: requires
+
+  - from: emails-cart-abandon
+    to: emails-stress-test
+    type: produces
+
+  - from: emails-stress-test
+    to: emails-black-validation
+    type: gates
+    condition: "score >= 8"
+
+  # All tracks → delivery gate
+  - from: vsl-black-validation
+    to: delivery-gate
+    type: produces
+
+  - from: lp-black-validation
+    to: delivery-gate
+    type: produces
+
+  - from: creatives-black-validation
+    to: delivery-gate
+    type: produces
+
+  - from: emails-black-validation
+    to: delivery-gate
+    type: produces

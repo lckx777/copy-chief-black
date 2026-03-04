@@ -1,0 +1,89 @@
+squad:
+  name: Copy Chief BLACK
+  id: copy-chief
+  version: "1.0.0"
+  description: "Direct Response copy production squad — VSL, Landing Page, Creatives, Emails"
+
+  agents:
+    - id: helix
+      role: orchestrator
+      handle: "@chief"
+      tier: 1
+    - id: vox
+      role: researcher
+      handle: "@researcher"
+      tier: 2
+    - id: cipher
+      role: miner
+      handle: "@miner"
+      tier: 3
+    - id: atlas
+      role: briefer
+      handle: "@briefer"
+      tier: 2
+    - id: echo
+      role: vsl
+      handle: "@vsl"
+      tier: 2
+    - id: forge
+      role: lp
+      handle: "@lp"
+      tier: 3
+    - id: scout
+      role: creative
+      handle: "@creative"
+      tier: 3
+    - id: blade
+      role: producer
+      handle: "@producer"
+      tier: 3
+    - id: hawk
+      role: critic
+      handle: "@critic"
+      tier: 2
+    - id: sentinel
+      role: gatekeeper
+      handle: "@gatekeeper"
+      tier: 2
+    - id: ops
+      role: ops
+      handle: "@ops"
+      tier: 1
+    - id: strategist
+      role: strategy
+      handle: "@strategist"
+      tier: 1
+    - id: reflection
+      role: reflection
+      handle: "@reflect"
+      tier: 2
+
+  data_tiers:
+    tier_1_shared: "squads/copy-chief/data/craft/"
+    tier_2_agent: "squads/copy-chief/data/"
+    tier_3_swipes: "skills/*/references/swipe-files/"
+
+  health_check_modules:
+    - hooks-heartbeat
+    - synapse-performance
+    - data-tier-integrity
+
+  workflows:
+    - research-pipeline
+    - briefing-pipeline
+    - production-pipeline
+    - review-pipeline
+
+  mcp_stack:
+    - name: copywriting
+      tools: [blind_critic, emotional_stress_test, black_validation, layered_review, write_chapter, voc_search, get_phase_context, validate_gate, create_mecanismo, validate_mecanismo]
+    - name: fb_ad_library
+      tools: [get_meta_ads, get_meta_platform_id, analyze_ad_video, analyze_ad_videos_batch]
+    - name: firecrawl
+      tools: [firecrawl_agent, firecrawl_scrape, firecrawl_search, firecrawl_crawl]
+    - name: zen
+      tools: [consensus, thinkdeep, challenge, codereview]
+    - name: apify
+      tools: [call-actor, search-actors, get-actor-output, get-dataset-items]
+    - name: playwright
+      tools: [browser_navigate, browser_snapshot, browser_click, browser_fill_form]

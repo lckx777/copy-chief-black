@@ -1,0 +1,380 @@
+# APEX Fidelity Prompts — 24 Experts
+# Sprint: S7.2
+# Uso: fidelity-score.ts carrega o prompt do expert e avalia copy contra ele
+# Criado: 2026-03-02
+
+version: "1.0"
+
+# Prompt base usado para TODOS os experts (customizado com {expert_*} vars)
+base_prompt: |
+  Avalie a FIDELIDADE desta copy ao estilo de {expert_name}.
+
+  ## Expert DNA
+  {expert_core_philosophy}
+
+  ## Técnicas Assinatura Esperadas
+  {expert_techniques}
+
+  ## Critérios APEX (score 1-10 cada)
+
+  **A — Adherence:** A copy segue os princípios CORE de {expert_name}?
+  - Princípios core presentes e aplicados?
+  - Filosofia do expert evidente nas escolhas?
+
+  **P — Precision:** Usa técnicas ESPECÍFICAS de {expert_name}?
+  - Quais técnicas assinatura estão presentes?
+  - São aplicadas com profundidade ou superficialmente?
+
+  **E — Expression:** Tom, ritmo e vocabulário batem com {expert_name}?
+  - Se remover o nome, saberia QUAL expert escreveu?
+  - Voz consistente ao longo da peça?
+
+  **X — eXecution:** Funciona como DR copy que converte?
+  - Além de soar como o expert, VENDE?
+  - CTA, urgência, proof presentes?
+
+  Responda em YAML:
+  ```yaml
+  adherence: [1-10]
+  precision: [1-10]
+  expression: [1-10]
+  execution: [1-10]
+  apex_total: [média]
+  techniques_found: ["lista de técnicas assinatura identificadas"]
+  strong_dimension: "A|P|E|X"
+  weak_dimension: "A|P|E|X"
+  verdict: "MASTERFUL|FAITHFUL|DILUTED|MISSED"
+  notes: "observação breve"
+  ```
+
+# Expert-specific overrides (philosophy + techniques para injetar no base_prompt)
+experts:
+
+  schwartz:
+    name: "Eugene Schwartz"
+    core_philosophy: |
+      Copy é ASSEMBLAR desejos existentes, não criá-los. O headline é sobre a conversa
+      mental do prospect, não sobre o produto. 5 níveis de awareness. 5 níveis de
+      sophistication. Canalizar desejo massivo existente para o produto.
+    techniques:
+      - "5 awareness levels (Unaware → Most Aware)"
+      - "5 sophistication levels"
+      - "Mass desire channeling"
+      - "Headline como ponte para conversa existente"
+    strong_dimension: "A"
+    threshold: { adherence: 8 }
+
+  collier:
+    name: "Robert Collier"
+    core_philosophy: |
+      Entrar na conversa já na mente do prospect. A copy não começa quando o prospect
+      lê — começa antes, na cabeça dele. Desire matching. Formato de carta pessoal.
+    techniques:
+      - "Enter the conversation in their mind"
+      - "Desire matching"
+      - "Letter format / personal tone"
+      - "Empathy bridge antes de vender"
+    strong_dimension: "E"
+    threshold: { expression: 8 }
+
+  ogilvy:
+    name: "David Ogilvy"
+    core_philosophy: |
+      We sell, or else. A consumidora não é idiota — ela é sua esposa. Research-first.
+      Facts over adjectives. Long headlines. Brand+DR hybrid. Quanto mais você CONTA,
+      mais você VENDE.
+    techniques:
+      - "Long headlines (10+ words)"
+      - "Research facts como argumento central"
+      - "Brand + Direct Response hybrid"
+      - "Zero adjetivos vazios — só fatos verificáveis"
+    strong_dimension: "P"
+    threshold: { precision: 8 }
+
+  cialdini:
+    name: "Robert Cialdini"
+    core_philosophy: |
+      7 princípios de influência: Reciprocidade, Compromisso, Prova Social, Autoridade,
+      Afinidade, Escassez, Unidade. Pre-suasion: preparar o terreno ANTES do pedido.
+      Persuasão ética baseada em ciência.
+    techniques:
+      - "2+ princípios de influência aplicados"
+      - "Pre-suasion (priming antes do pedido)"
+      - "Social proof architecture"
+      - "Ethical persuasion framework"
+    strong_dimension: "P"
+    threshold: { precision: 8 }
+
+  brown:
+    name: "Todd Brown"
+    core_philosophy: |
+      E5 Method. Unique Mechanism. New Opportunity (não improvement). Paradigm shift.
+      Big Marketing Idea. O mecanismo é onde mora a conversão. Sem mecanismo único,
+      você é commodity.
+    techniques:
+      - "E5 Method (Educate, Excite, Engage, Empower, Enroll)"
+      - "Unique Mechanism explícito e nomeado"
+      - "Paradigm shift (não melhoria — nova oportunidade)"
+      - "Big Marketing Idea como eixo central"
+    strong_dimension: "P"
+    threshold: { precision: 9 }
+
+  bencivenga:
+    name: "Gary Bencivenga"
+    core_philosophy: |
+      A prova mais forte é a melhor venda. One Key Idea — uma ideia central,
+      não várias. Convicção > Claims. 80% research, 20% writing. Belief harvesting.
+      Prospect deve sentir que DESCOBRIU, não que foi VENDIDO.
+    techniques:
+      - "Persuasion equations"
+      - "Implicit promises"
+      - "One Key Idea discipline"
+      - "Belief harvesting (usar crenças existentes)"
+      - "Conviction architecture"
+    strong_dimension: "A"
+    threshold: { adherence: 8 }
+
+  reeves:
+    name: "Rosser Reeves"
+    core_philosophy: |
+      Unique Selling Proposition. UMA claim, repetida sem parar. Não 3 claims.
+      Não 5 claims. UMA. E martele até grudar. Reality in Advertising.
+    techniques:
+      - "USP — single proposition"
+      - "Repetição estratégica da claim central"
+      - "Zero dispersão — uma mensagem"
+      - "Reality in Advertising framework"
+    strong_dimension: "P"
+    threshold: { precision: 9 }
+
+  makepeace:
+    name: "Clayton Makepeace"
+    core_philosophy: |
+      Pessoas compram com EMOÇÃO, justificam com lógica. $1.5 bilhão em vendas.
+      DRE — Dominant Resident Emotion. Emoção crua + prova cirúrgica = imbatível.
+      Se o leitor fica calmo lendo sua copy, você FALHOU. Emotional Selling Proposition.
+    techniques:
+      - "Emotional Selling Proposition"
+      - "Power leads (emoção nos primeiros 5 segundos)"
+      - "Emotion + Proof fusion (emoção crua + prova irrefutável)"
+      - "DRE amplification (nível 4-5)"
+      - "Control-killing specificity"
+    strong_dimension: "E"
+    threshold: { expression: 9 }
+
+  abraham:
+    name: "Jay Abraham"
+    core_philosophy: |
+      Strategy of Preeminence — ser o advisor mais confiável. 3 multiplicadores:
+      mais clientes × mais transações × ticket maior. Geometric growth. JV master.
+      Risk reversal total.
+    techniques:
+      - "Strategy of Preeminence"
+      - "3 multiplicadores"
+      - "Geometric growth thinking"
+      - "Risk reversal como estratégia central"
+    strong_dimension: "A"
+    threshold: { adherence: 8 }
+
+  hormozi:
+    name: "Alex Hormozi"
+    core_philosophy: |
+      Grand Slam Offer. Value Equation: Dream Outcome × Perceived Likelihood /
+      Time Delay × Effort & Sacrifice. Fazer a oferta tão boa que o prospect se
+      sente BURRO em recusar. $100M Offers.
+    techniques:
+      - "Value Equation (4 variáveis)"
+      - "Grand Slam Offer framework"
+      - "Dream outcome articulation"
+      - "Stack de valor que faz preço parecer ridículo"
+    strong_dimension: "P"
+    threshold: { precision: 9 }
+
+  halbert:
+    name: "Gary Halbert"
+    core_philosophy: |
+      A-pile. Copy é carta de uma pessoa para outra. Cada frase PUXA a próxima.
+      Especificidade fanática. Linguagem de mesa de cozinha. The most important
+      ingredient is the LIST, not the copy.
+    techniques:
+      - "A-pile energy (urgência de abrir)"
+      - "Specificity obsession (números, nomes, detalhes)"
+      - "Kitchen-table language (conversa, não redação)"
+      - "Each sentence pulls to the next"
+    strong_dimension: "E"
+    threshold: { expression: 9 }
+
+  sugarman:
+    name: "Joe Sugarman"
+    core_philosophy: |
+      Slippery slope — o leitor não consegue parar de ler. 30 Psychological Triggers.
+      Curiosity seeds. Involvement devices. Flow é tudo. Se o leitor PARA em qualquer
+      ponto, a copy falhou.
+    techniques:
+      - "Slippery slope (impossível parar de ler)"
+      - "30 Psychological Triggers"
+      - "Curiosity seeds entre parágrafos"
+      - "Involvement devices (mental engagement)"
+    strong_dimension: "E"
+    threshold: { expression: 9 }
+
+  kennedy:
+    name: "Dan Kennedy"
+    core_philosophy: |
+      No BS. Deadline stacking. Takeaway selling. Reason-why para cada elemento.
+      Magnetic marketing. Urgência não é gimmick — é respect pelo tempo do prospect.
+      O close não é o final — é a RAZÃO da copy existir.
+    techniques:
+      - "Deadline stacking (múltiplas razões de urgência)"
+      - "Takeaway selling (nem todo mundo pode ter)"
+      - "Reason-why para cada claim"
+      - "No BS directness"
+    strong_dimension: "X"
+    threshold: { execution: 9 }
+
+  caples:
+    name: "John Caples"
+    core_philosophy: |
+      Tested Advertising Methods. Headline é onde 80% do dinheiro está. A/B test
+      TUDO. Métricas > opiniões. Se não mediu, não sabe se funciona.
+    techniques:
+      - "Headline formulas testadas"
+      - "A/B split-test mindset"
+      - "Measurable results orientation"
+      - "Proven headline templates"
+    strong_dimension: "P"
+    threshold: { precision: 8 }
+
+  carlton:
+    name: "John Carlton"
+    core_philosophy: |
+      Simple Writing System. Street-smart. Copy crua, sem filtro. Personalidade
+      é arma. Freelance kick-ass. Escrever como se estivesse no bar explicando
+      para um amigo.
+    techniques:
+      - "Simple Writing System"
+      - "Street-smart voice (bar, não escritório)"
+      - "Personality as weapon"
+      - "Raw honesty over polish"
+    strong_dimension: "E"
+    threshold: { expression: 8 }
+
+  chaperon:
+    name: "Andre Chaperon"
+    core_philosophy: |
+      Email é storytelling serializado. Soap opera sequence. Open loops entre emails
+      que FORÇAM a abertura do próximo. Autoresponder Madness. Narrative arcs que
+      criam relacionamento antes de vender.
+    techniques:
+      - "Soap opera sequence"
+      - "Open loops entre emails"
+      - "Narrative arcs"
+      - "Autoresponder architecture"
+    strong_dimension: "P"
+    threshold: { precision: 9 }
+
+  kern:
+    name: "Frank Kern"
+    core_philosophy: |
+      Personality-driven. Conversational selling. Tribe building. Launch sequences.
+      Ser genuíno vende mais que ser polished. A pessoa compra VOCÊ antes de
+      comprar o produto.
+    techniques:
+      - "Personality-driven copy"
+      - "Conversational selling (não formal)"
+      - "Tribe building"
+      - "Launch sequence architecture"
+    strong_dimension: "E"
+    threshold: { expression: 8 }
+
+  agora:
+    name: "Agora Financial Model"
+    core_philosophy: |
+      Industrial copy machine. Big Idea + processo. Financial promotions.
+      Magalogs. Advertorials. Fear-greed oscillation. Volume com processo.
+    techniques:
+      - "Magalog structure"
+      - "Fear-greed oscillation"
+      - "Advertorial format"
+      - "Financial promo framework (crisis → opportunity)"
+    strong_dimension: "P"
+    threshold: { precision: 8 }
+
+  sabri:
+    name: "Sabri Suby"
+    core_philosophy: |
+      Sell Like Crazy. HPDA (Hook, Problem, Dream, Ask). Godfather Offer.
+      Volume de variações. Testing obsessivo. 8-Phase formula. Data > intuição.
+    techniques:
+      - "HPDA formula"
+      - "Godfather Offer (can't refuse)"
+      - "8-Phase testing"
+      - "Volume de variações com data tracking"
+    strong_dimension: "X"
+    threshold: { execution: 8 }
+
+  brunson:
+    name: "Russell Brunson"
+    core_philosophy: |
+      DotCom Secrets. Epiphany Bridge. Attractive Character. Funnel hacking.
+      Cada etapa do funil tem UM propósito. Secret formula: Dream Customer →
+      Bait → Funnel → Frontend → Backend.
+    techniques:
+      - "Epiphany Bridge stories"
+      - "Attractive Character framework"
+      - "Funnel stage-specific copy"
+      - "Secret Formula (dream customer → bait → funnel)"
+    strong_dimension: "P"
+    threshold: { precision: 8 }
+
+  ry_schwartz:
+    name: "Ryan Schwartz"
+    core_philosophy: |
+      Cohort launches. Agora model para digital. Cross-promotions. Backend
+      monetization. Belief shift como estratégia de email. VOC-driven copy.
+    techniques:
+      - "Cohort launch structure"
+      - "Cross-promotion architecture"
+      - "Belief shift sequences"
+      - "Backend monetization strategy"
+    strong_dimension: "P"
+    threshold: { precision: 8 }
+
+  powers:
+    name: "John E. Powers"
+    core_philosophy: |
+      O primeiro copywriter. Honestidade radical. Anti-hype. Plain speak. Se o
+      produto tem defeito, DIGA. Honestidade vende mais que hype. Retail truth.
+    techniques:
+      - "Radical honesty (admit flaws)"
+      - "Anti-hype (zero exaggeration)"
+      - "Plain speak (shortest words)"
+      - "Truth as selling strategy"
+    strong_dimension: "E"
+    threshold: { expression: 9 }
+
+  vaynerchuk:
+    name: "Gary Vaynerchuk"
+    core_philosophy: |
+      Platform-native. Jab Jab Jab Right Hook. Attention arbitrage. Social-first.
+      Content que funciona no feed, não content adaptado de outro formato.
+    techniques:
+      - "Platform-native content (cada plataforma = linguagem)"
+      - "Jab Jab Jab Right Hook cadence"
+      - "Attention arbitrage"
+      - "Social-first, not adapted"
+    strong_dimension: "E"
+    threshold: { expression: 8 }
+
+  hopkins:
+    name: "Claude Hopkins"
+    core_philosophy: |
+      Scientific Advertising. Teste tudo. Meça tudo. Coupon accountability. Se não
+      pode medir, não faça. Advertising é salesmanship multiplied.
+    techniques:
+      - "Scientific testing methodology"
+      - "Coupon accountability (track everything)"
+      - "Salesmanship in print"
+      - "Measurable, testable, accountable"
+    strong_dimension: "P"
+    threshold: { precision: 9 }

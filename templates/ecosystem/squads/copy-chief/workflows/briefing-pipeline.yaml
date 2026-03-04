@@ -1,0 +1,49 @@
+workflow:
+  id: briefing-pipeline
+  title: "HELIX Briefing Pipeline"
+  description: "10-phase strategic briefing with MUP/MUS validation"
+  gate_required: briefing
+  depends_on_gate: research
+
+  phases:
+    - id: helix-phases-1-4
+      title: "HELIX Phases 1-4 (Context)"
+      agents: [atlas]
+      tasks: [helix-briefing]
+      parallel: false
+      handoff_prompt: |
+        Atlas executes HELIX phases 1-4 sequentially:
+        1. Cenario, 2. Avatar, 3. Nivel de Consciencia, 4. DRE.
+        get_phase_context mandatory at start of each phase.
+
+    - id: helix-phase-5-6
+      title: "HELIX Phases 5-6 (MUP/MUS — HUMAN GATE)"
+      agents: [atlas]
+      tasks: [helix-briefing, validate-mecanismo]
+      parallel: false
+      depends_on: [helix-phases-1-4]
+      human_gate: true
+      handoff_prompt: |
+        Atlas defines MUP (Phase 5) and MUS (Phase 6).
+        consensus validates TOP 3 MUP candidates.
+        blind_critic validates MUP and MUS statements (>= 8).
+        emotional_stress_test validates MUP+MUS together (>= 8).
+        HUMAN APPROVAL REQUIRED before advancing.
+
+    - id: helix-phases-7-10
+      title: "HELIX Phases 7-10 (Strategy)"
+      agents: [atlas]
+      tasks: [helix-briefing]
+      parallel: false
+      depends_on: [helix-phase-5-6]
+      handoff_prompt: |
+        Atlas completes: 7. One Belief, 8. Promessa Central, 9. Prova, 10. Oferta.
+
+    - id: briefing-gate
+      title: "Briefing Gate"
+      agents: [sentinel]
+      parallel: false
+      depends_on: [helix-phases-7-10]
+      handoff_prompt: |
+        Sentinel runs validate_gate BRIEFING.
+        Required: 10 HELIX phases complete, mecanismo VALIDATED/APPROVED.

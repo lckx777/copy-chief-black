@@ -1,0 +1,111 @@
+# Overnight Production Config (v1.0)
+# Sprint S30.2 — Overnight Loop v2
+# Configures the autonomous overnight production engine.
+#
+# Ref: scripts/auto-production-loop.ts (S30.1)
+# Ref: scripts/morning-report.ts (S30.3)
+# Ref: ~/.claude/config/workflow-loops.yaml (per-loop stop criteria)
+# Ref: ~/.claude/rules/conclave.md § S35.7 (Stuck Loop Detection)
+# Created: 2026-03-02
+
+overnight:
+
+  # ═══════════════════════════════════════════════════════════
+  # TIMING & HALT CONTROL
+  # ═══════════════════════════════════════════════════════════
+
+  # Maximum total wall time for the overnight run.
+  # Format: "4h", "2h30m", "90m", "3600s"
+  max_wall_time: "4h"
+
+  # HALT: if a deliverable's score drops 2+ iterations in a row → halt that deliverable.
+  # Prevents wasting iterations on a diverging production direction.
+  halt_on_score_drop: true
+
+  # HALT: if score < threshold after this many consecutive iterations → halt + flag.
+  halt_after_failures: 3
+
+  # When a deliverable is halted after halt_after_failures, flag it for Conclave review.
+  # Does NOT auto-run Conclave — human decision required.
+  # Ref: ~/.claude/rules/conclave.md § S35.7
+  conclave_on_stuck: true
+
+  # ═══════════════════════════════════════════════════════════
+  # DELIVERABLES (in priority order — lowest priority runs first)
+  # ═══════════════════════════════════════════════════════════
+
+  deliverables:
+
+    - type: vsl
+      priority: 1
+      # Which chapters to produce: "all" or list of chapter numbers [1,2,3]
+      # Chapters: 1=Lead, 2=Background, 3=Tese/MUP, 4=MUS, 5=Product Buildup, 6=Stack, 7=Garantia, 8=Close
+      chapters: all
+      min_score: 8
+      # Max iterations per chapter before halt/escalation.
+      # Per-chapter overrides defined in workflow-loops.yaml (critical chapters get more iterations).
+      max_iterations: 3
+
+    - type: lp
+      priority: 2
+      # Which blocks to produce: "all" or list of block numbers [1..14]
+      # Blocks: 1=Header, 2=Lead, 3=Problema, 4=Vilao, 5=MUP, 6=MUS, 7=Beneficios,
+      #         8=Prova Social, 9=Autoridade, 10=Stack, 11=Garantia, 12=Preco+CTA, 13=FAQ, 14=CTA Final
+      blocks: all
+      min_score: 8
+      max_iterations: 3
+
+    - type: creative
+      priority: 3
+      # Platforms to produce for
+      platforms:
+        - meta
+        - youtube
+      # Number of variations per platform
+      variations: 5
+      min_score: 8
+      # More iterations for creatives — they often need full rewrites
+      max_iterations: 5
+
+    - type: email
+      priority: 4
+      # Which emails to produce: "all" or list of email numbers [1..7]
+      # Emails: 1=Welcome, 2=Story, 3=Problem, 4=Solution, 5=Proof, 6=Offer, 7=Close
+      emails: all
+      min_score: 8
+      max_iterations: 3
+
+  # ═══════════════════════════════════════════════════════════
+  # SCHEDULE (informational — scheduling is external)
+  # ═══════════════════════════════════════════════════════════
+  # Actual loop is triggered manually or by an external scheduler (cron, launchd).
+  # These times are for documentation and reporting only.
+
+  schedule:
+    start: "22:00"
+    end: "06:00"
+    timezone: "America/Sao_Paulo"
+
+  # ═══════════════════════════════════════════════════════════
+  # NOTIFICATIONS & REPORTS
+  # ═══════════════════════════════════════════════════════════
+
+  notifications:
+    # Generate morning report when loop completes (success or halt)
+    on_complete: true
+    # Log notification when a deliverable is flagged for Conclave
+    on_stuck: true
+    # Log notification when halt criteria trigger
+    on_halt: true
+    # Path relative to offer root where reports are saved
+    report_path: "production/overnight-reports/"
+
+  # ═══════════════════════════════════════════════════════════
+  # HUMAN STOP SENTINEL
+  # ═══════════════════════════════════════════════════════════
+  # To stop the loop gracefully:
+  #   bun run scripts/auto-production-loop.ts stop --offer <offer>
+  #
+  # This creates a `.overnight-stop` file in the offer root.
+  # The loop checks for this file at each unit boundary and halts gracefully.
+  # The file is automatically removed when the loop exits.

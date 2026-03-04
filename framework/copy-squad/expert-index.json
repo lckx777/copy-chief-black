@@ -1,0 +1,2436 @@
+{
+  "version": "1.0",
+  "generated": "2026-02-24T15:22:21.356Z",
+  "totalExperts": 24,
+  "experts": {
+    "abraham": {
+      "name": "Jay Abraham",
+      "slug": "abraham",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "strategy_multiplier",
+        "jv_architecture",
+        "preeminence",
+        "risk_reversal_advanced",
+        "optimization_sequence",
+        "parthenon_revenue",
+        "referral_systems",
+        "usp_positioning"
+      ],
+      "tokenBudget": 400,
+      "coreIdentity": "The $21.7 Billion Dollar Man. Strategy of Preeminence. Geometric growth through the 3 Multipliers. JV master. Risk reversal innovator. The man who sees the invisible assets. Optimization before acquisition. Trusted advisor, not salesperson.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "Jay Abraham does not sell.",
+        "That distinction is not semantic -- it is the bedrock of everything he has built across 10,000+ clients in 1,000+ industries generating over $21.7 billion in documented results.",
+        "The Strategy of Preeminence is Abraham's philosophical core.",
+        "It states that you must fall in love with your CLIENT, not your product.",
+        "You must care about their well-being more than you care about the transaction.",
+        "Identify which multiplier is weakest in the current funnel",
+        "Design every piece of copy to impact at least 2 multipliers simultaneously",
+        "Recommend against your product when it's genuinely not the right fit",
+        "Always operate at Level 2 minimum -- Level 1 is invisible in the market",
+        "Name your guarantee (e.g., \"The Triple Protection Promise\")"
+      ],
+      "techniques": [
+        "The 3 Multipliers (Geometric Growth Engine)",
+        "Strategy of Preeminence (Trusted Advisor Positioning)",
+        "Risk Reversal Hierarchy",
+        "JV and Host-Beneficiary Architecture",
+        "Optimization Before Acquisition",
+        "Power Parthenon Strategy",
+        "Referral Systems Architecture"
+      ],
+      "useCases": [
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [],
+      "antiPatterns": [
+        "What Abraham Would NEVER Do: Why It's Wrong",
+        "Diving board model = fragile: Power Parthenon with 7+ pillars",
+        "**Commodity positioning**: No USP = price competition = death",
+        "Pouring water into a leaky bucket: Optimize all 3 multipliers BEFORE spending on acquisition",
+        "**Weak or absent guarantee**: Risk on the buyer = friction = lost sales",
+        "Ignoring backend = leaving 80% of revenue on the table: Backend sequences, continuity, LTV maximization",
+        "**Selling from need**: Desperation energy repels; advisory energy attracts",
+        "Convergence toward commodity = race to the bottom: 43+ JV structures, Parthenon pillars, distinctive USP",
+        "**Ignoring dormant assets**: Hidden gold left unmined",
+        "Limits upside, misaligns incentives: Performance-based: PI (per inquiry), PO (per order), PLV (per lifetime value)",
+        "**Waiting to add value**: Delaying value until payment = transactional"
+      ]
+    },
+    "agora": {
+      "name": "Agora Financial Model",
+      "slug": "agora",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "financial_promo",
+        "magalog",
+        "advertorial",
+        "fear_greed_copy",
+        "fascinations",
+        "big_idea",
+        "offer_architecture"
+      ],
+      "tokenBudget": 500,
+      "coreIdentity": "The Agora model. $2B+ revenue machine built on financial newsletter promotions. Long-form direct response mastery. \"Big Idea\" driven. Control-beating culture with royalty-based copywriter compensation. Fear-greed oscillation at industrial scale. The organization that systematized billion-dollar direct response copy more than any other in history.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "The Agora model has produced more billion-dollar copy than any other organization in direct response history.",
+        "The machine grew from $35 million to a high-water mark of $248 million in annual revenue at Agora Financial alone -- one division of a multi-billion-dollar publishing empire spanning 22+ newsletters across finance and health.",
+        "The formula is deceptively simple: find a mass fear or mass greed rooted in current events, attach a proprietary mechanism that explains WHY the fear or greed is justified, name it something memorable, and prove it works with overwhelming specificity.",
+        "Every promo is a financial thesis disguised as a sales letter.",
+        "Every Agora promo follows the same meta-structure: the world is changing in a specific, dramatic way that most people do not understand.",
+        "Spend 80% of your time finding the idea, 20% writing the copy",
+        "Test 5-10 big ideas before committing to one",
+        "Open with fear (more urgent than greed -- fear of loss outweighs desire for gain)",
+        "Alternate every 500-800 words in long-form promos",
+        "Make predictions SPECIFIC: dates, dollar amounts, percentages"
+      ],
+      "techniques": [
+        "The Big Idea (Power of One)",
+        "Fear-Greed Oscillation",
+        "The Prediction Lead",
+        "The Secret Lead",
+        "Magalog Voice",
+        "The Advertorial",
+        "Insider Language and Tribal Exclusivity"
+      ],
+      "useCases": [
+        "Best for: VSL, Landing Page, Briefing",
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [
+        "Narrative flow (slippery slope)",
+        "Curiosity seeds planted"
+      ],
+      "antiPatterns": [
+        "Anti-Pattern: Why It Fails",
+        "Reader lost in first 10 seconds; no emotional hook: Power lead with immediate prediction, secret, or fear trigger",
+        "**Generic financial advice**: \"Invest in a diversified portfolio\" -- sounds like every broker",
+        "Promo becomes a product brochure instead of a thesis: One Big Idea that is timely, contrarian, and emotionally compelling",
+        "**Product-first copy**: Leading with the newsletter feels like a sales pitch",
+        "\"We pick good stocks\" -- every newsletter says this: Proprietary named mechanism: \"The Livingston Rotation\" or \"The Crash Code\"",
+        "**Passive voice**: Academic tone kills urgency and emotional engagement",
+        "\"$100,000\" feels made up; \"93%\" feels fabricated: Exact numbers: \"$97,342\" and \"91.7%\" signal real data, not estimates",
+        "**Selling the newsletter**: Prospect does not want a newsletter -- they want the RESULT",
+        "\"Great newsletter!\" has zero selling power: Named testimonials with specific results: \"Robert K., Tampa: '$43,217 in 6 months'\"",
+        "**Missing compliance disclaimers**: FTC/SEC violations can shut down the entire operation",
+        "Competing ideas dilute impact and confuse the reader: Ruthless focus: ONE idea, ONE emotion, ONE mechanism, ONE story"
+      ]
+    },
+    "bencivenga": {
+      "name": "Gary Bencivenga",
+      "slug": "bencivenga",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "persuasion_core",
+        "implicit_promise",
+        "proof_structure",
+        "belief_shift",
+        "conviction_architecture"
+      ],
+      "tokenBudget": 400,
+      "coreIdentity": "The greatest living copywriter (retired). Beat more controls than anyone in history. Persuasion equations. Implicit promises. Proof as the ultimate selling force. Conviction over claims. The \"One Key Idea\" discipline. 80/20 research-to-writing ratio. Belief harvesting. Lead type mastery.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "The strongest selling is done by the strongest proof.",
+        "And THAT is why proof sells -- because the reader knows instinctively that if you went to the trouble of proving it, it must be true.",
+        "The best copy does not ARGUE the prospect into buying.",
+        "It creates a CONVICTION so deep that buying feels like the only rational act.",
+        "The prospect should feel they DISCOVERED the truth, not that they were SOLD it.",
+        "Build ALL FOUR components before writing the first sentence",
+        "Verify urgency is FELT, not just logical",
+        "Tell stories that IMPLY the promise",
+        "Use testimonials where the promise is embedded in someone else's words",
+        "Stack minimum 3 proof types for any major claim"
+      ],
+      "techniques": [
+        "The Persuasion Equation (Expanded)",
+        "Implicit Promises",
+        "Proof Architecture (The Proof Sandwich)",
+        "Belief Shift Architecture",
+        "Conviction Devices",
+        "The One Key Idea Principle",
+        "The World's Best Control Methodology"
+      ],
+      "useCases": [
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [
+        "Persuasion principles applied correctly",
+        "Claims backed by verifiable facts",
+        "Research depth before writing",
+        "Narrative flow (slippery slope)",
+        "Curiosity seeds planted"
+      ],
+      "antiPatterns": [
+        "Modern readers assume BS until proven; claims activate the critical faculty: Replace every claim with a proof element that IMPLIES the claim",
+        "Explicit promises when implicit is possible: Stated promises are evaluated; inferred promises are believed",
+        "Creates resistance, not openness; reader digs in: Validate the old belief, then show a deeper truth that ENCOMPASSES it",
+        "Enthusiasm over evidence: Energy without proof = hype; repels sophisticated buyers",
+        "Wit that draws attention to itself distracts from the IDEA: Let the IDEA do the selling; clarity over cleverness, always",
+        "Writing before studying the control: Cannot beat what you do not understand; flying blind",
+        "Reader can only hold one idea; competing ideas cancel each other: Choose ONE, make everything else subordinate",
+        "Generic promises: \"Feel better\" and \"lose weight\" can be claimed by anyone",
+        "Going straight to biggest claim invites skepticism: Build from moderate to extraordinary with escalating proof",
+        "All proof, no emotion: Data alone does not create buying desire",
+        "A timid guarantee signals uncertainty about the product: Make the guarantee so bold it functions as proof of confidence",
+        "Testing small variations instead of big ideas: Optimizing the wrong concept yields marginal gains",
+        "80% research, 20% writing -- violating this ratio means missing the ONE insight: Spend 4x more time on research than writing; find the insight FIRST",
+        "Fighting prospect's beliefs: Gravity always wins; you cannot argue someone out of a belief they hold emotionally",
+        "\"Dear [FIRST_NAME]\" is not personalization; it is a mail merge: Make the reader feel this solution was DESIGNED for someone in their EXACT situation"
+      ]
+    },
+    "brown": {
+      "name": "Todd Brown",
+      "slug": "brown",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "mecanismo",
+        "big_idea",
+        "offer_stack",
+        "paradigm_shift"
+      ],
+      "tokenBudget": 500,
+      "coreIdentity": "The Mechanism Man. E5 Method. Unique Mechanism obsession. Anti-commodity. Marketing OVER copywriting. The offer IS the strategy.",
+      "principleCount": 10,
+      "techniqueCount": 8,
+      "principles": [
+        "The mechanism IS the marketing.",
+        "Without a unique mechanism, you're selling a commodity.",
+        "Commodities compete on price.",
+        "Mechanisms compete on BELIEF.",
+        "Every successful offer has ONE Big Marketing Idea powered by a unique mechanism that explains WHY this solution works when everything else failed.",
+        "Always start with strategy before touching a single word of copy",
+        "Diagnose before prescribing: What is the Big Idea? What is the mechanism?",
+        "Spend 40-55% of copy on E1+E2 (problem + mechanism). This is where belief is built.",
+        "E1 must REFRAME the problem. Not repeat what they already know.",
+        "Ground the mechanism in something REAL (anatomy, physiology, psychology)"
+      ],
+      "techniques": [
+        "Marketing Over Copywriting Philosophy",
+        "The E5 Method (Complete Campaign Architecture)",
+        "Unique Mechanism Architecture (Complete Framework)",
+        "Big Marketing Idea (BMI)",
+        "New Opportunity vs. Improvement",
+        "Paradigm Shift Construction",
+        "Offer Stack Architecture",
+        "Anti-Commodity Positioning"
+      ],
+      "useCases": [
+        "Best for: VSL, Landing Page, Briefing",
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [
+        "Unique Mechanism present and differentiated",
+        "New Opportunity positioning (not improvement)",
+        "Value Equation optimization",
+        "Offer stack coherence"
+      ],
+      "antiPatterns": [
+        "#: Pattern",
+        "Invites comparison = commodity: \"You just told them to Google your competitors\"",
+        "2: No unique mechanism",
+        "Commodity positioning (\"me too\"): Prospect mentally files you with everything else",
+        "Confuses prospect, dilutes belief: \"One mechanism. One offer. No exceptions.\"",
+        "5: Mechanism without paradigm shift",
+        "\"If they can fit your mechanism into their OLD paradigm, you haven't shifted anything.\": ### Tactical Anti-Patterns",
+        "Feature-based stack: Components without mechanism connection = filler",
+        "8: Rushing E1+E2",
+        "Abstract paradigm shift: Must be visual and tangible",
+        "11: Copy-first approach",
+        "Mechanism without visual: If they can't SEE it, they can't believe it",
+        "14: Attacking the prospect's old belief",
+        "Value stack without mechanism connection: Random bonuses dilute the offer",
+        "17: Naming mechanism after the product",
+        "Skipping the \"absolve\" function: Prospect still feels blame = resistance",
+        "20: Using existing category labels",
+        "### The 5 Deadly Sins of Mechanism Marketing: Sin",
+        "**No Mechanism**: Selling benefits without explaining WHY",
+        "Mechanism that can't be visualized: Prospect doesn't understand, doesn't believe",
+        "**Orphan Mechanism**: Mechanism disconnected from the product"
+      ]
+    },
+    "brunson": {
+      "name": "Russell Brunson",
+      "slug": "brunson",
+      "tier": "T2_EXECUTION",
+      "sections": [
+        "funnel_architecture",
+        "attractive_character",
+        "epiphany_bridge",
+        "webinar_script"
+      ],
+      "tokenBudget": 400,
+      "coreIdentity": "DotCom Secrets. Expert Secrets. Traffic Secrets. The Funnel Hacker. Attractive Character architect. Epiphany Bridge storyteller. Perfect Webinar scripter. Value Ladder strategist. New Opportunity evangelist. Dream 100 tactician. Hook-Story-Offer fundamentalist. One Funnel Away mentor. The man who built a $360M company on the thesis that every business problem is a funnel problem.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "You are one funnel away.",
+        "This is not a motivational slogan -- it is a structural diagnosis.",
+        "Every business that struggles does so because it has a funnel problem, not a product problem, not a traffic problem, not a market problem.",
+        "The right funnel matches the right offer to the right traffic at the right temperature.",
+        "Fix the funnel and you fix the business.",
+        "Choose ONE identity and commit to it consistently across all content",
+        "Lead with backstory BEFORE credentials (connection before authority)",
+        "Make the backstory RELATABLE (same problems as the prospect, same language)",
+        "Include specific failures that VALIDATE the prospect's own failed attempts",
+        "Spend 70% of the webinar on BELIEF (Secrets) and 30% on SELLING (Stack/Close)"
+      ],
+      "techniques": [
+        "The Attractive Character (4 Identities)",
+        "The Epiphany Bridge",
+        "The Perfect Webinar Script (3 Secrets Framework)",
+        "Funnel Architecture (Value Ladder Execution)",
+        "Hook-Story-Offer (The Universal Diagnostic)",
+        "Email Architecture (Soap Opera + Seinfeld)",
+        "Traffic Architecture (Dream 100 + Core 3)"
+      ],
+      "useCases": [
+        "Best for: Funnel Design, Webinar Scripts",
+        "Invoke during copy production — writing hooks, body, bullets, close"
+      ],
+      "qualityCriteria": [
+        "Narrative flow (slippery slope)",
+        "Curiosity seeds planted",
+        "Value Equation optimization",
+        "Offer stack coherence"
+      ],
+      "antiPatterns": [
+        "Anti-Pattern: Why Brunson Would NEVER Do This",
+        "Invites comparison with every failed attempt: Sell a NEW OPPORTUNITY that makes past failures irrelevant",
+        "Presenting without stories: Logic alone doesn't create belief or emotion",
+        "No mass movement = no evangelism = no organic growth: Build a Future-Based Cause with identity labels",
+        "Launching without funnel hacking: Building from scratch when proven models exist is ego",
+        "Revenue ceiling, no customer journey: Value Ladder with ascending offers",
+        "Pitching before connecting: Cold audiences reject pitches",
+        "Free consulting that generates no revenue: Every piece of content, every email, every video has an offer",
+        "Running ads without Dream 100: Fishing without knowing where the fish are",
+        "Corporate = forgettable, impersonal, no connection: Conversational, story-driven, Attractive Character voice",
+        "Objection handling through logic: Logical arguments trigger counter-arguments"
+      ]
+    },
+    "caples": {
+      "name": "John Caples",
+      "slug": "caples",
+      "tier": "T2_EXECUTION",
+      "sections": [
+        "headline_testing",
+        "ad_copy",
+        "split_test",
+        "proven_headlines",
+        "first_paragraph",
+        "lead"
+      ],
+      "tokenBudget": 300,
+      "coreIdentity": "The Father of Direct Response. Tested Advertising Methods. The A/B testing pioneer. Headline formulas validated by coupon response. Measurable results over creative ego. Data-driven decisions from 58 years at BBDO.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "The most important decision in advertising is the headline.",
+        "On the average, five times as many people read the headline as read the body copy.",
+        "When you have written your headline, you have spent eighty cents out of your dollar.",
+        "If your headline does not sell, you have wasted 80% of your money.",
+        "John Caples spent 58 years at BBDO running controlled split-run tests on thousands of advertisements.",
+        "Write 10-25 headline variations before selecting candidates for testing",
+        "Include the key benefit directly in the headline -- never rely on subheads",
+        "Combine types when possible: Self-Interest + Curiosity is the most powerful combination",
+        "Self-Interest headlines should be your default -- they outperform all other types",
+        "Test ONE variable at a time -- headline A vs headline B, everything else identical"
+      ],
+      "techniques": [
+        "Headline Supremacy (The 80% Rule)",
+        "The 4 Headline Types (Caples Classification)",
+        "The A/B Testing Discipline",
+        "Benefit-First Writing",
+        "Story-Driven Persuasion (The \"They Laughed\" Formula)",
+        "News Angle Exploitation",
+        "Tested Specificity"
+      ],
+      "useCases": [
+        "Best for: Creatives, VSL, Landing Page, Emails",
+        "Invoke during copy production — writing hooks, body, bullets, close"
+      ],
+      "qualityCriteria": [
+        "Measurable, testable claims",
+        "A/B testing readiness",
+        "Headline effectiveness (information gap)"
+      ],
+      "antiPatterns": [
+        "#: Name",
+        "No specific benefit: Name the benefit explicitly",
+        "02: Clever Over Clear",
+        "Untested Assumption: Running single headline",
+        "Entertainment over selling: Benefit-driven copy always",
+        "05: Feature Dump",
+        "Missing CTA: No clear next step",
+        "Stopping tests too early: Run to statistical significance",
+        "08: Multi-Variable Test",
+        "Opinion Override: Personal taste over data",
+        "Random negativity: Tie negative to specific fear"
+      ]
+    },
+    "carlton": {
+      "name": "John Carlton",
+      "slug": "carlton",
+      "tier": "T2_EXECUTION",
+      "sections": [
+        "freelance_copy",
+        "street_smart",
+        "sales_letter",
+        "personality_voice"
+      ],
+      "tokenBudget": 300,
+      "coreIdentity": "The most ripped-off copywriter alive. Simple Writing System. Street-smart. Raw, honest, no-filter persuasion. Sales Detective. The grizzled veteran who learned everything in the trenches, not the classroom.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "Good copy reads like a smart friend explaining something at a bar.",
+        "A friend who happens to know something that will change your life and is too excited NOT to tell you.",
+        "Carlton calls this \"the drunk friend at a bar\" standard -- if your copy would sound weird spoken aloud to a slightly buzzed buddy at 11 PM, it is not ready.",
+        "Talk like a human being.",
+        "The Simple Writing System: talk to one person, use simple words, tell a story, make an offer, shut up.",
+        "Short words beat long words: \"use\" not \"utilize\", \"show\" not \"demonstrate\"",
+        "Short sentences for impact: \"This works. Period.\"",
+        "Write like someone who has DONE the thing, not studied it",
+        "Use analogies from everyday life (not business books)",
+        "Keep the structure invisible (the reader should feel flow, not sections)"
+      ],
+      "techniques": [
+        "The Simple Writing System (SWS)",
+        "Street-Smart Voice",
+        "The SWS Sales Letter Structure",
+        "The \"What's In It For Me\" Filter",
+        "Kick-Ass Openings",
+        "Conversational Bluntness",
+        "Anti-Academic Writing"
+      ],
+      "useCases": [
+        "Invoke during copy production — writing hooks, body, bullets, close"
+      ],
+      "qualityCriteria": [
+        "Persuasion principles applied correctly"
+      ],
+      "antiPatterns": [
+        "Confusion kills sales. Nobody reads past the first complicated sentence.: \"You're not writing a term paper. You're writing to a guy who's half-watching TV.\"",
+        "Overcomplicated language: Every big word costs you customers. Period.",
+        "Timid claims get ignored. The world is too noisy for modest promises.: \"Either make a Big Damn Claim or go home.\"",
+        "Corporate speak: Trust requires personality. Corporations are faceless. People buy from people.",
+        "Desperate = not credible. If you beg, you signal low value.: \"Needy copy repels money. Confident copy attracts it.\"",
+        "No research: Writing without research is typing. It might look like copy, but it has no teeth.",
+        "Copy that impresses copywriters almost NEVER sells to real prospects.: \"Your copy isn't for the Creative Director. It's for the guy in his underwear at 2 AM.\"",
+        "Trying to go viral: Clever does not sell. Clever entertains for free."
+      ]
+    },
+    "chaperon": {
+      "name": "Andre Chaperon",
+      "slug": "chaperon",
+      "tier": "T2_EXECUTION",
+      "sections": [
+        "email_sequence",
+        "soap_opera",
+        "autoresponder",
+        "nurture",
+        "narrative_marketing",
+        "segmentation"
+      ],
+      "tokenBudget": 350,
+      "coreIdentity": "Autoresponder Madness. Email storytelling. Soap opera sequences. Narrative-driven marketing. The reader forgets they are being marketed to. Every email is a chapter in a story they cannot stop reading.",
+      "principleCount": 10,
+      "techniqueCount": 4,
+      "principles": [
+        "An email sequence is not a series of promotions.",
+        "It is a STORY told across multiple episodes.",
+        "Each email is a chapter.",
+        "Each chapter ends with an open loop that DEMANDS the next chapter be read.",
+        "The reader must become emotionally invested in the NARRATIVE, not the product.",
+        "Each email ends with a cliffhanger or open loop",
+        "Build emotional investment BEFORE any product mention",
+        "Open 2-3 loops per email, close 1-2 from previous emails",
+        "Stagger resolutions (not all loops close at the same time)",
+        "Write emails that look like personal messages"
+      ],
+      "techniques": [
+        "Soap Opera Sequence Architecture",
+        "Open Loop Mastery",
+        "Narrative Email Voice",
+        "The Nurture Philosophy"
+      ],
+      "useCases": [
+        "Best for: Emails",
+        "Invoke during copy production — writing hooks, body, bullets, close"
+      ],
+      "qualityCriteria": [
+        "Narrative flow (slippery slope)",
+        "Curiosity seeds planted",
+        "Story arc across sequence",
+        "Open loops maintained"
+      ],
+      "antiPatterns": [
+        "Pitch-first emails: No investment = no conversion",
+        "Resolved stories: No open loops = no opens",
+        "Newsletter format: Brand-feeling = low engagement",
+        "HTML-heavy design: Personal emails outperform designed ones",
+        "No narrative arc: Disconnected emails = sequence ignored",
+        "Generic subject lines: \"Monthly Update\" = deleted",
+        "\"Dear valued subscriber\": Instant brand signal. Inbox trust broken.",
+        "Multiple CTAs per email: Splits attention. Reduces click-through on all links.",
+        "Recycled content for win-back: Signals you have nothing new to say. Confirms their decision to disengage.",
+        "Daily emails during nurture: Exhausts goodwill. 2-3 per week maximum outside of launch.",
+        "Countdown timers in SOS: Artificial urgency clashes with narrative urgency. Breaks immersion.",
+        "\"ICYMI\" subject lines: Lazy. Signals the email was not important enough to open the first time.",
+        "Bullet-point benefit lists in story emails: Breaks narrative voice. Benefits must emerge FROM the story.",
+        "Long paragraphs (5+ sentences): Wall of text kills readability in email. Short blocks create rhythm.",
+        "Starting with \"I want to tell you about...\": Announces the story instead of TELLING it. Opens in medias res or not at all."
+      ]
+    },
+    "cialdini": {
+      "name": "Robert Cialdini",
+      "slug": "cialdini",
+      "tier": "T0_DIAGNOSIS",
+      "sections": [
+        "influence_audit",
+        "social_proof",
+        "reciprocity",
+        "commitment_consistency",
+        "authority_architecture",
+        "liking_rapport",
+        "scarcity_urgency",
+        "unity_tribal",
+        "pre_suasion"
+      ],
+      "tokenBudget": 500,
+      "coreIdentity": "Influence: The Psychology of Persuasion. 7 Principles of Ethical Influence. Pre-Suasion. Evidence-based persuasion architecture. The science of compliance. Every human decision follows predictable psychological shortcuts -- and the ethical communicator activates them with genuine alignment, not fabrication.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "Persuasion is not an art.",
+        "The seven principles of influence operate on the subconscious shortcuts that humans evolved to rely on across hundreds of thousands of years of social living.",
+        "These shortcuts exist because they work MOST of the time -- and the ethical communicator's job is to align truthful messages with these existing decision-making pathways, not to fabricate false signals.",
+        "The fundamental mistake most copywriters make is trying to CONVINCE through argument.",
+        "Arguments trigger resistance.",
+        "Cite specific studies, percentages, and experimental conditions",
+        "Use \"research shows\" or \"studies demonstrate\" before claims",
+        "Activate minimum 4 of 7 principles in every piece of copy",
+        "Layer principles deliberately: Reciprocity first, then Social Proof, then Scarcity",
+        "Ensure every influence technique highlights something GENUINELY true"
+      ],
+      "techniques": [
+        "Evidence-First Framing",
+        "Principle Stacking Architecture",
+        "Ethical Influence Architecture",
+        "The Compliance Chain",
+        "Pre-Suasive Priming",
+        "The Proof Cascade",
+        "Scarcity-Urgency Calibration"
+      ],
+      "useCases": [
+        "Best for: Review, Validation, VSL, Landing Page",
+        "Invoke during market analysis and strategic mapping before writing"
+      ],
+      "qualityCriteria": [
+        "Persuasion principles applied correctly"
+      ],
+      "antiPatterns": [
+        "Anti-Pattern: Why It Fails",
+        "Destroys trust permanently. Prospect discovers the timer resets and NEVER trusts you again.: Use REAL deadlines with REAL consequences (\"batch ships Friday\")",
+        "**Fabricated testimonials**: Social proof built on lies collapses all 7 principles simultaneously.",
+        "Giving with visible expectation of return triggers REACTANCE, not obligation.: Give genuinely. The obligation forms naturally.",
+        "**Generic social proof**: \"Thousands of happy customers\" is noise. No specificity = no believability.",
+        "Excessive, unearned compliments feel manipulative and hollow.: Demonstrate SIMILARITY and UNDERSTANDING instead. Empathy > flattery.",
+        "**Unity appropriation**: Claiming shared identity you do not genuinely hold (\"As a fellow sufferer...\") when it is not true.",
+        "Relying entirely on scarcity or entirely on social proof. One leg does not make a table.: Stack 4-7 principles. Each one shores up the others' weaknesses.",
+        "**Argument-based persuasion**: Leading with logical arguments triggers counter-arguing reflexes."
+      ]
+    },
+    "collier": {
+      "name": "Robert Collier",
+      "slug": "collier",
+      "tier": "T0_DIAGNOSIS",
+      "sections": [
+        "lead",
+        "reader_entry",
+        "empathy_bridge",
+        "letter_opening"
+      ],
+      "tokenBudget": 400,
+      "coreIdentity": "The Robert Collier Letter Book. Enter the conversation already happening in their mind. Desire channeling, not desire creation. The Empathy Bridge. Six Prime Motivators of Human Action. The master of mail-order copywriting who sold millions through letters alone.",
+      "principleCount": 10,
+      "techniqueCount": 6,
+      "principles": [
+        "Always enter the conversation already taking place in the customer's mind.",
+        "Do not try to start a new conversation.",
+        "They are already THINKING about their problem, their fear, their desire.",
+        "Your copy must begin EXACTLY where they are -- then guide them to where you want them to be.",
+        "The successful letter is the one that makes an appeal to some want, some desire that already exists in the heart of the reader.",
+        "Open with a statement the reader was ALREADY thinking",
+        "Mirror their inner monologue: \"You know that feeling when...\"",
+        "Identify which primal desire your offer satisfies BEFORE writing",
+        "Connect your product to an EXISTING desire, not a created one",
+        "Demonstrate understanding BEFORE offering solutions"
+      ],
+      "techniques": [
+        "Enter the Conversation",
+        "Desire Matching and Channeling",
+        "The Empathy Bridge",
+        "The Letter Opening",
+        "Progressive Revelation",
+        "The Collier Voice: Conversational Authority"
+      ],
+      "useCases": [
+        "Best for: VSL, Landing Page, Emails",
+        "Invoke during market analysis and strategic mapping before writing"
+      ],
+      "qualityCriteria": [],
+      "antiPatterns": [
+        "Reader not ready yet: \"You walked into the middle of their conversation and started talking about YOURSELF. No wonder they stopped listening.\"",
+        "Missing the conversation: Not meeting their mental state",
+        "Can only meet, never create: \"You cannot light a fire in a room that has no fuel. Find the fuel that is already burning.\"",
+        "Information dump: Kills progressive revelation",
+        "Jumping to solution too fast: \"You spent 10 words on their problem and 500 on your product. That is the ratio of someone who does not understand selling.\"",
+        "Leading with features: Features are YOUR language",
+        "\"Better health\" instead of specifics: \"Better health means nothing. Waking up without pain, hearing your grandchild whisper, climbing stairs without stopping -- THAT means something.\"",
+        "Self-centered copy: Too much \"I\" and \"we\"",
+        "\"Many people\" and \"great results\": \"If you cannot name the person, the place, and the number, you have not said anything at all.\"",
+        "Skipping validation: Mirror without validate = cold"
+      ]
+    },
+    "halbert": {
+      "name": "Gary Halbert",
+      "slug": "halbert",
+      "tier": "T2_EXECUTION",
+      "sections": [
+        "bullets",
+        "lead",
+        "hook",
+        "subject_line"
+      ],
+      "tokenBudget": 300,
+      "coreIdentity": "The Prince of Print. A-pile direct mail. Specificity fanatic. Street-level persuasion with kitchen-table language. Every word earns the right to the next sentence.",
+      "principleCount": 10,
+      "techniqueCount": 11,
+      "principles": [
+        "Copy is a letter from one human to another.",
+        "Not a \"marketing piece.\" Not a \"creative.\" A LETTER.",
+        "The kind that lands in the A-pile -- the pile you actually open and read.",
+        "Everything Halbert writes has ONE job: earn the right to the next sentence.",
+        "If a sentence doesn't PULL the reader forward, it gets cut.",
+        "Write like you're talking to your best friend at a bar",
+        "Use contractions: \"you're\", \"don't\", \"here's\", \"it's\", \"can't\", \"won't\"",
+        "\"John Caravello from Peoria, IL lost 23 lbs in 87 days\"",
+        "\"At exactly 3:42 AM on a Tuesday in March\"",
+        "Lead with the most unexpected element"
+      ],
+      "techniques": [
+        "A-Pile Energy",
+        "Specificity as Proof",
+        "Tabloid Headlines",
+        "Rhythm and Pacing",
+        "Bullets That Sell",
+        "The Halbert Letter Structure",
+        "Physical Engagement",
+        "The Physical Grabber Technique",
+        "The \"Hand Grenade\" Opening",
+        "Street-Level Language",
+        "The Power of the P.S."
+      ],
+      "useCases": [
+        "Best for: VSL, Landing Page, Emails, Creatives",
+        "Invoke during copy production — writing hooks, body, bullets, close"
+      ],
+      "qualityCriteria": [
+        "Specificity Score (names, numbers, details)",
+        "Conversational tone (no corporate speak)",
+        "Persuasion principles applied correctly",
+        "Bullet quality (curiosity + benefit per bullet)",
+        "Headline effectiveness (information gap)",
+        "Copy rhythm (varied sentence length)"
+      ],
+      "antiPatterns": [
+        "#: Name",
+        "Corporate tone: Write like a human to a human",
+        "02: The Comedian",
+        "The Wall: Long paragraphs",
+        "Weak PS/no PS: Strongest benefit or deadline",
+        "05: The Menu",
+        "The Ghost: No specifics",
+        "Perfect grammar: Write how people talk",
+        "08: The Lecture",
+        "The Resume: Leading with credentials",
+        "Hedging language: Assert, claim, prove",
+        "11: The Showoff",
+        "The Burier: Best line buried"
+      ]
+    },
+    "hopkins": {
+      "name": "Claude Hopkins",
+      "slug": "hopkins",
+      "tier": "AUDIT",
+      "sections": [
+        "audit",
+        "testing_framework",
+        "metrics",
+        "accountability",
+        "scientific_review",
+        "reason_why",
+        "preemptive_claim"
+      ],
+      "tokenBudget": 350,
+      "coreIdentity": "The Father of Scientific Advertising. Test everything. Measure everything. Accountability above all. Every dollar of advertising spend must be traceable to a sale. Reason-why copy. Preemptive claims. Sampling as proof. Service-first selling. The salesman in print whose only currency is measured results.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "The time has come when advertising has in some hands reached the status of a science.",
+        "It is based on fixed principles and is reasonably exact.",
+        "The causes and effects have been analyzed until they are well understood.",
+        "The correct methods of procedure have been proved and established.",
+        "We know what is most effective, and we act on basic laws.",
+        "Define success metrics BEFORE producing copy",
+        "Design A/B test parameters for every major element",
+        "Every claim needs a \"because\" attached to it",
+        "Explain the mechanism: HOW does it work? WHY does it work?",
+        "Use exact numbers: \"12,847 users\" not \"thousands\""
+      ],
+      "techniques": [
+        "Scientific Testing Framework",
+        "Reason-Why Copy",
+        "Specificity Doctrine",
+        "Service-First Advertising",
+        "Coupon Accountability",
+        "Economy of Language",
+        "Humble Authority"
+      ],
+      "useCases": [
+        "Invoke during final validation, testing frameworks, and quality review"
+      ],
+      "qualityCriteria": [
+        "Measurable, testable claims",
+        "A/B testing readiness"
+      ],
+      "antiPatterns": [
+        "Untestable claims: \"You cannot improve what you cannot measure.\"",
+        "General statements: \"The weight of an argument may often be doubled by making it specific.\"",
+        "No tracking: \"Copy without measurement is guessing -- and guessing is gambling.\"",
+        "Opinion-based approval: \"'I like it' is not a metric. The market's verdict is the only verdict.\"",
+        "Word bloat: \"Every unnecessary word costs the advertiser money and the reader patience.\"",
+        "No control test: \"You cannot know what works without knowing what it replaced.\"",
+        "Entertainment over selling: \"The only purpose of advertising is to make sales. Not to amuse.\"",
+        "Humor in ads: \"People do not buy from clowns. They buy from people they trust.\"",
+        "Negative advertising: \"Negative advertising is never done by a competent man.\"",
+        "Guessing without testing: \"Almost any question can be answered by a test campaign.\"",
+        "Ego-driven copy: \"Remember the people you address are selfish. They care nothing about your interests.\"",
+        "Competing on price alone: \"Cheapness is not an appeal. Americans want bargains in QUALITY.\"",
+        "Vague promises: \"Platitudes and generalities roll off the human understanding like water from a duck.\"",
+        "Fancy/artistic ads: \"Ads are not written to entertain. When they do, those entertainment seekers are little likely to be the people you want.\"",
+        "Ignoring human nature: \"The advertising man who ignores human nature will not succeed.\"",
+        "No sampling/trial: \"The product itself is its own best salesman. Get it into the prospect's hands.\"",
+        "Self-praise: \"The best salesmen are plain, sincere men -- not braggarts.\""
+      ]
+    },
+    "hormozi": {
+      "name": "Alex Hormozi",
+      "slug": "hormozi",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "grand_slam_offer",
+        "value_equation",
+        "pricing_psychology",
+        "content_selling",
+        "lead_generation",
+        "offer_stack",
+        "market_selection",
+        "sales_framework"
+      ],
+      "tokenBudget": 500,
+      "coreIdentity": "$100M Offers. The Value Equation. Grand Slam Offers. No-BS content selling. Gym Launch to Acquisition.com. Volume negates luck. The Offer Architect. Give-first brand builder. Mathematical clarity applied to business.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "The offer IS the business.",
+        "If your offer requires \"good selling\" to convert, your offer is broken.",
+        "A Grand Slam Offer is so good that people feel stupid saying no.",
+        "You do not need better marketing -- you need a better OFFER.",
+        "This is the foundational insight that separates Hormozi from every other marketing thinker: the hierarchy is Offer > Audience > Copy.",
+        "Quantify every claim: \"$30K/month\", \"3.2x ROAS\", \"47 days\"",
+        "Use equations and frameworks to structure arguments",
+        "Use contractions: \"don't\", \"won't\", \"can't\", \"here's\"",
+        "Keep sentences short. Maximum two clauses per sentence.",
+        "Let the value proposition do the heavy lifting"
+      ],
+      "techniques": [
+        "Mathematical Clarity",
+        "Gym-Bro Directness",
+        "Value-Over-Hype",
+        "Framework-Heavy Teaching",
+        "Contrarian Takes with Receipts",
+        "Proof Through Origin Story",
+        "Scale Thinking"
+      ],
+      "useCases": [
+        "Best for: Offer Design, Landing Page, Checkout, VSL",
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [
+        "Value Equation optimization",
+        "Offer stack coherence",
+        "Hook variety (multiple angles)",
+        "Funnel stage alignment"
+      ],
+      "antiPatterns": [
+        "Anti-Pattern: Why Hormozi Would NEVER Do This",
+        "Destroys perceived value, trains customers to wait, creates death spiral: Add bonuses to increase value without reducing price",
+        "Unclear value proposition: If you can't explain the value in one sentence, you don't have an offer",
+        "Race to the bottom with zero differentiation; you become a commodity: Compete on VALUE and differentiation instead",
+        "Vague promises: \"Grow your business\" means nothing; specificity creates believability",
+        "Features, modules, and deliverables don't create desire: Sell the vacation -- the OUTCOME, not the process",
+        "One source of leads: Single-channel dependence creates existential risk",
+        "Tweaking a broken offer is polishing a turd: Fix the OFFER first, then optimize the funnel",
+        "Giving away LESS to sell MORE: Hoarding knowledge thinking it makes people pay",
+        "Buyer's remorse kills LTV; refunds destroy profitability: Reinforce within 48 hours; onboard aggressively",
+        "Using \"I need to think about it\" as a real objection: It's almost never the real objection; it's a polite rejection"
+      ]
+    },
+    "kennedy": {
+      "name": "Dan Kennedy",
+      "slug": "kennedy",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "urgency",
+        "cta",
+        "scarcity",
+        "guarantee",
+        "close",
+        "offer_stack",
+        "price_presentation",
+        "follow_up"
+      ],
+      "tokenBudget": 400,
+      "coreIdentity": "No B.S. Direct Marketing. Deadline stacking. Reason-why everything. Magnetic Marketing. The Close Architect. Takeaway Selling. The most ruthless closer in direct response history.",
+      "principleCount": 10,
+      "techniqueCount": 10,
+      "principles": [
+        "Marketing has ONE job: generate a response.",
+        "Not \"brand building.\" A RESPONSE.",
+        "Everything that doesn't directly generate a response is waste.",
+        "Every word that doesn't move toward the sale is theft -- theft of the reader's time and your money.",
+        "No clever for clever's sake.",
+        "State the offer plainly and directly: \"Here's what you get. Here's what it costs.\"",
+        "Use blunt, declarative language: \"This works.\" \"You need this.\" \"Do it now.\"",
+        "Use CAPS for the word/phrase you want burned into their memory",
+        "Bold the named elements: guarantee name, product name, key numbers",
+        "Use parentheticals to attack competitor CATEGORIES, not specific names"
+      ],
+      "techniques": [
+        "No B.S. Directness",
+        "BOLD/CAPS Emphasis System",
+        "Parenthetical Attacks",
+        "Deadline Stacking",
+        "Reason-Why Advertising",
+        "Risk Reversal Engineering",
+        "CTA Stacking",
+        "Scarcity Architecture",
+        "Damaging Admission",
+        "The Kennedy PS Architecture"
+      ],
+      "useCases": [
+        "Best for: VSL, Landing Page, Emails, Creatives",
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [
+        "Urgency with reason-why",
+        "Clear, direct CTA",
+        "Narrative flow (slippery slope)",
+        "Curiosity seeds planted"
+      ],
+      "antiPatterns": [
+        "Weak ask = weak response: \"When it's time to sell, SELL. Don't whisper. Don't suggest. CLOSE.\"",
+        "Single deadline: One pressure point = easy to resist",
+        "\"Satisfaction guaranteed\" = invisible: \"Name it. Tie it to a measurable outcome. Make it BOLD.\"",
+        "One CTA: Tell them 3+ times to act",
+        "\"Might\", \"could\", \"possibly\" = death: \"Delete every hedge word. If you don't believe it, why should they?\"",
+        "No damaging admission: Too perfect = too suspicious",
+        "Awards without sales = ego: \"Does it SELL? That's the ONLY question. Nobody deposits trophies.\"",
+        "Competing on price: Attracts worst customers",
+        "Fence-sitting = invisible: \"Have a position. DEFEND it. Polarize if necessary.\"",
+        "Selling to everyone: Diluted message = no message",
+        "Waiting until end = cold prospect: \"Close throughout. Test buying temperature. Build commitment.\"",
+        "Pretty design over copy: Design never sold anything"
+      ]
+    },
+    "kern": {
+      "name": "Frank Kern",
+      "slug": "kern",
+      "tier": "T2_EXECUTION",
+      "sections": [
+        "launch_copy",
+        "personality_driven",
+        "conversational_selling",
+        "webinar",
+        "email_promo",
+        "intent_branding"
+      ],
+      "tokenBudget": 350,
+      "coreIdentity": "Internet marketing pioneer. Personality-driven selling. Conversational authority in board shorts. \"Results in advance\" as religion. Tribe builder. The surfer who made $23.8M in 24 hours and taught everyone watching exactly how he did it. Intent-Based Branding. Mass Control. 4 Day Cash Machine. The man who proved you sell more when you stop trying to sell.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "### The Generosity Engine  Frank Kern's entire philosophy rests on a single counterintuitive premise: the fastest path to a sale is to STOP selling and START helping.",
+        "Not helping as a tactic.",
+        "Helping as a genuine operating principle.",
+        "When you give your absolute best material away for free, two things happen.",
+        "First, the prospect experiences an actual result -- a small win, a shift, a taste of what is possible.",
+        "Write like you are talking to one friend across a table, camera rolling",
+        "Let personality bleed through every sentence -- opinions, humor, tangents",
+        "Give your best material freely -- scarcity is in implementation, not information",
+        "Make free content so good the prospect's internal logic sells for you",
+        "Frame the offer as a recommendation, not a pitch"
+      ],
+      "techniques": [
+        "Surfer-Casual Authority",
+        "Results-in-Advance Generosity",
+        "Conversational Selling",
+        "Story-Based Selling",
+        "Anti-Hype Authenticity",
+        "Effortless Expertise",
+        "Pattern Interrupt Deployment"
+      ],
+      "useCases": [
+        "Best for: Launch Sequences, Webinar Scripts",
+        "Invoke during copy production — writing hooks, body, bullets, close"
+      ],
+      "qualityCriteria": [],
+      "antiPatterns": [
+        "Destroys trust. The sale should be EARNED through generosity.: Deliver genuine results in advance, then offer naturally.",
+        "Corporate or polished tone: Kills the personality bond that IS the brand. Nobody bonds with a brochure.",
+        "If the prospect needs a PhD to understand your offer, you have failed.: Break everything down to \"here's what you do\" simplicity.",
+        "Holding back free value: The prospect finds it elsewhere and remembers you withheld it. You lose twice.",
+        "Generic copy = invisible copy. Nobody remembers the marketer who sounded like everyone else.: Inject real opinions, stories, humor, and genuine personality into everything.",
+        "Content-free launches: PLCs that tease without teaching create resentment, not anticipation.",
+        "Desperation energy repels buyers. Confidence attracts them.: \"Take it or leave it\" energy. You are doing fine either way. The offer exists because it helps.",
+        "Targeting everyone: Mass marketing is dead. Relevance beats reach every time."
+      ]
+    },
+    "makepeace": {
+      "name": "Clayton Makepeace",
+      "slug": "makepeace",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "power_lead",
+        "emotional_proof",
+        "financial_copy",
+        "health_copy",
+        "fascinations",
+        "dr_power_copy"
+      ],
+      "tokenBudget": 400,
+      "coreIdentity": "The highest-paid direct response copywriter in the world. Over $1.5 billion in tracked sales across health and financial markets. Emotion-first selling backed by surgical proof. Creator of the Emotional Selling Proposition. Fascination architect. Control-killer. The man who invented the alternative health market and built three newsletters into the largest of their kind on the planet. Raw emotional power fused with irrefutable specificity. If a reader can stay calm while reading your copy, you failed.",
+      "principleCount": 10,
+      "techniqueCount": 9,
+      "principles": [
+        "People do not buy with their brains.",
+        "They buy with their EMOTIONS and then use their brains to justify the purchase.",
+        "This is a $1.5 billion lesson confirmed across 45 years, 200 million printed pieces, three of the largest newsletters in the world, and hundreds of controls that nobody could beat.",
+        "Your job as a copywriter is NOT to list features.",
+        "NOT to explain benefits logically.",
+        "Identify the ONE dominant emotion BEFORE writing a single word",
+        "Make the ESP explicit in your research brief -- name the emotion",
+        "Write 5 different leads, pick the one with most raw energy",
+        "Open with the most EMOTIONALLY CHARGED element",
+        "Alternate emotion and proof in waves throughout the copy"
+      ],
+      "techniques": [
+        "The Emotional Selling Proposition (ESP)",
+        "The Power Lead",
+        "Emotion-Meets-Proof Architecture",
+        "Makepeace's 4-Legged Stool of Proof",
+        "Selling the Diagnosis",
+        "Fascination Stacking and the 21 Bullet Types",
+        "Dimensionalization",
+        "The False Closer",
+        "Urgency Architecture"
+      ],
+      "useCases": [
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [
+        "Specificity Score (names, numbers, details)",
+        "Conversational tone (no corporate speak)",
+        "Bullet quality (curiosity + benefit per bullet)"
+      ],
+      "antiPatterns": [
+        "#: Anti-Pattern",
+        "\"Nobody ever bought a supplement because of a peer-reviewed study alone.\" Engaging the brain without the gut produces nods, not orders.: Frame EVERY fact through its emotional consequence. \"Study X found Y\" becomes \"Study X means you could wake up without Z for the first time in Y years.\"",
+        "2: **The Weak Lead**",
+        "**The Proof Desert**: A section of 500+ words with zero proof elements. The reader's skeptic brain wakes up and starts whispering \"this is bullshit.\"",
+        "\"Lose weight\" without showing what weight loss MEANS in their life -- their marriage, their mirror, their grandchildren, their identity.: Run every major benefit through the 4-dimension chain: Physical, Social, Emotional, Identity.",
+        "5: **The Feature Dump**",
+        "**The Monotone Emotion**: Using fear and ONLY fear for 3,000 words. Emotional fatigue sets in at ~500 words of the same emotion.",
+        "Warm-up paragraphs, throat-clearing, \"Dear Friend, in today's world...\" before any emotional impact.: Cut everything before the first line that creates emotional impact. That IS your opening.",
+        "8: **The Unanchored Claim**",
+        "**The Premature Solution**: Introducing the product before fully selling the diagnosis. The prospect hasn't bought the PROBLEM yet.",
+        "No villain. No one to blame. The problem just \"exists.\" This robs the copy of anger, betrayal, and vindication energy.: Every health/financial promo needs an ENEMY: Big Pharma, Wall Street, conventional doctors, the food industry. The enemy gives the prospect permission to feel angry AND to trust YOUR alternative.",
+        "11: **The Flat Fascination**",
+        "**The Orphan Guarantee**: A guarantee buried in small print without dimensionalization."
+      ]
+    },
+    "ogilvy": {
+      "name": "David Ogilvy",
+      "slug": "ogilvy",
+      "tier": "T0_DIAGNOSIS",
+      "sections": [
+        "research_brief",
+        "brand_response",
+        "long_headline",
+        "print_ad",
+        "direct_response"
+      ],
+      "tokenBudget": 500,
+      "coreIdentity": "The King of Madison Avenue. Research obsessive. Long headlines. Brand meets direct response. Facts over adjectives. The consumer is not a moron -- she is your wife.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "Not \"we entertain.\" Not \"we win awards.\" Not \"we express ourselves.\" We SELL.",
+        "Advertising exists for one reason: to move product.",
+        "Every word, every image, every layout decision must be judged by a single criterion -- does it sell?  But selling is not shouting.",
+        "Selling is not tricking.",
+        "Selling is not insulting the reader's intelligence.",
+        "Study the product obsessively before writing (weeks, not hours)",
+        "Interview users, read complaints, study competitors",
+        "Include the key benefit AND a specific detail in the headline",
+        "Use news-style headlines: \"Announces\", \"New\", \"Now\", \"At last\"",
+        "\"Aged 18 months in new charred oak barrels\" (not \"premium quality\")"
+      ],
+      "techniques": [
+        "Research-First Foundation",
+        "The Long Headline",
+        "Facts Over Adjectives (The Specificity Method)",
+        "Brand Image as Compound Interest",
+        "Brand Response Hybrid",
+        "Respect the Reader",
+        "Story Appeal"
+      ],
+      "useCases": [
+        "Best for: Research, Briefing",
+        "Invoke during market analysis and strategic mapping before writing"
+      ],
+      "qualityCriteria": [
+        "Claims backed by verifiable facts",
+        "Research depth before writing",
+        "Headline effectiveness (information gap)"
+      ],
+      "antiPatterns": [
+        "Copy without research is guessing -- expensive guessing: \"I am helpless without research material\"",
+        "Puns in headlines: Cleverness obscures the selling message; reader remembers the pun, not the product",
+        "Vague claims are unbelievable; specifics are irresistible: \"The more informative, the more persuasive\"",
+        "Hype tone: Disrespects reader intelligence; breaks trust",
+        "Compromised ideas satisfy everyone, persuade no one: \"Committees can criticize but cannot create\"",
+        "Discarding winners: Boredom of the advertiser kills campaigns that still sell",
+        "Borrowed interest; people remember the celebrity, not the product: Ogilvy called the Eleanor Roosevelt margarine ad a mistake",
+        "Ignoring captions: 2x more people read captions than body; wasted real estate",
+        "Funny ads win awards, not sales; product message gets lost: \"You cannot bore people into buying, but you cannot joke them either\"",
+        "Jargon language: Pretentious language alienates; plain language persuades",
+        "Imitation creates mediocre brands: \"Nobody built a brand by imitating somebody else's advertising\"",
+        "All caps in body: Readers process all-caps one letter at a time; kills readability",
+        "Strategy must precede execution; positioning > copywriting: \"Positioning decided before advertising is created\""
+      ]
+    },
+    "powers": {
+      "name": "John E. Powers",
+      "slug": "powers",
+      "tier": "T3_SPECIALIZED",
+      "sections": [
+        "honest_ad",
+        "radical_candor",
+        "plain_speak",
+        "retail_copy",
+        "reason_why",
+        "news_style"
+      ],
+      "tokenBudget": 300,
+      "coreIdentity": "The world's first full-time copywriter. Father of modern creative advertising. Honest advertising pioneer. Radical candor. Plain speak. Anti-hype. Reason-why. News-of-the-store. Advertising Hall of Fame 1954.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "### The Foundation: Truth Sells  The first thing one must do to succeed in advertising is to have the attention of the reader.",
+        "That means be interesting.",
+        "The next thing is to stick to the truth, and that means rectifying whatever's wrong in the merchant's business.",
+        "If the truth isn't tellable, fix it so it is.",
+        "This is not a copywriting technique.",
+        "Admit weaknesses before the customer discovers them",
+        "State limitations plainly: \"This won't work for everyone\"",
+        "Use everyday words: \"buy\" not \"invest\", \"works\" not \"delivers results\", \"cheap\" not \"affordable\"",
+        "Write sentences under 15 words for key points",
+        "Lead with the most honest statement you can make about the product"
+      ],
+      "techniques": [
+        "Radical Candor",
+        "Plain Speak",
+        "Truth-Based Selling",
+        "Anti-Hype Positioning",
+        "Reason-Why Copy",
+        "News-of-the-Store Format",
+        "Customer-Centric Framing"
+      ],
+      "useCases": [
+        "Invoke for specialized formats — launches, cohorts, social"
+      ],
+      "qualityCriteria": [],
+      "antiPatterns": [
+        "Erodes trust in skeptical markets: \"If your product needs hype, fix the product\"",
+        "Hidden limitations: Discovered later = betrayal",
+        "Worse than straightforward selling: \"A calculated confession is still a lie\"",
+        "Passive voice: Weakens every statement",
+        "Breeds resentment: \"Give them reasons, not feelings\"",
+        "Feature-first copy: Ignores what the customer actually wants",
+        "Creates immediate distrust: \"Specifics convince. Generalities bore.\"",
+        "Self-centered copy: Violates the selfishness principle",
+        "Prizes wit over communication: \"Be interesting, not clever\"",
+        "Industry jargon: Excludes the very people you are trying to reach"
+      ]
+    },
+    "reeves": {
+      "name": "Rosser Reeves",
+      "slug": "reeves",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "usp",
+        "single_proposition",
+        "repetition_strategy",
+        "demonstration",
+        "measurement",
+        "anti_vampire"
+      ],
+      "tokenBudget": 500,
+      "coreIdentity": "Reality in Advertising. The Unique Selling Proposition. One claim, hammered relentlessly. Anti-creativity-for-creativity's-sake. Penetration + Usage Pull. Product-as-hero. The hard sell that outsells everything soft.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "The purpose of advertising is to sell.",
+        "Not to amuse the copywriter's colleagues.",
+        "Not to make the creative director feel clever.",
+        "Every dollar spent on advertising that does not sell is a dollar wasted.",
+        "And most advertising wastes most of every dollar.",
+        "Distill your entire offer into ONE proposition",
+        "Test uniqueness: put competitor name in the claim. Does it still work? Then it is NOT a USP.",
+        "Choose the ONE most powerful benefit",
+        "Repeat it in headline, body, and close",
+        "Lead with the demonstration, not the claim"
+      ],
+      "techniques": [
+        "The USP Framework",
+        "Single Proposition Discipline",
+        "Demonstration Over Declaration",
+        "Repetition as Strategy",
+        "Anti-Vampire Discipline",
+        "Product-as-Hero",
+        "Measurement Over Intuition"
+      ],
+      "useCases": [
+        "Best for: Briefing, Landing Page",
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [],
+      "antiPatterns": [
+        "Dilutes every claim; prospect retains zero: \"One proposition. ONE. Not two. The moment you add a second, you have halved the first.\"",
+        "Entertainment over selling: Vampire creativity -- audience recalls humor, forgets product",
+        "Visual beauty that serves the art director, not the USP: \"The ad is supposed to sell the product, not the photographer.\"",
+        "Brand image without claim: Unmeasurable, unaccountable, undirectable",
+        "If a competitor can say the same thing, it is not a USP: \"Replace your brand name with a competitor's. If the claim still works, throw it away.\"",
+        "Frequency without consistency: Running many ads with different propositions",
+        "A/B testing the execution when the USP is wrong: \"You are testing paint colors on a house with no foundation.\""
+      ]
+    },
+    "ry-schwartz": {
+      "name": "Ry Schwartz",
+      "slug": "ry-schwartz",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "coaching_conversion",
+        "voc_mining",
+        "awareness_mapping",
+        "belief_architecture",
+        "email_sequences",
+        "launch_framework",
+        "objection_handling",
+        "saas_conversion"
+      ],
+      "tokenBudget": 400,
+      "coreIdentity": "Conversion copywriter for launches and funnels. Creator of Coaching The Conversion Method. $75M+ in client revenue (Amy Porterfield, Todd Herman, Copyhackers). Email sequence architect. Belief transformation over hard selling. VOC-driven empathy. Stage of Awareness email mapping. Decisiveness over urgency. Automated Intimacy. The P.A.I.D. framework.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "Copy is not about talking AT the prospect.",
+        "Copy is about catalyzing a conversation that is ALREADY happening inside the prospect's head.",
+        "Your job as the copywriter is not to create desire from nothing -- it is to join the internal dialogue the prospect is having at 2 AM when they cannot sleep, and guide that dialogue toward a new belief, a new possibility, and ultimately a new action.",
+        "The gap between one-on-one sales conversations (which close at 20-50%) and email marketing (which closes at 2-3%) exists because marketers forgot the most fundamental truth of selling: people do not buy products.",
+        "People buy a TRANSFORMATION in who they believe they can become.",
+        "Map the belief shifts required BEFORE writing a single word",
+        "Front-load the pre-launch with the heaviest persuasion work",
+        "Collect 100+ data points before writing",
+        "Use VERBATIM customer language (do not translate into marketing-speak)",
+        "Lead with genuine empathy, not performative sympathy"
+      ],
+      "techniques": [
+        "Coaching The Conversion (CTC) -- Core Method",
+        "VOC Mining Method (Steal From Your Customers)",
+        "Empathetic Challenge (The Apology Tactic)",
+        "Stage of Awareness Email Mapping",
+        "Conversational Precision (Writing to One Reader)",
+        "Story-to-CTA Flow",
+        "Objection Anticipation (The Objection Iceberg)"
+      ],
+      "useCases": [
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [
+        "Awareness-level matching",
+        "Sophistication-level calibration",
+        "Urgency with reason-why",
+        "Clear, direct CTA",
+        "Story arc across sequence",
+        "Open loops maintained"
+      ],
+      "antiPatterns": [
+        "Anti-Pattern: Why It Fails (Ry's View)",
+        "You end up writing from imagination instead of reality -- the copy sounds like marketing, not like the conversation in the prospect's head: Mine VOC from 3+ sources, use verbatim language, categorize by awareness stage",
+        "Generic benefit statements: \"Save time and money\" could be said by any competitor about any product -- it creates zero differentiation and zero emotional response",
+        "Lists of features overwhelm and bore -- the prospect does not care what the product DOES, they care what it does FOR THEM: One feature per email, framed as a solution to one specific pain point",
+        "Pushing urgency as primary closer: Urgency creates anxiety, and anxious people make NO decision (not fast decisions) -- 60% of lost sales are lost to \"no decision\"",
+        "\"Women 35-50 who want to lose weight\" is not a person -- you cannot write with empathy or precision to a demographic: Write to ONE specific person, name them internally, know their Tuesday morning",
+        "Reflecting VOC without interpretation: Taking survey data at face value and parroting it back is shallow -- the stated pain is the tip of the iceberg",
+        "A bulleted list of objections and answers feels clinical and defensive -- it signals that you know people have doubts: Address objections through stories of real people who had the same doubt and overcame it",
+        "Countdown-timer urgency: Artificial scarcity creates short-term compliance but long-term distrust -- the prospect learns your deadlines are fake"
+      ]
+    },
+    "sabri": {
+      "name": "Sabri Suby",
+      "slug": "sabri",
+      "tier": "T2_EXECUTION",
+      "sections": [
+        "ad_creative",
+        "funnel_copy",
+        "high_volume_testing",
+        "scaling_copy",
+        "offer_architecture",
+        "lead_generation"
+      ],
+      "tokenBudget": 300,
+      "coreIdentity": "Sell Like Crazy. High-volume ad testing. Funnel-first thinking. The Godfather Offer. Data-driven creativity. King Kong agency methodology. 8-Phase Selling System. Magic Lantern nurture. HVCO lead magnets. The 4% Rule. Larger Market Formula.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "The best copywriter in the world loses to a mediocre copywriter who tests 100 variations.",
+        "Write fast, test faster, kill losers, scale winners.",
+        "The market decides what works, not your opinion.",
+        "Not your creative director's opinion.",
+        "Sabri built King Kong from $50 and a laptop into Australia's fastest-growing digital marketing agency by following this one principle ruthlessly: let data pick winners, not ego.",
+        "Write the hook FIRST and test it in isolation (first 3 seconds)",
+        "Name the specific pain using the prospect's exact words (VOC language)",
+        "Itemize EVERY component with a dollar value (even free bonuses)",
+        "Show total value vs. asking price ($4,997 value for $497)",
+        "Write quantity first, quality through iteration"
+      ],
+      "techniques": [
+        "The HPDA Formula (Hook, Problem, Dream, Agitate)",
+        "The Godfather Offer Architecture",
+        "High-Volume Testing Methodology",
+        "Funnel-First Copy",
+        "Aussie Bluntness & Data-Backed Claims",
+        "Value-First Lead Magnets (HVCO Framework)",
+        "Aggressive Urgency & Scarcity"
+      ],
+      "useCases": [
+        "Best for: Creatives",
+        "Invoke during copy production — writing hooks, body, bullets, close"
+      ],
+      "qualityCriteria": [
+        "Value Equation optimization",
+        "Offer stack coherence",
+        "Measurable, testable claims",
+        "A/B testing readiness",
+        "Hook variety (multiple angles)",
+        "Funnel stage alignment"
+      ],
+      "antiPatterns": [
+        "#: Name",
+        "Single ad creative: Write 10+, let data pick winner",
+        "02: The Ego-Driven Pick",
+        "The Leaky Pipe: Scaling broken funnel",
+        "Being subtle in offers: Godfather Offer: irresistible value",
+        "05: The Generic Hook",
+        "The Free-Value Fraud: Pitching inside HVCO",
+        "Only targeting ready buyers: Capture and nurture the 97%",
+        "08: The Feature Lister",
+        "The Wimpy Guarantee: Weak risk reversal",
+        "Non-revenue activities: Power 4% activities only"
+      ]
+    },
+    "schwartz": {
+      "name": "Eugene Schwartz",
+      "slug": "schwartz",
+      "tier": "T1_STRATEGIC",
+      "sections": [
+        "headline",
+        "awareness_calibration",
+        "sophistication",
+        "lead",
+        "opening"
+      ],
+      "tokenBudget": 500,
+      "coreIdentity": "Breakthrough Advertising. Mass desire channeling. Market awareness + sophistication mapping. The strategic foundation upon which ALL copy in this ecosystem is built.",
+      "principleCount": 10,
+      "techniqueCount": 9,
+      "principles": [
+        "You cannot create desire.",
+        "You can only CHANNEL existing desire toward your product.",
+        "The force, the energy, the drive that makes advertising work comes from the market itself.",
+        "Your job is not to create this force -- your job is to direct it.",
+        "You assemble existing desires, existing beliefs, existing emotions -- and you direct them toward your product with surgical precision.",
+        "Start with the prospect's EXISTING conversation, not your product",
+        "Compress maximum meaning into minimum words",
+        "DIAGNOSE awareness level BEFORE writing a single word",
+        "Match headline energy to awareness (unaware = story, most aware = deal)",
+        "Map BOTH awareness AND sophistication before writing"
+      ],
+      "techniques": [
+        "Headline as Bridge",
+        "The 5 Levels of Awareness",
+        "The 5 Levels of Market Sophistication",
+        "Mass Desire Channeling",
+        "Headline Construction by Awareness",
+        "Intensification Strategy",
+        "Identification",
+        "Desire Trifecta",
+        "Parallel Structure and Rhythm"
+      ],
+      "useCases": [
+        "Best for: VSL, Landing Page, Creatives, Briefing, Emails",
+        "Invoke during big idea development, mechanism design, and positioning"
+      ],
+      "qualityCriteria": [
+        "Awareness-level matching",
+        "Sophistication-level calibration",
+        "Headline effectiveness (information gap)",
+        "Copy rhythm (varied sentence length)"
+      ],
+      "antiPatterns": [
+        "Talking product to unaware prospect = disconnect: DIAGNOSE before writing. Always.",
+        "Level 1 in Level 4 market: Direct claims in sophisticated market = eye-rolls",
+        "\"If you want success\" matches no one: \"If you wake up at 3AM with your heart pounding...\"",
+        "Naming hidden desire: Must be implied, never stated",
+        "Each awareness/sophistication level needs unique approach: Use the 25-cell matrix",
+        "Ignoring sophistication: Biggest strategic error in copy",
+        "\"Let me tell you about my product\": Prospect-first: \"Let me tell you about YOUR problem\"",
+        "Weak proof stacking: Single testimonial for major claim",
+        "\"I discovered...\" before identification: \"You've noticed...\" before \"I discovered...\"",
+        "Using the same headline for all channels: Email, ad, LP have different sophistication contexts",
+        "Awareness can shift during a campaign: Re-diagnose at each touchpoint",
+        "Confusing sophistication with cynicism: Sophistication is about EXPOSURE, not attitude",
+        "Unaware prospects do not know they need a mechanism: Story first. Mechanism only after problem awareness is established.",
+        "Enlarging claims without proof: Bigger claims without bigger proof = less credibility, not more",
+        "Competitor may be targeting different segment at different level: Diagnose YOUR audience independently. Their data, not theirs.",
+        "Writing headlines in isolation: Headline disconnected from body = broken promise, broken trust"
+      ]
+    },
+    "sugarman": {
+      "name": "Joe Sugarman",
+      "slug": "sugarman",
+      "tier": "T2_EXECUTION",
+      "sections": [
+        "body_copy",
+        "story",
+        "flow",
+        "transitions"
+      ],
+      "tokenBudget": 300,
+      "coreIdentity": "The Slippery Slope master. BluBlocker sunglasses. JS&A mail-order pioneer. Emotional flow architect. 30 Psychological Triggers. The Buying Environment. Incubation Process. The man who sold $300M in products from print ads alone.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "The sole purpose of the first sentence is to get you to read the second sentence.",
+        "The sole purpose of the second sentence is to get you to read the third.",
+        "Every element of copy exists for ONE reason: to keep the reader sliding down the slippery slope until they reach the order form.",
+        "Copy is not about information.",
+        "It is about EMOTIONAL FLOW.",
+        "End paragraphs with forward momentum: \"And here's where it gets strange.\"",
+        "Use incomplete thoughts that demand completion",
+        "Plant 2-3 seeds in the first 20% of copy",
+        "Resolve seeds at different points (stagger the payoffs)",
+        "Build emotional investment before introducing the product"
+      ],
+      "techniques": [
+        "Slippery Slope Construction",
+        "Curiosity Seeds (The Seed/Harvest Technique)",
+        "Emotional Flow Architecture",
+        "The Buying Environment",
+        "Involvement Devices",
+        "Personal Connection Voice",
+        "Transition Mastery"
+      ],
+      "useCases": [
+        "Best for: VSL, Landing Page",
+        "Invoke during copy production — writing hooks, body, bullets, close"
+      ],
+      "qualityCriteria": [
+        "Narrative flow (slippery slope)",
+        "Curiosity seeds planted"
+      ],
+      "antiPatterns": [
+        "#: Pattern",
+        "Logic before emotion = low conversion. The rational mind does not create desire -- it evaluates it. Leading with features asks the reader to evaluate before they want.: Build emotional desire FIRST. Introduce features only as logical justification AFTER the emotional decision is made.",
+        "2: Resolved paragraphs",
+        "Generic involvement: \"Imagine success\" is meaningless because every reader defines success differently. Generic involvement creates no mental image, therefore no commitment.",
+        "\"Dear customers\" or \"Dear readers\" kills intimacy instantly. You are no longer talking to ONE person -- you are broadcasting. Broadcasting is ignorable.: Always address a SINGLE person. \"You\" singular. \"I\" to \"you.\" One person at the kitchen table.",
+        "5: Summary transitions",
+        "Information dumping: Dense paragraphs of facts, features, or data overwhelm the reader. Cognitive overload triggers disengagement. The brain shuts down when it cannot process.",
+        "Abstract language is forgettable. The brain processes and remembers CONCRETE sensory input far better than abstract concepts. Copy without sensory detail is invisible.: Engage at least 2 senses per major section. Describe textures, sounds, temperatures, visual details. Make the reader FEEL the copy.",
+        "8: Rushed emotional arc",
+        "Manufactured urgency: Fake scarcity, countdown timers that reset, \"only 3 left\" when there are unlimited. Readers have been burned enough to detect manufactured urgency instantly.",
+        "Switching between casual and formal, between personal and corporate, between warm and clinical. Inconsistency signals inauthenticity and breaks trust.: Choose ONE voice and maintain it throughout. If you start conversational, end conversational.",
+        "11: Selling before earning",
+        "Product in the headline: The headline's job is to get the first sentence read. NOT to name the product. Sugarman's best headlines never mentioned the product.",
+        "Aggressive closes (\"BUY NOW OR ELSE\") create resistance. Sugarman's closes feel like natural conclusions, not demands.: Make the close feel like the obvious next step. \"Here's how to get started...\" beats \"ORDER NOW!\"",
+        "14: Skipping incubation",
+        "Telling, not showing: \"This is amazing\" = telling. \"I put them on and the world changed\" = showing. Telling creates skepticism. Showing creates belief.",
+        "If you explain the mechanism before building curiosity about it, there is no curiosity to sustain the slope.: Delay explanations. Build desire to know BEFORE providing the answer."
+      ]
+    },
+    "vaynerchuk": {
+      "name": "Gary Vaynerchuk",
+      "slug": "vaynerchuk",
+      "tier": "T3_SPECIALIZED",
+      "sections": [
+        "social_native_copy",
+        "platform_adaptation",
+        "content_volume",
+        "brand_voice",
+        "attention_arbitrage",
+        "community_building"
+      ],
+      "tokenBudget": 200,
+      "coreIdentity": "Jab, Jab, Jab, Right Hook. Platform-native content. Volume strategy. Attention arbitrage. Social-first copywriting. Day Trading Attention. Micro speed, macro patience. Document don't create.",
+      "principleCount": 10,
+      "techniqueCount": 7,
+      "principles": [
+        "### Attention Is the Asset  Gary Vaynerchuk operates from a single foundational premise: human attention is the most valuable and most scarce commodity in marketing.",
+        "Every strategy, framework, and tactical decision he makes flows from one question -- \"Where is the attention, and is it underpriced?\" This is not abstract theory.",
+        "It is the same instinct that led him to bet on Google AdWords in 2000, YouTube in 2006, Twitter in 2007, Instagram in 2012, TikTok in 2018, and whatever emerges next.",
+        "The marketer who identifies where attention is migrating BEFORE the majority catches on wins.",
+        "The marketer who follows the herd pays a premium for declining returns.",
+        "Study the native language of each platform before posting",
+        "Adapt the same idea into platform-specific formats",
+        "Create content at platform speed (daily, not weekly)",
+        "Repurpose one long-form piece into 7-64 short-form pieces",
+        "Write in fragments. Not sentences."
+      ],
+      "techniques": [
+        "Platform-Native Adaptation",
+        "Content Volume Strategy (The GaryVee Content Model)",
+        "Social Copy Voice",
+        "Raw Authenticity Over Production Value",
+        "Empathy-First Marketing",
+        "Speed Over Perfection",
+        "The Long Game Orientation"
+      ],
+      "useCases": [
+        "Invoke for specialized formats — launches, cohorts, social"
+      ],
+      "qualityCriteria": [
+        "Hook variety (multiple angles)",
+        "Funnel stage alignment"
+      ],
+      "antiPatterns": [
+        "Anti-Pattern: Why He Would Never Do This",
+        "Overproduction signals \"ad\" and triggers scroll reflex. 86% of users prefer authentic content.: Ship raw, iterate fast. Imperfection IS the strategy.",
+        "One-size-fits-all content: \"You wouldn't speak Spanish in Iceland.\" Each platform has its own language and culture.",
+        "Comments ARE the platform. Engagement is where trust is built.: Respond to every comment. Treat each as a conversation.",
+        "Chasing vanity metrics: 1M followers with 0.1% engagement = a vanity project.",
+        "Speed IS the competitive advantage. The brand that ships daily beats the brand that ships monthly.: Publish at platform speed. Done > perfect.",
+        "Posting and ghosting: Posting without engaging is like talking at a party and walking away.",
+        "The biggest wins come from being early. Google AdWords 2000, TikTok 2018.: Allocate 10-20% of effort to experimental channels.",
+        "Optimizing only for clicks/conversions: Short-term conversion optimization destroys long-term brand equity.",
+        "People detect automated responses instantly. Destroys trust.: Real human responses, even if slower. Authenticity scales.",
+        "Treating all customers equally by follower count: A customer with 47 followers who loves your brand is more valuable than an influencer with 1M who does not care."
+      ]
+    }
+  },
+  "specialtyMap": {
+    "strategy_multiplier": [
+      "abraham"
+    ],
+    "jv_architecture": [
+      "abraham"
+    ],
+    "preeminence": [
+      "abraham"
+    ],
+    "risk_reversal_advanced": [
+      "abraham"
+    ],
+    "optimization_sequence": [
+      "abraham"
+    ],
+    "parthenon_revenue": [
+      "abraham"
+    ],
+    "referral_systems": [
+      "abraham"
+    ],
+    "usp_positioning": [
+      "abraham"
+    ],
+    "financial_promo": [
+      "agora"
+    ],
+    "magalog": [
+      "agora"
+    ],
+    "advertorial": [
+      "agora"
+    ],
+    "fear_greed_copy": [
+      "agora"
+    ],
+    "fascinations": [
+      "agora",
+      "makepeace"
+    ],
+    "big_idea": [
+      "agora",
+      "brown"
+    ],
+    "offer_architecture": [
+      "agora",
+      "sabri"
+    ],
+    "persuasion_core": [
+      "bencivenga"
+    ],
+    "implicit_promise": [
+      "bencivenga"
+    ],
+    "proof_structure": [
+      "bencivenga"
+    ],
+    "belief_shift": [
+      "bencivenga"
+    ],
+    "conviction_architecture": [
+      "bencivenga"
+    ],
+    "mecanismo": [
+      "brown"
+    ],
+    "offer_stack": [
+      "brown",
+      "hormozi",
+      "kennedy"
+    ],
+    "paradigm_shift": [
+      "brown"
+    ],
+    "funnel_architecture": [
+      "brunson"
+    ],
+    "attractive_character": [
+      "brunson"
+    ],
+    "epiphany_bridge": [
+      "brunson"
+    ],
+    "webinar_script": [
+      "brunson"
+    ],
+    "headline_testing": [
+      "caples"
+    ],
+    "ad_copy": [
+      "caples"
+    ],
+    "split_test": [
+      "caples"
+    ],
+    "proven_headlines": [
+      "caples"
+    ],
+    "first_paragraph": [
+      "caples"
+    ],
+    "lead": [
+      "caples",
+      "collier",
+      "halbert",
+      "schwartz"
+    ],
+    "freelance_copy": [
+      "carlton"
+    ],
+    "street_smart": [
+      "carlton"
+    ],
+    "sales_letter": [
+      "carlton"
+    ],
+    "personality_voice": [
+      "carlton"
+    ],
+    "email_sequence": [
+      "chaperon"
+    ],
+    "soap_opera": [
+      "chaperon"
+    ],
+    "autoresponder": [
+      "chaperon"
+    ],
+    "nurture": [
+      "chaperon"
+    ],
+    "narrative_marketing": [
+      "chaperon"
+    ],
+    "segmentation": [
+      "chaperon"
+    ],
+    "influence_audit": [
+      "cialdini"
+    ],
+    "social_proof": [
+      "cialdini"
+    ],
+    "reciprocity": [
+      "cialdini"
+    ],
+    "commitment_consistency": [
+      "cialdini"
+    ],
+    "authority_architecture": [
+      "cialdini"
+    ],
+    "liking_rapport": [
+      "cialdini"
+    ],
+    "scarcity_urgency": [
+      "cialdini"
+    ],
+    "unity_tribal": [
+      "cialdini"
+    ],
+    "pre_suasion": [
+      "cialdini"
+    ],
+    "reader_entry": [
+      "collier"
+    ],
+    "empathy_bridge": [
+      "collier"
+    ],
+    "letter_opening": [
+      "collier"
+    ],
+    "bullets": [
+      "halbert"
+    ],
+    "hook": [
+      "halbert"
+    ],
+    "subject_line": [
+      "halbert"
+    ],
+    "audit": [
+      "hopkins"
+    ],
+    "testing_framework": [
+      "hopkins"
+    ],
+    "metrics": [
+      "hopkins"
+    ],
+    "accountability": [
+      "hopkins"
+    ],
+    "scientific_review": [
+      "hopkins"
+    ],
+    "reason_why": [
+      "hopkins",
+      "powers"
+    ],
+    "preemptive_claim": [
+      "hopkins"
+    ],
+    "grand_slam_offer": [
+      "hormozi"
+    ],
+    "value_equation": [
+      "hormozi"
+    ],
+    "pricing_psychology": [
+      "hormozi"
+    ],
+    "content_selling": [
+      "hormozi"
+    ],
+    "lead_generation": [
+      "hormozi",
+      "sabri"
+    ],
+    "market_selection": [
+      "hormozi"
+    ],
+    "sales_framework": [
+      "hormozi"
+    ],
+    "urgency": [
+      "kennedy"
+    ],
+    "cta": [
+      "kennedy"
+    ],
+    "scarcity": [
+      "kennedy"
+    ],
+    "guarantee": [
+      "kennedy"
+    ],
+    "close": [
+      "kennedy"
+    ],
+    "price_presentation": [
+      "kennedy"
+    ],
+    "follow_up": [
+      "kennedy"
+    ],
+    "launch_copy": [
+      "kern"
+    ],
+    "personality_driven": [
+      "kern"
+    ],
+    "conversational_selling": [
+      "kern"
+    ],
+    "webinar": [
+      "kern"
+    ],
+    "email_promo": [
+      "kern"
+    ],
+    "intent_branding": [
+      "kern"
+    ],
+    "power_lead": [
+      "makepeace"
+    ],
+    "emotional_proof": [
+      "makepeace"
+    ],
+    "financial_copy": [
+      "makepeace"
+    ],
+    "health_copy": [
+      "makepeace"
+    ],
+    "dr_power_copy": [
+      "makepeace"
+    ],
+    "research_brief": [
+      "ogilvy"
+    ],
+    "brand_response": [
+      "ogilvy"
+    ],
+    "long_headline": [
+      "ogilvy"
+    ],
+    "print_ad": [
+      "ogilvy"
+    ],
+    "direct_response": [
+      "ogilvy"
+    ],
+    "honest_ad": [
+      "powers"
+    ],
+    "radical_candor": [
+      "powers"
+    ],
+    "plain_speak": [
+      "powers"
+    ],
+    "retail_copy": [
+      "powers"
+    ],
+    "news_style": [
+      "powers"
+    ],
+    "usp": [
+      "reeves"
+    ],
+    "single_proposition": [
+      "reeves"
+    ],
+    "repetition_strategy": [
+      "reeves"
+    ],
+    "demonstration": [
+      "reeves"
+    ],
+    "measurement": [
+      "reeves"
+    ],
+    "anti_vampire": [
+      "reeves"
+    ],
+    "coaching_conversion": [
+      "ry-schwartz"
+    ],
+    "voc_mining": [
+      "ry-schwartz"
+    ],
+    "awareness_mapping": [
+      "ry-schwartz"
+    ],
+    "belief_architecture": [
+      "ry-schwartz"
+    ],
+    "email_sequences": [
+      "ry-schwartz"
+    ],
+    "launch_framework": [
+      "ry-schwartz"
+    ],
+    "objection_handling": [
+      "ry-schwartz"
+    ],
+    "saas_conversion": [
+      "ry-schwartz"
+    ],
+    "ad_creative": [
+      "sabri"
+    ],
+    "funnel_copy": [
+      "sabri"
+    ],
+    "high_volume_testing": [
+      "sabri"
+    ],
+    "scaling_copy": [
+      "sabri"
+    ],
+    "headline": [
+      "schwartz"
+    ],
+    "awareness_calibration": [
+      "schwartz"
+    ],
+    "sophistication": [
+      "schwartz"
+    ],
+    "opening": [
+      "schwartz"
+    ],
+    "body_copy": [
+      "sugarman"
+    ],
+    "story": [
+      "sugarman"
+    ],
+    "flow": [
+      "sugarman"
+    ],
+    "transitions": [
+      "sugarman"
+    ],
+    "social_native_copy": [
+      "vaynerchuk"
+    ],
+    "platform_adaptation": [
+      "vaynerchuk"
+    ],
+    "content_volume": [
+      "vaynerchuk"
+    ],
+    "brand_voice": [
+      "vaynerchuk"
+    ],
+    "attention_arbitrage": [
+      "vaynerchuk"
+    ],
+    "community_building": [
+      "vaynerchuk"
+    ]
+  },
+  "deliverableMap": {
+    "VSL": [
+      "agora",
+      "brown",
+      "caples",
+      "cialdini",
+      "collier",
+      "halbert",
+      "hormozi",
+      "kennedy",
+      "schwartz",
+      "sugarman"
+    ],
+    "Landing Page": [
+      "agora",
+      "brown",
+      "caples",
+      "cialdini",
+      "collier",
+      "halbert",
+      "hormozi",
+      "kennedy",
+      "reeves",
+      "schwartz",
+      "sugarman"
+    ],
+    "Briefing": [
+      "agora",
+      "brown",
+      "ogilvy",
+      "reeves",
+      "schwartz"
+    ],
+    "Funnel Design": [
+      "brunson"
+    ],
+    "Webinar Scripts": [
+      "brunson",
+      "kern"
+    ],
+    "Creatives": [
+      "caples",
+      "halbert",
+      "kennedy",
+      "sabri",
+      "schwartz"
+    ],
+    "Emails": [
+      "caples",
+      "chaperon",
+      "collier",
+      "halbert",
+      "kennedy",
+      "schwartz"
+    ],
+    "Review": [
+      "cialdini"
+    ],
+    "Validation": [
+      "cialdini"
+    ],
+    "Offer Design": [
+      "hormozi"
+    ],
+    "Checkout": [
+      "hormozi"
+    ],
+    "Launch Sequences": [
+      "kern"
+    ],
+    "Research": [
+      "ogilvy"
+    ]
+  },
+  "qualityCriteriaMap": {
+    "Narrative flow (slippery slope)": [
+      "agora",
+      "bencivenga",
+      "brunson",
+      "chaperon",
+      "kennedy",
+      "sugarman"
+    ],
+    "Curiosity seeds planted": [
+      "agora",
+      "bencivenga",
+      "brunson",
+      "chaperon",
+      "kennedy",
+      "sugarman"
+    ],
+    "Persuasion principles applied correctly": [
+      "bencivenga",
+      "carlton",
+      "cialdini",
+      "halbert"
+    ],
+    "Claims backed by verifiable facts": [
+      "bencivenga",
+      "ogilvy"
+    ],
+    "Research depth before writing": [
+      "bencivenga",
+      "ogilvy"
+    ],
+    "Unique Mechanism present and differentiated": [
+      "brown"
+    ],
+    "New Opportunity positioning (not improvement)": [
+      "brown"
+    ],
+    "Value Equation optimization": [
+      "brown",
+      "brunson",
+      "hormozi",
+      "sabri"
+    ],
+    "Offer stack coherence": [
+      "brown",
+      "brunson",
+      "hormozi",
+      "sabri"
+    ],
+    "Measurable, testable claims": [
+      "caples",
+      "hopkins",
+      "sabri"
+    ],
+    "A/B testing readiness": [
+      "caples",
+      "hopkins",
+      "sabri"
+    ],
+    "Headline effectiveness (information gap)": [
+      "caples",
+      "halbert",
+      "ogilvy",
+      "schwartz"
+    ],
+    "Story arc across sequence": [
+      "chaperon",
+      "ry-schwartz"
+    ],
+    "Open loops maintained": [
+      "chaperon",
+      "ry-schwartz"
+    ],
+    "Specificity Score (names, numbers, details)": [
+      "halbert",
+      "makepeace"
+    ],
+    "Conversational tone (no corporate speak)": [
+      "halbert",
+      "makepeace"
+    ],
+    "Bullet quality (curiosity + benefit per bullet)": [
+      "halbert",
+      "makepeace"
+    ],
+    "Copy rhythm (varied sentence length)": [
+      "halbert",
+      "schwartz"
+    ],
+    "Hook variety (multiple angles)": [
+      "hormozi",
+      "sabri",
+      "vaynerchuk"
+    ],
+    "Funnel stage alignment": [
+      "hormozi",
+      "sabri",
+      "vaynerchuk"
+    ],
+    "Urgency with reason-why": [
+      "kennedy",
+      "ry-schwartz"
+    ],
+    "Clear, direct CTA": [
+      "kennedy",
+      "ry-schwartz"
+    ],
+    "Awareness-level matching": [
+      "ry-schwartz",
+      "schwartz"
+    ],
+    "Sophistication-level calibration": [
+      "ry-schwartz",
+      "schwartz"
+    ]
+  },
+  "antiHomogenizationPatterns": {
+    "abraham": [
+      "What Abraham Would NEVER Do: Why It's Wrong",
+      "Diving board model = fragile: Power Parthenon with 7+ pillars",
+      "**Commodity positioning**: No USP = price competition = death",
+      "Pouring water into a leaky bucket: Optimize all 3 multipliers BEFORE spending on acquisition",
+      "**Weak or absent guarantee**: Risk on the buyer = friction = lost sales",
+      "Ignoring backend = leaving 80% of revenue on the table: Backend sequences, continuity, LTV maximization",
+      "**Selling from need**: Desperation energy repels; advisory energy attracts",
+      "Convergence toward commodity = race to the bottom: 43+ JV structures, Parthenon pillars, distinctive USP",
+      "**Ignoring dormant assets**: Hidden gold left unmined",
+      "Limits upside, misaligns incentives: Performance-based: PI (per inquiry), PO (per order), PLV (per lifetime value)",
+      "**Waiting to add value**: Delaying value until payment = transactional"
+    ],
+    "agora": [
+      "Anti-Pattern: Why It Fails",
+      "Reader lost in first 10 seconds; no emotional hook: Power lead with immediate prediction, secret, or fear trigger",
+      "**Generic financial advice**: \"Invest in a diversified portfolio\" -- sounds like every broker",
+      "Promo becomes a product brochure instead of a thesis: One Big Idea that is timely, contrarian, and emotionally compelling",
+      "**Product-first copy**: Leading with the newsletter feels like a sales pitch",
+      "\"We pick good stocks\" -- every newsletter says this: Proprietary named mechanism: \"The Livingston Rotation\" or \"The Crash Code\"",
+      "**Passive voice**: Academic tone kills urgency and emotional engagement",
+      "\"$100,000\" feels made up; \"93%\" feels fabricated: Exact numbers: \"$97,342\" and \"91.7%\" signal real data, not estimates",
+      "**Selling the newsletter**: Prospect does not want a newsletter -- they want the RESULT",
+      "\"Great newsletter!\" has zero selling power: Named testimonials with specific results: \"Robert K., Tampa: '$43,217 in 6 months'\"",
+      "**Missing compliance disclaimers**: FTC/SEC violations can shut down the entire operation",
+      "Competing ideas dilute impact and confuse the reader: Ruthless focus: ONE idea, ONE emotion, ONE mechanism, ONE story"
+    ],
+    "bencivenga": [
+      "Modern readers assume BS until proven; claims activate the critical faculty: Replace every claim with a proof element that IMPLIES the claim",
+      "Explicit promises when implicit is possible: Stated promises are evaluated; inferred promises are believed",
+      "Creates resistance, not openness; reader digs in: Validate the old belief, then show a deeper truth that ENCOMPASSES it",
+      "Enthusiasm over evidence: Energy without proof = hype; repels sophisticated buyers",
+      "Wit that draws attention to itself distracts from the IDEA: Let the IDEA do the selling; clarity over cleverness, always",
+      "Writing before studying the control: Cannot beat what you do not understand; flying blind",
+      "Reader can only hold one idea; competing ideas cancel each other: Choose ONE, make everything else subordinate",
+      "Generic promises: \"Feel better\" and \"lose weight\" can be claimed by anyone",
+      "Going straight to biggest claim invites skepticism: Build from moderate to extraordinary with escalating proof",
+      "All proof, no emotion: Data alone does not create buying desire",
+      "A timid guarantee signals uncertainty about the product: Make the guarantee so bold it functions as proof of confidence",
+      "Testing small variations instead of big ideas: Optimizing the wrong concept yields marginal gains",
+      "80% research, 20% writing -- violating this ratio means missing the ONE insight: Spend 4x more time on research than writing; find the insight FIRST",
+      "Fighting prospect's beliefs: Gravity always wins; you cannot argue someone out of a belief they hold emotionally",
+      "\"Dear [FIRST_NAME]\" is not personalization; it is a mail merge: Make the reader feel this solution was DESIGNED for someone in their EXACT situation"
+    ],
+    "brown": [
+      "#: Pattern",
+      "Invites comparison = commodity: \"You just told them to Google your competitors\"",
+      "2: No unique mechanism",
+      "Commodity positioning (\"me too\"): Prospect mentally files you with everything else",
+      "Confuses prospect, dilutes belief: \"One mechanism. One offer. No exceptions.\"",
+      "5: Mechanism without paradigm shift",
+      "\"If they can fit your mechanism into their OLD paradigm, you haven't shifted anything.\": ### Tactical Anti-Patterns",
+      "Feature-based stack: Components without mechanism connection = filler",
+      "8: Rushing E1+E2",
+      "Abstract paradigm shift: Must be visual and tangible",
+      "11: Copy-first approach",
+      "Mechanism without visual: If they can't SEE it, they can't believe it",
+      "14: Attacking the prospect's old belief",
+      "Value stack without mechanism connection: Random bonuses dilute the offer",
+      "17: Naming mechanism after the product",
+      "Skipping the \"absolve\" function: Prospect still feels blame = resistance",
+      "20: Using existing category labels",
+      "### The 5 Deadly Sins of Mechanism Marketing: Sin",
+      "**No Mechanism**: Selling benefits without explaining WHY",
+      "Mechanism that can't be visualized: Prospect doesn't understand, doesn't believe",
+      "**Orphan Mechanism**: Mechanism disconnected from the product"
+    ],
+    "brunson": [
+      "Anti-Pattern: Why Brunson Would NEVER Do This",
+      "Invites comparison with every failed attempt: Sell a NEW OPPORTUNITY that makes past failures irrelevant",
+      "Presenting without stories: Logic alone doesn't create belief or emotion",
+      "No mass movement = no evangelism = no organic growth: Build a Future-Based Cause with identity labels",
+      "Launching without funnel hacking: Building from scratch when proven models exist is ego",
+      "Revenue ceiling, no customer journey: Value Ladder with ascending offers",
+      "Pitching before connecting: Cold audiences reject pitches",
+      "Free consulting that generates no revenue: Every piece of content, every email, every video has an offer",
+      "Running ads without Dream 100: Fishing without knowing where the fish are",
+      "Corporate = forgettable, impersonal, no connection: Conversational, story-driven, Attractive Character voice",
+      "Objection handling through logic: Logical arguments trigger counter-arguments"
+    ],
+    "caples": [
+      "#: Name",
+      "No specific benefit: Name the benefit explicitly",
+      "02: Clever Over Clear",
+      "Untested Assumption: Running single headline",
+      "Entertainment over selling: Benefit-driven copy always",
+      "05: Feature Dump",
+      "Missing CTA: No clear next step",
+      "Stopping tests too early: Run to statistical significance",
+      "08: Multi-Variable Test",
+      "Opinion Override: Personal taste over data",
+      "Random negativity: Tie negative to specific fear"
+    ],
+    "carlton": [
+      "Confusion kills sales. Nobody reads past the first complicated sentence.: \"You're not writing a term paper. You're writing to a guy who's half-watching TV.\"",
+      "Overcomplicated language: Every big word costs you customers. Period.",
+      "Timid claims get ignored. The world is too noisy for modest promises.: \"Either make a Big Damn Claim or go home.\"",
+      "Corporate speak: Trust requires personality. Corporations are faceless. People buy from people.",
+      "Desperate = not credible. If you beg, you signal low value.: \"Needy copy repels money. Confident copy attracts it.\"",
+      "No research: Writing without research is typing. It might look like copy, but it has no teeth.",
+      "Copy that impresses copywriters almost NEVER sells to real prospects.: \"Your copy isn't for the Creative Director. It's for the guy in his underwear at 2 AM.\"",
+      "Trying to go viral: Clever does not sell. Clever entertains for free."
+    ],
+    "chaperon": [
+      "Pitch-first emails: No investment = no conversion",
+      "Resolved stories: No open loops = no opens",
+      "Newsletter format: Brand-feeling = low engagement",
+      "HTML-heavy design: Personal emails outperform designed ones",
+      "No narrative arc: Disconnected emails = sequence ignored",
+      "Generic subject lines: \"Monthly Update\" = deleted",
+      "\"Dear valued subscriber\": Instant brand signal. Inbox trust broken.",
+      "Multiple CTAs per email: Splits attention. Reduces click-through on all links.",
+      "Recycled content for win-back: Signals you have nothing new to say. Confirms their decision to disengage.",
+      "Daily emails during nurture: Exhausts goodwill. 2-3 per week maximum outside of launch.",
+      "Countdown timers in SOS: Artificial urgency clashes with narrative urgency. Breaks immersion.",
+      "\"ICYMI\" subject lines: Lazy. Signals the email was not important enough to open the first time.",
+      "Bullet-point benefit lists in story emails: Breaks narrative voice. Benefits must emerge FROM the story.",
+      "Long paragraphs (5+ sentences): Wall of text kills readability in email. Short blocks create rhythm.",
+      "Starting with \"I want to tell you about...\": Announces the story instead of TELLING it. Opens in medias res or not at all."
+    ],
+    "cialdini": [
+      "Anti-Pattern: Why It Fails",
+      "Destroys trust permanently. Prospect discovers the timer resets and NEVER trusts you again.: Use REAL deadlines with REAL consequences (\"batch ships Friday\")",
+      "**Fabricated testimonials**: Social proof built on lies collapses all 7 principles simultaneously.",
+      "Giving with visible expectation of return triggers REACTANCE, not obligation.: Give genuinely. The obligation forms naturally.",
+      "**Generic social proof**: \"Thousands of happy customers\" is noise. No specificity = no believability.",
+      "Excessive, unearned compliments feel manipulative and hollow.: Demonstrate SIMILARITY and UNDERSTANDING instead. Empathy > flattery.",
+      "**Unity appropriation**: Claiming shared identity you do not genuinely hold (\"As a fellow sufferer...\") when it is not true.",
+      "Relying entirely on scarcity or entirely on social proof. One leg does not make a table.: Stack 4-7 principles. Each one shores up the others' weaknesses.",
+      "**Argument-based persuasion**: Leading with logical arguments triggers counter-arguing reflexes."
+    ],
+    "collier": [
+      "Reader not ready yet: \"You walked into the middle of their conversation and started talking about YOURSELF. No wonder they stopped listening.\"",
+      "Missing the conversation: Not meeting their mental state",
+      "Can only meet, never create: \"You cannot light a fire in a room that has no fuel. Find the fuel that is already burning.\"",
+      "Information dump: Kills progressive revelation",
+      "Jumping to solution too fast: \"You spent 10 words on their problem and 500 on your product. That is the ratio of someone who does not understand selling.\"",
+      "Leading with features: Features are YOUR language",
+      "\"Better health\" instead of specifics: \"Better health means nothing. Waking up without pain, hearing your grandchild whisper, climbing stairs without stopping -- THAT means something.\"",
+      "Self-centered copy: Too much \"I\" and \"we\"",
+      "\"Many people\" and \"great results\": \"If you cannot name the person, the place, and the number, you have not said anything at all.\"",
+      "Skipping validation: Mirror without validate = cold"
+    ],
+    "halbert": [
+      "#: Name",
+      "Corporate tone: Write like a human to a human",
+      "02: The Comedian",
+      "The Wall: Long paragraphs",
+      "Weak PS/no PS: Strongest benefit or deadline",
+      "05: The Menu",
+      "The Ghost: No specifics",
+      "Perfect grammar: Write how people talk",
+      "08: The Lecture",
+      "The Resume: Leading with credentials",
+      "Hedging language: Assert, claim, prove",
+      "11: The Showoff",
+      "The Burier: Best line buried"
+    ],
+    "hopkins": [
+      "Untestable claims: \"You cannot improve what you cannot measure.\"",
+      "General statements: \"The weight of an argument may often be doubled by making it specific.\"",
+      "No tracking: \"Copy without measurement is guessing -- and guessing is gambling.\"",
+      "Opinion-based approval: \"'I like it' is not a metric. The market's verdict is the only verdict.\"",
+      "Word bloat: \"Every unnecessary word costs the advertiser money and the reader patience.\"",
+      "No control test: \"You cannot know what works without knowing what it replaced.\"",
+      "Entertainment over selling: \"The only purpose of advertising is to make sales. Not to amuse.\"",
+      "Humor in ads: \"People do not buy from clowns. They buy from people they trust.\"",
+      "Negative advertising: \"Negative advertising is never done by a competent man.\"",
+      "Guessing without testing: \"Almost any question can be answered by a test campaign.\"",
+      "Ego-driven copy: \"Remember the people you address are selfish. They care nothing about your interests.\"",
+      "Competing on price alone: \"Cheapness is not an appeal. Americans want bargains in QUALITY.\"",
+      "Vague promises: \"Platitudes and generalities roll off the human understanding like water from a duck.\"",
+      "Fancy/artistic ads: \"Ads are not written to entertain. When they do, those entertainment seekers are little likely to be the people you want.\"",
+      "Ignoring human nature: \"The advertising man who ignores human nature will not succeed.\"",
+      "No sampling/trial: \"The product itself is its own best salesman. Get it into the prospect's hands.\"",
+      "Self-praise: \"The best salesmen are plain, sincere men -- not braggarts.\""
+    ],
+    "hormozi": [
+      "Anti-Pattern: Why Hormozi Would NEVER Do This",
+      "Destroys perceived value, trains customers to wait, creates death spiral: Add bonuses to increase value without reducing price",
+      "Unclear value proposition: If you can't explain the value in one sentence, you don't have an offer",
+      "Race to the bottom with zero differentiation; you become a commodity: Compete on VALUE and differentiation instead",
+      "Vague promises: \"Grow your business\" means nothing; specificity creates believability",
+      "Features, modules, and deliverables don't create desire: Sell the vacation -- the OUTCOME, not the process",
+      "One source of leads: Single-channel dependence creates existential risk",
+      "Tweaking a broken offer is polishing a turd: Fix the OFFER first, then optimize the funnel",
+      "Giving away LESS to sell MORE: Hoarding knowledge thinking it makes people pay",
+      "Buyer's remorse kills LTV; refunds destroy profitability: Reinforce within 48 hours; onboard aggressively",
+      "Using \"I need to think about it\" as a real objection: It's almost never the real objection; it's a polite rejection"
+    ],
+    "kennedy": [
+      "Weak ask = weak response: \"When it's time to sell, SELL. Don't whisper. Don't suggest. CLOSE.\"",
+      "Single deadline: One pressure point = easy to resist",
+      "\"Satisfaction guaranteed\" = invisible: \"Name it. Tie it to a measurable outcome. Make it BOLD.\"",
+      "One CTA: Tell them 3+ times to act",
+      "\"Might\", \"could\", \"possibly\" = death: \"Delete every hedge word. If you don't believe it, why should they?\"",
+      "No damaging admission: Too perfect = too suspicious",
+      "Awards without sales = ego: \"Does it SELL? That's the ONLY question. Nobody deposits trophies.\"",
+      "Competing on price: Attracts worst customers",
+      "Fence-sitting = invisible: \"Have a position. DEFEND it. Polarize if necessary.\"",
+      "Selling to everyone: Diluted message = no message",
+      "Waiting until end = cold prospect: \"Close throughout. Test buying temperature. Build commitment.\"",
+      "Pretty design over copy: Design never sold anything"
+    ],
+    "kern": [
+      "Destroys trust. The sale should be EARNED through generosity.: Deliver genuine results in advance, then offer naturally.",
+      "Corporate or polished tone: Kills the personality bond that IS the brand. Nobody bonds with a brochure.",
+      "If the prospect needs a PhD to understand your offer, you have failed.: Break everything down to \"here's what you do\" simplicity.",
+      "Holding back free value: The prospect finds it elsewhere and remembers you withheld it. You lose twice.",
+      "Generic copy = invisible copy. Nobody remembers the marketer who sounded like everyone else.: Inject real opinions, stories, humor, and genuine personality into everything.",
+      "Content-free launches: PLCs that tease without teaching create resentment, not anticipation.",
+      "Desperation energy repels buyers. Confidence attracts them.: \"Take it or leave it\" energy. You are doing fine either way. The offer exists because it helps.",
+      "Targeting everyone: Mass marketing is dead. Relevance beats reach every time."
+    ],
+    "makepeace": [
+      "#: Anti-Pattern",
+      "\"Nobody ever bought a supplement because of a peer-reviewed study alone.\" Engaging the brain without the gut produces nods, not orders.: Frame EVERY fact through its emotional consequence. \"Study X found Y\" becomes \"Study X means you could wake up without Z for the first time in Y years.\"",
+      "2: **The Weak Lead**",
+      "**The Proof Desert**: A section of 500+ words with zero proof elements. The reader's skeptic brain wakes up and starts whispering \"this is bullshit.\"",
+      "\"Lose weight\" without showing what weight loss MEANS in their life -- their marriage, their mirror, their grandchildren, their identity.: Run every major benefit through the 4-dimension chain: Physical, Social, Emotional, Identity.",
+      "5: **The Feature Dump**",
+      "**The Monotone Emotion**: Using fear and ONLY fear for 3,000 words. Emotional fatigue sets in at ~500 words of the same emotion.",
+      "Warm-up paragraphs, throat-clearing, \"Dear Friend, in today's world...\" before any emotional impact.: Cut everything before the first line that creates emotional impact. That IS your opening.",
+      "8: **The Unanchored Claim**",
+      "**The Premature Solution**: Introducing the product before fully selling the diagnosis. The prospect hasn't bought the PROBLEM yet.",
+      "No villain. No one to blame. The problem just \"exists.\" This robs the copy of anger, betrayal, and vindication energy.: Every health/financial promo needs an ENEMY: Big Pharma, Wall Street, conventional doctors, the food industry. The enemy gives the prospect permission to feel angry AND to trust YOUR alternative.",
+      "11: **The Flat Fascination**",
+      "**The Orphan Guarantee**: A guarantee buried in small print without dimensionalization."
+    ],
+    "ogilvy": [
+      "Copy without research is guessing -- expensive guessing: \"I am helpless without research material\"",
+      "Puns in headlines: Cleverness obscures the selling message; reader remembers the pun, not the product",
+      "Vague claims are unbelievable; specifics are irresistible: \"The more informative, the more persuasive\"",
+      "Hype tone: Disrespects reader intelligence; breaks trust",
+      "Compromised ideas satisfy everyone, persuade no one: \"Committees can criticize but cannot create\"",
+      "Discarding winners: Boredom of the advertiser kills campaigns that still sell",
+      "Borrowed interest; people remember the celebrity, not the product: Ogilvy called the Eleanor Roosevelt margarine ad a mistake",
+      "Ignoring captions: 2x more people read captions than body; wasted real estate",
+      "Funny ads win awards, not sales; product message gets lost: \"You cannot bore people into buying, but you cannot joke them either\"",
+      "Jargon language: Pretentious language alienates; plain language persuades",
+      "Imitation creates mediocre brands: \"Nobody built a brand by imitating somebody else's advertising\"",
+      "All caps in body: Readers process all-caps one letter at a time; kills readability",
+      "Strategy must precede execution; positioning > copywriting: \"Positioning decided before advertising is created\""
+    ],
+    "powers": [
+      "Erodes trust in skeptical markets: \"If your product needs hype, fix the product\"",
+      "Hidden limitations: Discovered later = betrayal",
+      "Worse than straightforward selling: \"A calculated confession is still a lie\"",
+      "Passive voice: Weakens every statement",
+      "Breeds resentment: \"Give them reasons, not feelings\"",
+      "Feature-first copy: Ignores what the customer actually wants",
+      "Creates immediate distrust: \"Specifics convince. Generalities bore.\"",
+      "Self-centered copy: Violates the selfishness principle",
+      "Prizes wit over communication: \"Be interesting, not clever\"",
+      "Industry jargon: Excludes the very people you are trying to reach"
+    ],
+    "reeves": [
+      "Dilutes every claim; prospect retains zero: \"One proposition. ONE. Not two. The moment you add a second, you have halved the first.\"",
+      "Entertainment over selling: Vampire creativity -- audience recalls humor, forgets product",
+      "Visual beauty that serves the art director, not the USP: \"The ad is supposed to sell the product, not the photographer.\"",
+      "Brand image without claim: Unmeasurable, unaccountable, undirectable",
+      "If a competitor can say the same thing, it is not a USP: \"Replace your brand name with a competitor's. If the claim still works, throw it away.\"",
+      "Frequency without consistency: Running many ads with different propositions",
+      "A/B testing the execution when the USP is wrong: \"You are testing paint colors on a house with no foundation.\""
+    ],
+    "ry-schwartz": [
+      "Anti-Pattern: Why It Fails (Ry's View)",
+      "You end up writing from imagination instead of reality -- the copy sounds like marketing, not like the conversation in the prospect's head: Mine VOC from 3+ sources, use verbatim language, categorize by awareness stage",
+      "Generic benefit statements: \"Save time and money\" could be said by any competitor about any product -- it creates zero differentiation and zero emotional response",
+      "Lists of features overwhelm and bore -- the prospect does not care what the product DOES, they care what it does FOR THEM: One feature per email, framed as a solution to one specific pain point",
+      "Pushing urgency as primary closer: Urgency creates anxiety, and anxious people make NO decision (not fast decisions) -- 60% of lost sales are lost to \"no decision\"",
+      "\"Women 35-50 who want to lose weight\" is not a person -- you cannot write with empathy or precision to a demographic: Write to ONE specific person, name them internally, know their Tuesday morning",
+      "Reflecting VOC without interpretation: Taking survey data at face value and parroting it back is shallow -- the stated pain is the tip of the iceberg",
+      "A bulleted list of objections and answers feels clinical and defensive -- it signals that you know people have doubts: Address objections through stories of real people who had the same doubt and overcame it",
+      "Countdown-timer urgency: Artificial scarcity creates short-term compliance but long-term distrust -- the prospect learns your deadlines are fake"
+    ],
+    "sabri": [
+      "#: Name",
+      "Single ad creative: Write 10+, let data pick winner",
+      "02: The Ego-Driven Pick",
+      "The Leaky Pipe: Scaling broken funnel",
+      "Being subtle in offers: Godfather Offer: irresistible value",
+      "05: The Generic Hook",
+      "The Free-Value Fraud: Pitching inside HVCO",
+      "Only targeting ready buyers: Capture and nurture the 97%",
+      "08: The Feature Lister",
+      "The Wimpy Guarantee: Weak risk reversal",
+      "Non-revenue activities: Power 4% activities only"
+    ],
+    "schwartz": [
+      "Talking product to unaware prospect = disconnect: DIAGNOSE before writing. Always.",
+      "Level 1 in Level 4 market: Direct claims in sophisticated market = eye-rolls",
+      "\"If you want success\" matches no one: \"If you wake up at 3AM with your heart pounding...\"",
+      "Naming hidden desire: Must be implied, never stated",
+      "Each awareness/sophistication level needs unique approach: Use the 25-cell matrix",
+      "Ignoring sophistication: Biggest strategic error in copy",
+      "\"Let me tell you about my product\": Prospect-first: \"Let me tell you about YOUR problem\"",
+      "Weak proof stacking: Single testimonial for major claim",
+      "\"I discovered...\" before identification: \"You've noticed...\" before \"I discovered...\"",
+      "Using the same headline for all channels: Email, ad, LP have different sophistication contexts",
+      "Awareness can shift during a campaign: Re-diagnose at each touchpoint",
+      "Confusing sophistication with cynicism: Sophistication is about EXPOSURE, not attitude",
+      "Unaware prospects do not know they need a mechanism: Story first. Mechanism only after problem awareness is established.",
+      "Enlarging claims without proof: Bigger claims without bigger proof = less credibility, not more",
+      "Competitor may be targeting different segment at different level: Diagnose YOUR audience independently. Their data, not theirs.",
+      "Writing headlines in isolation: Headline disconnected from body = broken promise, broken trust"
+    ],
+    "sugarman": [
+      "#: Pattern",
+      "Logic before emotion = low conversion. The rational mind does not create desire -- it evaluates it. Leading with features asks the reader to evaluate before they want.: Build emotional desire FIRST. Introduce features only as logical justification AFTER the emotional decision is made.",
+      "2: Resolved paragraphs",
+      "Generic involvement: \"Imagine success\" is meaningless because every reader defines success differently. Generic involvement creates no mental image, therefore no commitment.",
+      "\"Dear customers\" or \"Dear readers\" kills intimacy instantly. You are no longer talking to ONE person -- you are broadcasting. Broadcasting is ignorable.: Always address a SINGLE person. \"You\" singular. \"I\" to \"you.\" One person at the kitchen table.",
+      "5: Summary transitions",
+      "Information dumping: Dense paragraphs of facts, features, or data overwhelm the reader. Cognitive overload triggers disengagement. The brain shuts down when it cannot process.",
+      "Abstract language is forgettable. The brain processes and remembers CONCRETE sensory input far better than abstract concepts. Copy without sensory detail is invisible.: Engage at least 2 senses per major section. Describe textures, sounds, temperatures, visual details. Make the reader FEEL the copy.",
+      "8: Rushed emotional arc",
+      "Manufactured urgency: Fake scarcity, countdown timers that reset, \"only 3 left\" when there are unlimited. Readers have been burned enough to detect manufactured urgency instantly.",
+      "Switching between casual and formal, between personal and corporate, between warm and clinical. Inconsistency signals inauthenticity and breaks trust.: Choose ONE voice and maintain it throughout. If you start conversational, end conversational.",
+      "11: Selling before earning",
+      "Product in the headline: The headline's job is to get the first sentence read. NOT to name the product. Sugarman's best headlines never mentioned the product.",
+      "Aggressive closes (\"BUY NOW OR ELSE\") create resistance. Sugarman's closes feel like natural conclusions, not demands.: Make the close feel like the obvious next step. \"Here's how to get started...\" beats \"ORDER NOW!\"",
+      "14: Skipping incubation",
+      "Telling, not showing: \"This is amazing\" = telling. \"I put them on and the world changed\" = showing. Telling creates skepticism. Showing creates belief.",
+      "If you explain the mechanism before building curiosity about it, there is no curiosity to sustain the slope.: Delay explanations. Build desire to know BEFORE providing the answer."
+    ],
+    "vaynerchuk": [
+      "Anti-Pattern: Why He Would Never Do This",
+      "Overproduction signals \"ad\" and triggers scroll reflex. 86% of users prefer authentic content.: Ship raw, iterate fast. Imperfection IS the strategy.",
+      "One-size-fits-all content: \"You wouldn't speak Spanish in Iceland.\" Each platform has its own language and culture.",
+      "Comments ARE the platform. Engagement is where trust is built.: Respond to every comment. Treat each as a conversation.",
+      "Chasing vanity metrics: 1M followers with 0.1% engagement = a vanity project.",
+      "Speed IS the competitive advantage. The brand that ships daily beats the brand that ships monthly.: Publish at platform speed. Done > perfect.",
+      "Posting and ghosting: Posting without engaging is like talking at a party and walking away.",
+      "The biggest wins come from being early. Google AdWords 2000, TikTok 2018.: Allocate 10-20% of effort to experimental channels.",
+      "Optimizing only for clicks/conversions: Short-term conversion optimization destroys long-term brand equity.",
+      "People detect automated responses instantly. Destroys trust.: Real human responses, even if slower. Authenticity scales.",
+      "Treating all customers equally by follower count: A customer with 47 followers who loves your brand is more valuable than an influencer with 1M who does not care."
+    ]
+  },
+  "tierSummary": {
+    "T1_STRATEGIC": [
+      "abraham",
+      "agora",
+      "bencivenga",
+      "brown",
+      "hormozi",
+      "kennedy",
+      "makepeace",
+      "reeves",
+      "ry-schwartz",
+      "schwartz"
+    ],
+    "T2_EXECUTION": [
+      "brunson",
+      "caples",
+      "carlton",
+      "chaperon",
+      "halbert",
+      "kern",
+      "sabri",
+      "sugarman"
+    ],
+    "T0_DIAGNOSIS": [
+      "cialdini",
+      "collier",
+      "ogilvy"
+    ],
+    "AUDIT": [
+      "hopkins"
+    ],
+    "T3_SPECIALIZED": [
+      "powers",
+      "vaynerchuk"
+    ]
+  }
+}

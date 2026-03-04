@@ -1,0 +1,174 @@
+# Workflow Loops Config (v1.0)
+# Sprint S28.8 — Squad-per-Workflow Loops
+# Stop criteria and per-loop overrides for the executor engine
+# Ref: ~/.claude/schemas/workflow-loop.schema.yaml
+# Created: 2026-03-02
+
+version: "1.0"
+name: workflow-loops
+
+# ═══════════════════════════════════════════
+# DEFAULTS — applied to all loops unless overridden
+# ═══════════════════════════════════════════
+
+defaults:
+  max_iterations: 3
+  min_score: 8.0
+  correction_strategy: targeted   # targeted | rewrite
+  human_stop: true                # human can interrupt at unit boundary
+
+  validation_tools:
+    per_unit:
+      - blind_critic
+    full_deliverable:
+      - emotional_stress_test
+
+  report_format: yaml             # yaml | json
+  output_report_dir: "production/loop-reports"
+
+# ═══════════════════════════════════════════
+# PER-LOOP OVERRIDES
+# ═══════════════════════════════════════════
+
+overrides:
+
+  # ── VSL ──────────────────────────────────────────────────────────────────
+  vsl:
+    persona: "@vsl"              # Echo
+    validator_persona: "@critic" # Hawk
+    output_dir: "production/vsl/drafts"
+    max_iterations: 3
+    min_score: 8.0
+    validation_tools:
+      per_unit:
+        - blind_critic
+      full_deliverable:
+        - emotional_stress_test
+
+    # Per-chapter max_iterations overrides — critical chapters get more attempts
+    units:
+      lead:
+        max_iterations: 5        # Lead is the most critical chapter
+        correction_strategy: rewrite  # Lead rewrites from scratch if it fails
+        min_score: 8.5           # Higher bar for lead
+      background:
+        max_iterations: 3
+      tese_mup:
+        max_iterations: 4        # MUP revelation is also critical
+        min_score: 8.5
+      mus:
+        max_iterations: 4        # MUS presentation — critical
+      product_buildup:
+        max_iterations: 3
+      stack:
+        max_iterations: 3
+      garantia:
+        max_iterations: 3
+      close:
+        max_iterations: 4        # CTA close — critical for conversion
+        min_score: 8.5
+
+  # ── LANDING PAGE ─────────────────────────────────────────────────────────
+  lp:
+    persona: "@lp"               # Forge
+    validator_persona: "@critic" # Hawk
+    output_dir: "production/landing-page/blocks"
+    max_iterations: 3
+    min_score: 8.0
+    validation_tools:
+      per_unit:
+        - blind_critic
+      full_deliverable:
+        - emotional_stress_test
+
+    # Per-block overrides for critical LP blocks
+    units:
+      header:
+        max_iterations: 4
+        min_score: 8.5           # Above-fold is critical
+      lead:
+        max_iterations: 5
+        min_score: 8.5
+        correction_strategy: rewrite
+      cta_final:
+        max_iterations: 4
+        min_score: 8.5
+      preco_cta:
+        max_iterations: 4
+        min_score: 8.5
+
+  # ── CREATIVES ─────────────────────────────────────────────────────────────
+  creative:
+    persona: "@creative"         # Scout
+    validator_persona: "@critic" # Hawk
+    output_dir: "production/creatives"
+    max_iterations: 5            # More room for creative variation
+    min_score: 8.0
+    correction_strategy: rewrite  # Creatives often need full rewrites
+
+    validation_tools:
+      per_unit:
+        - blind_critic
+        - emotional_stress_test  # Both tools per creative (not just full deliverable)
+      full_deliverable: []       # No separate full-deliverable pass
+
+    # Per-platform overrides
+    platforms:
+      meta:
+        variations: 5
+        formats: [ugc, expert, pattern_interrupt, testimonial, hook_only]
+      youtube:
+        variations: 3
+        formats: [skippable_hook, story_arc, educational]
+      tiktok:
+        variations: 5
+        formats: [trend, duet_friendly, native_scroll, ugc, talking_head]
+
+  # ── EMAIL ─────────────────────────────────────────────────────────────────
+  email:
+    persona: "@producer"         # Blade
+    validator_persona: "@critic" # Hawk
+    output_dir: "production/emails"
+    max_iterations: 3
+    min_score: 8.0
+    validation_tools:
+      per_unit:
+        - blind_critic
+      full_deliverable:
+        - emotional_stress_test
+
+    # Per-email overrides
+    units:
+      welcome:
+        max_iterations: 4        # First impression
+        min_score: 8.5
+      offer:
+        max_iterations: 4        # Sales email
+        min_score: 8.5
+        correction_strategy: rewrite
+
+# ═══════════════════════════════════════════
+# CIRCUIT BREAKER
+# ═══════════════════════════════════════════
+# When a unit hits max_iterations without passing, escalation protocol activates.
+# Ref: ~/.claude/rules/epistemic-protocol.md § Circuit Breaker
+
+circuit_breaker:
+  enabled: true
+  action: escalate_to_human     # escalate_to_human | skip_unit | abort_loop
+  report_attempts: true         # Include all iteration attempts in the escalation report
+  message_template: >
+    CIRCUIT BREAKER: [{loop}] unit '{unit}' did not reach score {min_score}
+    after {max_iterations} iterations.
+    Escalating to human for strategic direction.
+    Attempts: {attempts_summary}
+
+# ═══════════════════════════════════════════
+# DRY RUN BEHAVIOR
+# ═══════════════════════════════════════════
+
+dry_run:
+  show_execution_plan: true     # Print what would happen, unit by unit
+  show_stop_criteria: true      # Print effective stop criteria per unit
+  show_output_paths: true       # Print where files would be written
+  simulate_scores: false        # If true, simulate scores for demo purposes

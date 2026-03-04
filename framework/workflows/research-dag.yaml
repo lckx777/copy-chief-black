@@ -1,0 +1,288 @@
+# Research Pipeline — DAG Definition
+# Sprint S40.4 — DAG Pipeline Engine
+# Schema: ~/.claude/schemas/pipeline-dag.schema.yaml
+# Created: 2026-03-01
+
+id: research-pipeline
+name: "Research Pipeline"
+version: "1.0"
+description: "Audience research pipeline using the VOC Squad architecture: 5 specialized analysts running in parallel, feeding into synthesis. Ref: voc-squad.md, voc-research.md"
+
+nodes:
+  # ═══════════════════════════════════════════
+  # ENTRY — Context Loading
+  # ═══════════════════════════════════════════
+  - id: context-load
+    label: "Context Loading"
+    type: task
+    persona: "@researcher"
+    tools: []
+    status: pending
+    description: "Load niche library (biblioteca_nicho_*.md) + offer CONTEXT.md before any research begins"
+    deliverable: "CONTEXT.md"
+
+  # ═══════════════════════════════════════════
+  # VOC SQUAD — 5 Analysts in Parallel
+  # ═══════════════════════════════════════════
+  - id: voc-squad
+    label: "VOC Squad (Parallel)"
+    type: parallel_group
+    persona: "@researcher"
+    status: pending
+    parallel_members:
+      - voc-youtube
+      - voc-instagram
+      - voc-tiktok
+      - voc-reddit
+      - voc-amazon
+    description: "5 specialized analysts run concurrently. Each uses platform-specific prompts from ~/.claude/templates/agent-prompts/voc-{platform}-analyst.md. All use general-purpose subagent type for MCP access."
+
+  - id: voc-youtube
+    label: "YouTube Analyst"
+    type: task
+    persona: "@researcher"
+    tools:
+      - firecrawl_agent
+      - voc_search
+    status: pending
+    description: "Extract VOC from YouTube comments on viral content (10K+ views, 100+ comments). Focus: testimonials, timestamps, CTR patterns. Min: 50 quotes with username + engagement."
+    deliverable: "research/voc/raw/youtube-extraction.md"
+
+  - id: voc-instagram
+    label: "Instagram Analyst"
+    type: task
+    persona: "@researcher"
+    tools:
+      - firecrawl_agent
+      - voc_search
+    status: pending
+    description: "Extract VOC from Instagram Reels comments (5K+ likes). Focus: saves, shares, carousels. Min: 50 quotes with username + engagement."
+    deliverable: "research/voc/raw/instagram-extraction.md"
+
+  - id: voc-tiktok
+    label: "TikTok Analyst"
+    type: task
+    persona: "@researcher"
+    tools:
+      - firecrawl_agent
+      - voc_search
+    status: pending
+    description: "Extract VOC from TikTok comments on viral content (50K+ views). Focus: stitches, duets, trend sounds. Min: 50 quotes with username + engagement."
+    deliverable: "research/voc/raw/tiktok-extraction.md"
+
+  - id: voc-reddit
+    label: "Reddit/Forum Analyst"
+    type: task
+    persona: "@researcher"
+    tools:
+      - firecrawl_agent
+      - voc_search
+    status: pending
+    description: "Extract VOC from Reddit threads (50+ upvotes). Focus: raw unfiltered language, AMAs, throwaway accounts. Min: 50 quotes with username + engagement."
+    deliverable: "research/voc/raw/reddit-extraction.md"
+
+  - id: voc-amazon
+    label: "Amazon/Review Analyst"
+    type: task
+    persona: "@researcher"
+    tools:
+      - firecrawl_agent
+    status: pending
+    description: "Extract VOC from product reviews (1-2 stars for pain, 5 stars for desire). Verified Purchase only. Min: 30 reviews."
+    deliverable: "research/voc/raw/amazon-extraction.md"
+
+  # ═══════════════════════════════════════════
+  # COMPETITOR ANALYSIS (Parallel with VOC)
+  # ═══════════════════════════════════════════
+  - id: competitor-spy
+    label: "Ads Library Spy"
+    type: task
+    persona: "@miner"
+    tools:
+      - fb_ad_library.get_meta_platform_id
+      - fb_ad_library.get_meta_ads
+      - fb_ad_library.analyze_ad_video
+    status: pending
+    description: "Discovery-first competitor analysis. 4 levels: Nicho (Apify keyword), Sub-nicho (Apify), Mecanismo (Apify), Concorrentes diretos (MCP). Scale Score calculation for all found advertisers."
+    deliverable: "research/competitors/processed/ads-library-spy.md"
+
+  - id: competitor-summary
+    label: "Competitor Summary"
+    type: task
+    persona: "@miner"
+    tools: []
+    status: pending
+    description: "Synthesize competitor analysis: TOP 10 by Scale Score, TOP 5 videos with breakdown, patterns, gaps, recommendations"
+    deliverable: "research/competitors/summary.md"
+
+  # ═══════════════════════════════════════════
+  # VOC PROCESSING (after VOC Squad completes)
+  # ═══════════════════════════════════════════
+  - id: voc-processing
+    label: "VOC Processing & Dedup"
+    type: task
+    persona: "@researcher"
+    tools:
+      - voc_search
+    status: pending
+    description: "Merge all 5 analyst outputs. Dedup by Jaccard > 0.8. Triangulate cross-platform. Calculate DRE levels. Extract micro-unidades linguisticas (6 dimensions). Min final: 200 quotes, DRE level avg >= 3."
+    deliverable: "research/voc/processed/"
+
+  - id: voc-summary
+    label: "VOC Summary"
+    type: task
+    persona: "@researcher"
+    tools: []
+    status: pending
+    description: "Create voc/summary.md (<= 500 tokens) with: top emotions, DRE identification, key quotes (username+engagement), language patterns. Create voc/trends-analysis.md with cross-platform patterns."
+    deliverable: "research/voc/summary.md"
+
+  # ═══════════════════════════════════════════
+  # MECHANISM RESEARCH
+  # ═══════════════════════════════════════════
+  - id: mechanism-research
+    label: "Mechanism Research"
+    type: task
+    persona: "@researcher"
+    tools:
+      - firecrawl_agent
+      - firecrawl_scrape
+    status: pending
+    description: "Research scientific backing for MUP candidates. Find studies, data, expert quotes. Identify Sexy Cause candidates. Ref: primeiros-principios-copy-chief.md"
+    deliverable: "research/mechanism/summary.md"
+
+  # ═══════════════════════════════════════════
+  # AVATAR SYNTHESIS
+  # ═══════════════════════════════════════════
+  - id: avatar-synthesis
+    label: "Avatar Synthesis"
+    type: task
+    persona: "@researcher"
+    tools:
+      - voc_search
+    status: pending
+    description: "Synthesize avatar profile from VOC + competitor data: demographics, psychographics, DRE identification, awareness level, escalation levels 1-5. Extract language-patterns.md (6 micro-unidades dimensions)."
+    deliverable: "research/avatar/summary.md"
+
+  # ═══════════════════════════════════════════
+  # RESEARCH SYNTHESIS
+  # ═══════════════════════════════════════════
+  - id: research-synthesis
+    label: "Research Synthesis"
+    type: task
+    persona: "@researcher"
+    tools: []
+    status: pending
+    description: "Consolidate all research into synthesis.md: confidence score calculation, top insights, avatar summary, MUP candidates, competitor gaps. Confidence must reach >= 70% to pass gate."
+    deliverable: "research/synthesis.md"
+
+  # ═══════════════════════════════════════════
+  # EXIT GATE
+  # ═══════════════════════════════════════════
+  - id: research-gate
+    label: "Research Gate"
+    type: gate
+    persona: "@gatekeeper"
+    tools:
+      - validate_gate
+    status: pending
+    threshold: 70
+    description: "Validates all research deliverables exist and meet quality thresholds: 4 summaries, synthesis.md with confidence >= 70%, emotions categorized (35+ quotes), DRE identified."
+
+edges:
+  # Context load → VOC Squad (parallel) + Competitor Spy
+  - from: context-load
+    to: voc-squad
+    type: requires
+
+  - from: context-load
+    to: competitor-spy
+    type: requires
+
+  # VOC Squad → each analyst
+  - from: voc-squad
+    to: voc-youtube
+    type: requires
+
+  - from: voc-squad
+    to: voc-instagram
+    type: requires
+
+  - from: voc-squad
+    to: voc-tiktok
+    type: requires
+
+  - from: voc-squad
+    to: voc-reddit
+    type: requires
+
+  - from: voc-squad
+    to: voc-amazon
+    type: requires
+
+  # All VOC analysts → VOC Processing
+  - from: voc-youtube
+    to: voc-processing
+    type: produces
+
+  - from: voc-instagram
+    to: voc-processing
+    type: produces
+
+  - from: voc-tiktok
+    to: voc-processing
+    type: produces
+
+  - from: voc-reddit
+    to: voc-processing
+    type: produces
+
+  - from: voc-amazon
+    to: voc-processing
+    type: produces
+
+  # VOC Processing → VOC Summary
+  - from: voc-processing
+    to: voc-summary
+    type: produces
+
+  # Competitor spy → competitor summary
+  - from: competitor-spy
+    to: competitor-summary
+    type: produces
+
+  # VOC data → mechanism research (needs VOC to identify MUP candidates)
+  - from: voc-summary
+    to: mechanism-research
+    type: requires
+
+  # VOC data → avatar synthesis
+  - from: voc-summary
+    to: avatar-synthesis
+    type: requires
+
+  - from: competitor-summary
+    to: avatar-synthesis
+    type: requires
+
+  # All four summaries → research synthesis
+  - from: voc-summary
+    to: research-synthesis
+    type: produces
+
+  - from: competitor-summary
+    to: research-synthesis
+    type: produces
+
+  - from: mechanism-research
+    to: research-synthesis
+    type: produces
+
+  - from: avatar-synthesis
+    to: research-synthesis
+    type: produces
+
+  # Research synthesis → research gate
+  - from: research-synthesis
+    to: research-gate
+    type: produces
