@@ -12,3 +12,4 @@ Thumbs.db
 framework/plugins/marketplaces/
 claude-mem
 bun.lock
+framework/knowledge/enrichment-suggestions.md
