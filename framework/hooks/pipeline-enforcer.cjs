@@ -151,9 +151,78 @@ function _clearIteration(dispatchId) {
   } catch { /* best effort */ }
 }
 
+/**
+ * Find offer with pending dispatch queue, prioritizing session context.
+ *
+ * Priority order:
+ * 1. Offer from active-agents.json (session context) — if it has a pending queue
+ * 2. Offer from active-persona.json (backwards compat) — if it has a pending queue
+ * 3. Any offer with a non-stale pending queue (original behavior, but with staleness check)
+ *
+ * Staleness: queues older than 10 minutes with only pending items (never dispatched) are stale.
+ */
 function findActiveOffer(ecosystemRoot) {
-  // Dynamic scan: find ALL directories with dispatch-queue.yaml (no hardcoded niche list)
-  // Filters out UUID dirs, hidden dirs, and non-offer locations
+  const yaml = require('js-yaml');
+  const STALE_THRESHOLD_MS = 10 * 60 * 1000; // 10 minutes
+
+  // Helper: check if an offer has a non-stale pending queue
+  function hasValidQueue(offerRelPath) {
+    const queuePath = path.join(ecosystemRoot, offerRelPath, '.aios', 'dispatch-queue.yaml');
+    if (!fs.existsSync(queuePath)) return false;
+
+    try {
+      const queue = yaml.load(fs.readFileSync(queuePath, 'utf8'));
+      if (!queue?.queue) return false;
+
+      const hasPending = queue.queue.some(d => d.status === 'pending');
+      if (!hasPending) return false;
+
+      // Staleness check: if queue was created >10min ago AND has no dispatched items, it's stale
+      const createdAt = queue.created_at ? new Date(queue.created_at).getTime() : 0;
+      const age = Date.now() - createdAt;
+      const hasDispatched = queue.queue.some(d => d.status === 'dispatched' || d.status === 'completed');
+
+      if (age > STALE_THRESHOLD_MS && !hasDispatched) {
+        return false; // stale — never acted on
+      }
+
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  // Priority 1: Check session context (active-agents.json)
+  try {
+    const stateDir = path.join(process.env.HOME, '.claude', 'session-state');
+    const agentSetPath = path.join(stateDir, 'active-agents.json');
+    if (fs.existsSync(agentSetPath)) {
+      const agentSet = JSON.parse(fs.readFileSync(agentSetPath, 'utf8'));
+      // Find most recent agent's offer
+      let newest = null;
+      for (const [, info] of Object.entries(agentSet)) {
+        if (info.offer && (!newest || (info.activatedAt || 0) > (newest.activatedAt || 0))) {
+          newest = info;
+        }
+      }
+      if (newest?.offer && hasValidQueue(newest.offer)) {
+        return newest.offer;
+      }
+    }
+  } catch { /* skip */ }
+
+  // Priority 2: Check active-persona.json (backwards compat)
+  try {
+    const personaPath = path.join(process.env.HOME, '.claude', 'session-state', 'active-persona.json');
+    if (fs.existsSync(personaPath)) {
+      const persona = JSON.parse(fs.readFileSync(personaPath, 'utf8'));
+      if (persona?.offer && hasValidQueue(persona.offer)) {
+        return persona.offer;
+      }
+    }
+  } catch { /* skip */ }
+
+  // Priority 3: Fallback — scan for any offer with non-stale pending queue
   const UUID_RE = /^[0-9a-f]{8}-/;
   const SKIP_DIRS = new Set(['docs', 'scripts', 'site', 'export', 'knowledge', 'squads',
     'squad-prompts', 'metodologias-de-copy', 'pesquisas-setup', 'copy-chief-tutorial', 'research']);
@@ -169,9 +238,9 @@ function findActiveOffer(ecosystemRoot) {
         const offerDirs = fs.readdirSync(nichePath, { withFileTypes: true });
         for (const dir of offerDirs) {
           if (!dir.isDirectory() || dir.name.startsWith('.')) continue;
-          const queuePath = path.join(nichePath, dir.name, '.aios', 'dispatch-queue.yaml');
-          if (fs.existsSync(queuePath)) {
-            return `${topDir.name}/${dir.name}`;
+          const rel = `${topDir.name}/${dir.name}`;
+          if (hasValidQueue(rel)) {
+            return rel;
           }
         }
       } catch { /* skip */ }

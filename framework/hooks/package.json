@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "js-yaml": "^4.1.1",
+    "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "esbuild": "^0.27.3",
+    "typescript": "^5.9.3"
+  }
+}

@@ -387,6 +387,91 @@ function capitalize(s) {
 }
 
 /**
+ * Extract offer from user prompt by scanning for known offer names/paths.
+ * Priority: explicit niche/offer path > offer name in prompt.
+ * Returns offer object { relativePath, phase, state } or null.
+ */
+function extractOfferFromPrompt(prompt, ecosystemRoot) {
+  if (!prompt || typeof prompt !== 'string') return null;
+  const lower = prompt.toLowerCase();
+
+  // 1. Explicit niche/offer path: "saude/neuvelys", "relacionamento/quimica-amarracao"
+  const pathMatch = lower.match(/\b(saude|relacionamento|concursos|financeiro|educacao|marketing-digital)\/([\w-]+)\b/);
+  if (pathMatch) {
+    const rel = `${pathMatch[1]}/${pathMatch[2]}`;
+    const offer = _resolveOfferByPath(rel, ecosystemRoot);
+    if (offer) return offer;
+  }
+
+  // 2. Scan for known offer directory names in the prompt
+  const UUID_RE = /^[0-9a-f]{8}-/;
+  const SKIP_DIRS = new Set(['docs', 'scripts', 'site', 'export', 'knowledge', 'squads',
+    'squad-prompts', 'metodologias-de-copy', 'pesquisas-setup', 'copy-chief-tutorial', 'research']);
+
+  try {
+    const topDirs = fs.readdirSync(ecosystemRoot, { withFileTypes: true });
+    const candidates = [];
+
+    for (const topDir of topDirs) {
+      if (!topDir.isDirectory() || topDir.name.startsWith('.')) continue;
+      if (UUID_RE.test(topDir.name) || SKIP_DIRS.has(topDir.name)) continue;
+      const nichePath = path.join(ecosystemRoot, topDir.name);
+
+      try {
+        const offerDirs = fs.readdirSync(nichePath, { withFileTypes: true });
+        for (const dir of offerDirs) {
+          if (!dir.isDirectory() || dir.name.startsWith('.')) continue;
+          // Check if offer name appears in user prompt
+          if (lower.includes(dir.name.toLowerCase())) {
+            const helixPath = path.join(nichePath, dir.name, 'helix-state.yaml');
+            const contextPath = path.join(nichePath, dir.name, 'CONTEXT.md');
+            if (!fs.existsSync(helixPath) || !fs.existsSync(contextPath)) continue;
+
+            try {
+              const state = yaml.load(fs.readFileSync(helixPath, 'utf8'));
+              const phase = state?.current_phase || state?.phase || 'idle';
+              candidates.push({
+                relativePath: `${topDir.name}/${dir.name}`,
+                phase,
+                state,
+                nameLength: dir.name.length, // longer names = more specific match
+              });
+            } catch { /* skip corrupt */ }
+          }
+        }
+      } catch { /* skip */ }
+    }
+
+    // Return the most specific match (longest name wins — "quimica-amarracao" > "qa")
+    if (candidates.length > 0) {
+      candidates.sort((a, b) => b.nameLength - a.nameLength);
+      return candidates[0];
+    }
+  } catch { /* skip */ }
+
+  return null;
+}
+
+/**
+ * Resolve a known niche/offer path to an offer object.
+ */
+function _resolveOfferByPath(relativePath, ecosystemRoot) {
+  const offerDir = path.join(ecosystemRoot, relativePath);
+  const helixPath = path.join(offerDir, 'helix-state.yaml');
+  const contextPath = path.join(offerDir, 'CONTEXT.md');
+
+  if (!fs.existsSync(helixPath) || !fs.existsSync(contextPath)) return null;
+
+  try {
+    const state = yaml.load(fs.readFileSync(helixPath, 'utf8'));
+    const phase = state?.current_phase || state?.phase || 'idle';
+    return { relativePath, phase, state };
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Find active execution plan across all offers.
  * Returns { offerPath, plan } or null.
  */
@@ -513,7 +598,8 @@ async function main() {
 
   // === Path 1: Pipeline-level intent → generate execution plan ===
   if (detectIntent(userPrompt)) {
-    const offer = findActiveOffer(ecosystemRoot);
+    // Priority: offer mentioned in prompt > highest-phase-priority offer
+    const offer = extractOfferFromPrompt(userPrompt, ecosystemRoot) || findActiveOffer(ecosystemRoot);
     if (!offer) {
       process.stdout.write(JSON.stringify({}));
       return;
@@ -542,7 +628,8 @@ async function main() {
   // === Path 2: Task-level intent ===
   const taskMatch = detectTaskIntent(userPrompt);
   if (taskMatch) {
-    const offer = findActiveOffer(ecosystemRoot);
+    // Priority: offer mentioned in prompt > highest-phase-priority offer
+    const offer = extractOfferFromPrompt(userPrompt, ecosystemRoot) || findActiveOffer(ecosystemRoot);
     if (!offer) {
       process.stdout.write(JSON.stringify({}));
       return;

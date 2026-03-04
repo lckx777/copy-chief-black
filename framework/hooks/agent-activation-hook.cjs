@@ -76,7 +76,7 @@ async function main() {
     );
 
     const pipeline = new AgentActivationPipeline(ecosystemRoot, { debug: false });
-    const result = pipeline.activate(agentId, offerPath);
+    const result = pipeline.activate(agentId, offerPath, { taskPrompt: prompt });
 
     // Write active persona to SET (not single marker) for production-delegation-gate
     // Fixes race condition: parallel agents no longer overwrite each other

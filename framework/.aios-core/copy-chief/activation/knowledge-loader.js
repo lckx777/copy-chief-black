@@ -254,6 +254,173 @@ class KnowledgeLoader {
   }
 
   // =========================================================================
+  // Entry Point 4: Skill Knowledge Bridge (Tier 2.2)
+  // =========================================================================
+
+  resolveSkillKnowledge(agentId, offerPath, taskPrompt = '') {
+    const registry = this._loadRegistry();
+    if (!registry?.skill_bridge) return null;
+
+    const bridge = registry.skill_bridge;
+    const agentBridge = bridge.agents?.[agentId];
+    if (!agentBridge) return null;
+
+    const skillRoot = this._resolveHomePath(bridge.skills_root);
+    const skillDir = path.join(skillRoot, agentBridge.skill_id);
+    if (!fs.existsSync(skillDir)) return null;
+
+    const result = { methodology: [], swipes: [], onDemand: [], loaded: 0 };
+
+    // 1. Methodology files (always loaded)
+    for (const entry of agentBridge.methodology || []) {
+      const entryPath = typeof entry === 'string' ? entry : entry.path;
+      const filePath = path.join(skillDir, entryPath);
+
+      if (entry.extract_sections) {
+        const fullContent = this._readFileSafe(filePath);
+        if (fullContent) {
+          const extracted = entry.extract_sections
+            .map(s => this._extractMarkdownSection(fullContent, s))
+            .filter(Boolean)
+            .join('\n\n');
+          if (extracted) {
+            result.methodology.push({ path: `skills/${agentBridge.skill_id}/${entryPath}`, content: extracted });
+            result.loaded++;
+          }
+        }
+      } else {
+        const content = this._readFileSafe(filePath);
+        if (content) {
+          result.methodology.push({ path: `skills/${agentBridge.skill_id}/${entryPath}`, content });
+          result.loaded++;
+        }
+      }
+    }
+
+    // 2. On-demand files (conditional on taskPrompt)
+    if (taskPrompt) {
+      const promptLower = taskPrompt.toLowerCase();
+      for (const od of agentBridge.on_demand || []) {
+        const keywords = od.condition.split('|').map(k => k.trim().toLowerCase());
+        if (keywords.some(kw => promptLower.includes(kw))) {
+          const filePath = path.join(skillDir, od.path);
+          const content = this._readFileSafe(filePath);
+          if (content) {
+            result.onDemand.push({ path: `skills/${agentBridge.skill_id}/${od.path}`, content });
+            result.loaded++;
+          }
+        }
+      }
+    }
+
+    // 3. Niche-matched swipes (only if agent has swipes: true)
+    if (agentBridge.swipes && offerPath) {
+      const swipeRoot = this._resolveHomePath(bridge.swipe_root);
+      const nicheDirs = this._resolveNicheSwipeDirs(bridge, offerPath);
+      const maxSwipes = bridge.max_swipes || 5;
+      const maxSize = bridge.max_swipe_size || 4096;
+
+      for (const nicheDir of nicheDirs) {
+        if (result.swipes.length >= maxSwipes) break;
+        const dirPath = path.join(swipeRoot, nicheDir);
+        if (!fs.existsSync(dirPath)) continue;
+
+        let files;
+        try { files = fs.readdirSync(dirPath).filter(f => f.endsWith('.md')); }
+        catch { continue; }
+
+        for (const file of files) {
+          if (result.swipes.length >= maxSwipes) break;
+          const filePath = path.join(dirPath, file);
+          const content = this._readFileSafe(filePath);
+          if (content && content.length > 200) {
+            const truncated = content.length > maxSize
+              ? content.substring(0, maxSize) + '\n...[truncated]'
+              : content;
+            result.swipes.push({ path: `swipe-files/${nicheDir}/${file}`, content: truncated });
+            result.loaded++;
+          }
+        }
+      }
+    }
+
+    return result.loaded > 0 ? result : null;
+  }
+
+  // Private: Resolve niche directories from offer context
+  _resolveNicheSwipeDirs(bridge, offerPath) {
+    const nicheMap = bridge.niche_map || {};
+    const matched = new Set();
+
+    const terms = this._extractNicheTerms(offerPath);
+
+    for (const term of terms) {
+      const termLower = term.toLowerCase();
+      for (const [keyword, dirs] of Object.entries(nicheMap)) {
+        if (termLower.includes(keyword)) {
+          for (const d of dirs) matched.add(d);
+        }
+      }
+    }
+
+    return [...matched];
+  }
+
+  // Private: Extract niche terms from offer path + CONTEXT.md
+  _extractNicheTerms(offerPath) {
+    const terms = offerPath.split('/');
+
+    // Try to read sub_niche from CONTEXT.md
+    const contextPath = path.join(this.ecosystemRoot, offerPath, 'CONTEXT.md');
+    try {
+      if (fs.existsSync(contextPath)) {
+        const ctx = fs.readFileSync(contextPath, 'utf8').substring(0, 3000);
+        const subNiche = ctx.match(/sub[_-]?nicho[:\s|]*\*?\*?\s*([^\n|*]+)/i);
+        if (subNiche) {
+          terms.push(...subNiche[1].trim().toLowerCase().split(/[\s\/]+/));
+        }
+      }
+    } catch { /* graceful */ }
+
+    // Read project_state.yaml for sub_niche too
+    const statePath = path.join(this.ecosystemRoot, offerPath, 'project_state.yaml');
+    try {
+      if (fs.existsSync(statePath)) {
+        const state = fs.readFileSync(statePath, 'utf8').substring(0, 1000);
+        const subMatch = state.match(/sub_niche:\s*["']?([^"'\n]+)/i);
+        if (subMatch) {
+          terms.push(...subMatch[1].trim().toLowerCase().split(/[\s\/-]+/));
+        }
+      }
+    } catch { /* graceful */ }
+
+    return [...new Set(terms)];
+  }
+
+  // Private: Extract a markdown section by heading
+  _extractMarkdownSection(content, heading) {
+    const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`${escaped}[^\n]*\n([\\s\\S]*?)(?=\n##\\s|$)`);
+    const match = content.match(regex);
+    return match ? match[1].trim() : null;
+  }
+
+  // Private: Read file safely with size guard
+  _readFileSafe(filePath) {
+    try {
+      if (!fs.existsSync(filePath)) return null;
+      const stats = fs.statSync(filePath);
+      if (stats.size > 100000) {
+        this._log(`File too large for skill bridge: ${filePath}`);
+        return null;
+      }
+      return fs.readFileSync(filePath, 'utf8');
+    } catch {
+      return null;
+    }
+  }
+
+  // =========================================================================
   // Private: Registry loading with mtime cache
   // =========================================================================
 

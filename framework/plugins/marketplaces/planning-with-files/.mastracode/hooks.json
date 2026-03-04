@@ -1,0 +1,27 @@
+{
+  "PreToolUse": [
+    {
+      "type": "command",
+      "command": "cat task_plan.md 2>/dev/null | head -30 || true",
+      "matcher": { "tool_name": "Write|Edit|Bash|Read|Glob|Grep" },
+      "timeout": 5000,
+      "description": "Read plan before tool use to keep goals in active context"
+    }
+  ],
+  "PostToolUse": [
+    {
+      "type": "command",
+      "command": "echo '[planning-with-files] File updated. If this completes a phase, update task_plan.md status.'",
+      "matcher": { "tool_name": "Write|Edit" },
+      "description": "Remind agent to update plan status after file changes"
+    }
+  ],
+  "Stop": [
+    {
+      "type": "command",
+      "command": "sh .mastracode/skills/planning-with-files/scripts/check-complete.sh 2>/dev/null || sh ~/.mastracode/skills/planning-with-files/scripts/check-complete.sh 2>/dev/null || true",
+      "timeout": 10000,
+      "description": "Check all phases are complete before the agent stops"
+    }
+  ]
+}

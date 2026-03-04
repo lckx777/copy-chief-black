@@ -28,9 +28,9 @@ class AgentActivationPipeline {
     const result = {
       agentId,
       offerPath,
-      tiers: { t1: null, t2: null, t2_1: null, t2_5: null, t3: null },
+      tiers: { t1: null, t2: null, t2_1: null, t2_2: null, t2_5: null, t3: null },
       context: '',
-      timing: { t1: 0, t2: 0, t2_1: 0, t2_5: 0, t3: 0, total: 0 },
+      timing: { t1: 0, t2: 0, t2_1: 0, t2_2: 0, t2_5: 0, t3: 0, total: 0 },
       warnings: [],
     };
 
@@ -91,6 +91,20 @@ class AgentActivationPipeline {
     } catch (e) {
       result.warnings.push(`Tier 2.1 degraded: ${e.message}`);
       this._log(`Tier 2.1 failure for ${agentId}: ${e.message}`);
+    }
+
+    // Tier 2.2: Skill Knowledge Bridge
+    try {
+      const t22Start = Date.now();
+      const taskPrompt22 = taskContext.taskPrompt || '';
+      const skillKnowledge = this._knowledgeLoader.resolveSkillKnowledge(agentId, offerPath, taskPrompt22);
+      if (skillKnowledge && skillKnowledge.loaded > 0) {
+        result.tiers.t2_2 = skillKnowledge;
+      }
+      result.timing.t2_2 = Date.now() - t22Start;
+    } catch (e) {
+      result.warnings.push(`Tier 2.2 degraded: ${e.message}`);
+      this._log(`Tier 2.2 failure for ${agentId}: ${e.message}`);
     }
 
     // Tier 2.5: Agent memory (Gap 4 — persistent state)
@@ -322,6 +336,46 @@ class AgentActivationPipeline {
       lines.push('</voice-dna>');
     }
 
+    // Tier 2.2: Skill Knowledge
+    const t2_2 = activationResult.tiers.t2_2;
+    if (t2_2) {
+      const skillId = t2_2.methodology[0]?.path.split('/')[1] || 'unknown';
+      lines.push(`<skill-knowledge skill="${skillId}" loaded="${t2_2.loaded}">`);
+
+      if (t2_2.methodology.length > 0) {
+        lines.push('<methodology>');
+        for (const m of t2_2.methodology) {
+          lines.push(`<file path="${m.path}">`);
+          lines.push(m.content);
+          lines.push('</file>');
+        }
+        lines.push('</methodology>');
+      }
+
+      if (t2_2.onDemand.length > 0) {
+        lines.push('<on-demand>');
+        for (const od of t2_2.onDemand) {
+          lines.push(`<file path="${od.path}">`);
+          lines.push(od.content);
+          lines.push('</file>');
+        }
+        lines.push('</on-demand>');
+      }
+
+      if (t2_2.swipes.length > 0) {
+        lines.push(`<swipes count="${t2_2.swipes.length}">`);
+        lines.push('<instruction>Reference swipe files from your niche. Study structure and techniques, do NOT copy.</instruction>');
+        for (const s of t2_2.swipes) {
+          lines.push(`<swipe path="${s.path}">`);
+          lines.push(s.content);
+          lines.push('</swipe>');
+        }
+        lines.push('</swipes>');
+      }
+
+      lines.push('</skill-knowledge>');
+    }
+
     // Tier 2.5: Agent memory
     const t2_5 = activationResult.tiers.t2_5;
     if (t2_5 && t2_5.context) {
@@ -349,7 +403,7 @@ class AgentActivationPipeline {
     }
 
     // Timing
-    lines.push(`<timing t1="${activationResult.timing.t1}ms" t2="${activationResult.timing.t2}ms" t2.1="${activationResult.timing.t2_1}ms" t2.5="${activationResult.timing.t2_5}ms" t3="${activationResult.timing.t3}ms" total="${activationResult.timing.total}ms" />`);
+    lines.push(`<timing t1="${activationResult.timing.t1}ms" t2="${activationResult.timing.t2}ms" t2.1="${activationResult.timing.t2_1}ms" t2.2="${activationResult.timing.t2_2}ms" t2.5="${activationResult.timing.t2_5}ms" t3="${activationResult.timing.t3}ms" total="${activationResult.timing.total}ms" />`);
 
     lines.push('</agent>');
     lines.push('</agent-activation>');
