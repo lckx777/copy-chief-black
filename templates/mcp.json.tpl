@@ -18,6 +18,36 @@
       "env": {
         "APIFY_TOKEN": "{{APIFY_TOKEN}}"
       }
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "{{FIRECRAWL_API_KEY}}"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "fb_ad_library": {
+      "command": "npx",
+      "args": ["-y", "facebook-ads-library-mcp"],
+      "env": {
+        "SCRAPECREATORS_API_KEY": "{{SCRAPECREATORS_API_KEY}}"
+      }
+    },
+    "zen": {
+      "command": "npx",
+      "args": ["-y", "zen-mcp-server"],
+      "env": {
+        "GEMINI_API_KEY": "{{GEMINI_API_KEY}}",
+        "OPENAI_API_KEY": "{{OPENAI_API_KEY}}"
+      }
     }
   }
 }
