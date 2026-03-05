@@ -1,3 +1,22 @@
+# Third-party plugins (not ours to distribute)
+framework/plugins/marketplaces/
+
+# Separate npm package
+framework/plugins/copywriting-mcp/
+
+# Runtime/generated data (regenerated after install)
+framework/knowledge/enrichment-suggestions.md
+framework/knowledge/entity-registry.yaml
+framework/knowledge/patterns-by-niche.yaml.bak
+framework/knowledge/feedback-loops.yaml
+framework/knowledge/self-healing-log.yaml
+framework/knowledge/retry-queue.yaml
+
+# Dev artifacts
+framework/tests/
+framework/.serena/
+*.zip
+
 # Dev files
 tsconfig.*.json
 .eslintrc*

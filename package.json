@@ -1,9 +1,9 @@
 {
   "name": "@lucapimenta/copy-chief-black",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Copy Chief BLACK — Direct Response Copywriting Framework for Claude Code",
   "bin": {
-    "copy-chief-black": "./bin/cli.js"
+    "copy-chief-black": "bin/cli.js"
   },
   "main": "lib/platform.js",
   "scripts": {
@@ -27,8 +27,43 @@
     "bin/",
     "installer/",
     "lib/",
-    "framework/",
-    "templates/"
+    "templates/",
+    "framework/*.md",
+    "framework/*.yaml",
+    "framework/.aios-core/",
+    "framework/agents/",
+    "framework/checklists/",
+    "framework/commands/",
+    "framework/config/",
+    "framework/copy-squad/",
+    "framework/data/",
+    "framework/docs/",
+    "framework/dossiers/",
+    "framework/experts/",
+    "framework/gotchas/",
+    "framework/hooks/",
+    "framework/ids/",
+    "framework/knowledge/README.md",
+    "framework/knowledge/universal/",
+    "framework/knowledge/cloned/",
+    "framework/knowledge/frameworks/",
+    "framework/knowledge/experts/",
+    "framework/knowledge/voc/",
+    "framework/knowledge/classification-maap.md",
+    "framework/knowledge/ingestion-tracking.yaml",
+    "framework/knowledge/patterns-by-niche.yaml",
+    "framework/learned-patterns/",
+    "framework/reference/",
+    "framework/references/",
+    "framework/rules/",
+    "framework/schemas/",
+    "framework/scripts/",
+    "framework/skills/",
+    "framework/stories/",
+    "framework/templates/",
+    "framework/workflows/",
+    "framework/plugins/*.json",
+    "framework/plugins/CLAUDE.md"
   ],
   "keywords": [
     "copywriting",
@@ -41,6 +76,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lckx777/copy-chief-black.git"
+    "url": "git+https://github.com/lckx777/copy-chief-black.git"
   }
 }
