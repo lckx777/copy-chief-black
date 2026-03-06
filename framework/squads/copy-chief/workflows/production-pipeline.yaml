@@ -1,0 +1,480 @@
+workflow:
+  id: production-pipeline
+  name: Production Pipeline
+  version: "1.0"
+  description: >-
+    Pipeline de producao de copy. Executa em paralelo a producao de VSL, Landing Page,
+    Criativos e Emails. Seguido por review blind critic e full validation de todos os
+    deliverables. Requer Briefing gate PASSED e Mecanismo APPROVED.
+  type: pipeline
+
+  metadata:
+    elicit: false
+    confirmation_required: false
+
+  execution_modes:
+    - mode: yolo
+      description: Producao autonoma dos 4 deliverables em paralelo
+      prompts: 0
+    - mode: interactive
+      description: Checkpoints apos cada deliverable e review
+      prompts: 6-10
+      default: true
+    - mode: preflight
+      description: Analise previa do briefing e checklist de producao antes de iniciar
+      prompts: 4-6
+
+  phases:
+    - phase_1: Parallel Production (VSL + LP + Creatives + Emails)
+    - phase_2: Blind Critic Review
+    - phase_3: Full Validation
+    - phase_4: Production Gate Check
+
+  sequence:
+    # =========================================================================
+    #  PHASE 1a: VSL Production (parallel)
+    # =========================================================================
+
+    - step: produce_vsl
+      id: vsl
+      phase: 1
+      agent: echo
+      action: Producao da VSL completa
+      requires: []
+      notes: |
+        Echo (@vsl) produz a Video Sales Letter completa:
+
+        Estrutura:
+        - Lead (tipo definido no HELIX fase 05)
+        - Problema + Inimigo (fase 02)
+        - Mecanismo (MUP → MUS)
+        - Solucao + Ingredientes
+        - Prova + Autoridade (fase 07)
+        - Oferta + Pricing (fase 08)
+        - Urgencia + CTA (fase 09)
+        - Close
+
+        Task: production-vsl.md
+
+        Pre-requisitos:
+        - Briefing gate PASSED
+        - Mecanismo APPROVED
+        - HELIX 10/10 completo
+
+        Inputs:
+        - briefings/phases/ (todas as 10 fases)
+        - mecanismo-unico.yaml
+        - research/synthesis.md
+        - squads/copy-chief/data/craft/ (psicologia, escrita)
+        - squads/copy-chief/data/leads/ (anatomia, tipos)
+
+        Criterios de sucesso:
+        - [ ] VSL completa com todos os capitulos
+        - [ ] DRE escalada presente no texto
+        - [ ] Mecanismo explicado com clareza
+        - [ ] Lead coerente com tipo definido no HELIX
+        - [ ] CTA claro e urgencia genuina
+        - [ ] Anti-homogenizacao verificada
+      outputs:
+        - production/vsl/vsl-draft.md
+        - production/vsl/vsl-chapters/
+      next: blind_critic
+
+    # =========================================================================
+    #  PHASE 1b: Landing Page Production (parallel)
+    # =========================================================================
+
+    - step: produce_lp
+      id: lp
+      phase: 1
+      agent: forge
+      action: Producao da Landing Page
+      requires: []
+      notes: |
+        Forge (@lp) produz os blocos da Landing Page:
+
+        Blocos (14-block structure):
+        - Hero + Headline
+        - Problema + Agitacao
+        - Mecanismo Visual
+        - Solucao + Ingredientes
+        - Prova Social
+        - Oferta + Kits
+        - Garantia
+        - FAQ
+        - CTA Final
+
+        Task: production-lp.md
+
+        Inputs:
+        - briefings/phases/ (todas as 10 fases)
+        - mecanismo-unico.yaml
+        - squads/copy-chief/data/lp/ (blocos, patterns, templates)
+
+        Criterios de sucesso:
+        - [ ] Todos os blocos escritos
+        - [ ] Headlines com hook forte
+        - [ ] Mecanismo visual explicado
+        - [ ] Oferta clara com ancoragem
+        - [ ] Mobile-friendly (frases curtas)
+      outputs:
+        - production/landing-page/lp-draft.md
+        - production/landing-page/blocks/
+      next: blind_critic
+
+    # =========================================================================
+    #  PHASE 1c: Creatives Production (parallel)
+    # =========================================================================
+
+    - step: produce_creatives
+      id: creatives
+      phase: 1
+      agent: scout
+      action: Producao de criativos (ads)
+      requires: []
+      notes: |
+        Scout (@creative) produz batch de criativos para ads:
+
+        Tipos:
+        - Video scripts (storytelling, problema-solucao, testemunho)
+        - Static image copy (headlines + body)
+        - Carousel copy
+        - UGC scripts
+
+        Angulos (do HELIX fase 10):
+        - Angulo DRE (medo/vergonha/frustracao)
+        - Angulo Mecanismo (paradigm shift)
+        - Angulo Autoridade (expert/estudo)
+        - Angulo Testemunho (antes/depois)
+        - Angulo Curiosidade (hook inesperado)
+
+        Task: production-creatives.md
+
+        Inputs:
+        - briefings/phases/fase-10-creative.md
+        - mecanismo-unico.yaml
+        - research/avatar-language.yaml
+        - squads/copy-chief/data/creative/ (angulos, breakdown)
+
+        Criterios de sucesso:
+        - [ ] Minimo 5 criativos por angulo
+        - [ ] Hooks nos primeiros 3 segundos
+        - [ ] Linguagem do avatar usada
+        - [ ] CTA claro em cada criativo
+        - [ ] Variacao suficiente (anti-homogenizacao)
+      outputs:
+        - production/creatives/creative-batch.md
+        - production/creatives/scripts/
+        - production/creatives/static/
+      next: blind_critic
+
+    # =========================================================================
+    #  PHASE 1d: Email Production (parallel)
+    # =========================================================================
+
+    - step: produce_emails
+      id: emails
+      phase: 1
+      agent: blade
+      action: Producao de sequencia de emails
+      requires: []
+      notes: |
+        Blade (@producer) produz sequencias de email:
+
+        Sequencias:
+        - Welcome sequence (3-5 emails)
+        - Abandono de carrinho (2-3 emails)
+        - Follow-up pos-venda (3 emails)
+        - Reengagement (2-3 emails)
+
+        Task: production-emails.md
+
+        Inputs:
+        - briefings/phases/ (fases relevantes)
+        - mecanismo-unico.yaml
+        - research/avatar-language.yaml
+
+        Criterios de sucesso:
+        - [ ] Todas as sequencias escritas
+        - [ ] Subject lines com hook forte
+        - [ ] Copy curto e direto
+        - [ ] CTA unico por email
+        - [ ] Coerencia com VSL e LP
+      outputs:
+        - production/emails/email-sequences.md
+        - production/emails/sequences/
+      next: blind_critic
+
+    # =========================================================================
+    #  PHASE 2: Blind Critic Review
+    # =========================================================================
+
+    - step: blind_critic_review
+      id: blind_critic
+      phase: 2
+      agent: hawk
+      action: Blind critic de todos os deliverables
+      requires:
+        - vsl
+        - lp
+        - creatives
+        - emails
+      notes: |
+        Hawk (@critic) executa blind critic em cada deliverable:
+
+        Criterios de avaliacao (por deliverable):
+        - DRE Score (0-10): Emocao presente e escalada?
+        - Mecanismo Score (0-10): MUP/MUS claro e credivel?
+        - Persuasion Flow (0-10): Sequencia logica, sem furos?
+        - Anti-Homog Score (0-10): Linguagem unica, nao generica?
+        - Hook Strength (0-10): Primeiros segundos/linhas capturam?
+        - CTA Clarity (0-10): Acao clara e urgente?
+
+        Task: review-blind-critic.md (target: all)
+
+        Inputs:
+        - production/vsl/vsl-draft.md
+        - production/landing-page/lp-draft.md
+        - production/creatives/creative-batch.md
+        - production/emails/email-sequences.md
+        - mecanismo-unico.yaml (para validacao)
+        - squads/copy-chief/data/critic/ (metodologia, checklist)
+
+        Resultado por deliverable:
+        - Score >= 7/10 em todos os criterios → PASS
+        - Score < 7/10 em qualquer criterio → REVISION NEEDED (lista de fixes)
+
+        Criterios de sucesso:
+        - [ ] Todos os deliverables avaliados
+        - [ ] Scores documentados por criterio
+        - [ ] Fix list especifica para cada issue
+      outputs:
+        - reviews/blind-critic-report.yaml
+        - reviews/fix-lists/
+      next: full_validation
+      on_failure: vsl
+
+    # =========================================================================
+    #  PHASE 3: Full Validation
+    # =========================================================================
+
+    - step: full_validation_review
+      id: full_validation
+      phase: 3
+      agent: hawk
+      action: Validacao completa de todos os deliverables
+      requires:
+        - blind_critic
+      notes: |
+        Hawk (@critic) executa full validation (emotional stress test + black validation):
+
+        Emotional Stress Test:
+        - Simula reacao do avatar ao ler o copy
+        - Identifica pontos de drop-off
+        - Verifica escalada emocional
+
+        Black Validation:
+        - Compliance check (claims proibidos)
+        - Consistencia entre deliverables
+        - Verificacao de promessas vs realidade
+        - Anti-patterns check
+
+        Task: review-full-validation.md
+
+        Inputs:
+        - Todos os deliverables de production/
+        - reviews/blind-critic-report.yaml
+        - mecanismo-unico.yaml
+        - squads/copy-chief/data/critic/ (anti-patterns, checklist)
+
+        Criterios de sucesso:
+        - [ ] Emotional stress test passado
+        - [ ] Black validation passada
+        - [ ] Sem compliance issues
+        - [ ] Consistencia entre deliverables confirmada
+      outputs:
+        - reviews/full-validation-report.yaml
+        - reviews/compliance-check.yaml
+      next: production_gate
+      on_failure: blind_critic
+
+    # =========================================================================
+    #  PHASE 4: Production Gate Check
+    # =========================================================================
+
+    - step: production_gate
+      id: production_gate
+      phase: 4
+      agent: sentinel
+      action: Validacao do Production Gate
+      requires:
+        - full_validation
+      notes: |
+        Sentinel (@gatekeeper) valida o Production Gate:
+
+        Checklist:
+        - [ ] VSL completa e validada (score >= 7)
+        - [ ] LP completa e validada (score >= 7)
+        - [ ] Criativos batch validado (score >= 7)
+        - [ ] Emails sequencias validadas (score >= 7)
+        - [ ] Blind critic PASSED para todos
+        - [ ] Full validation PASSED
+        - [ ] Sem compliance issues
+        - [ ] Consistencia entre deliverables
+
+        Task: gate-check.md
+        Gate: Production
+
+        Resultado:
+        - PASSED → Avanca para Review Pipeline (ou entrega)
+        - FAILED → Retorna lista de fixes para producao
+        - BLOCKED → Escala para @chief
+      outputs:
+        - helix-state.yaml (Production gate status)
+        - gate-report.yaml
+      next: complete
+      on_failure: vsl
+
+    # =========================================================================
+    #  WORKFLOW END
+    # =========================================================================
+
+    - workflow_end:
+        id: complete
+        action: production_complete
+        notes: |
+          Production Pipeline completo!
+
+          Deliverables:
+          - VSL: VALIDATED
+          - Landing Page: VALIDATED
+          - Criativos: VALIDATED
+          - Emails: VALIDATED
+
+          Gate: Production PASSED
+
+          Proximo: Executar review-pipeline (ou full delivery)
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Production Pipeline] --> B[echo: VSL]
+        A --> C[forge: Landing Page]
+        A --> D[scout: Criativos]
+        A --> E[blade: Emails]
+
+        B --> F[hawk: Blind Critic]
+        C --> F
+        D --> F
+        E --> F
+
+        F --> G{All PASS?}
+        G -->|Nao| H[Fix List]
+        H --> B
+        H --> C
+        H --> D
+        H --> E
+
+        G -->|Sim| I[hawk: Full Validation]
+
+        I --> J{Validation OK?}
+        J -->|Nao| F
+        J -->|Sim| K[sentinel: Production Gate]
+
+        K --> L{Gate PASSED?}
+        L -->|Sim| M[Production Complete]
+        L -->|Nao| N[Gap List]
+        N --> B
+
+        style M fill:#90EE90
+        style B fill:#98FB98
+        style C fill:#98FB98
+        style D fill:#98FB98
+        style E fill:#98FB98
+        style F fill:#DDA0DD
+        style I fill:#DDA0DD
+        style K fill:#DDA0DD
+        style H fill:#FFB6C1
+        style N fill:#FFB6C1
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Apos Briefing gate PASSED e Mecanismo APPROVED
+      - Quando Production gate esta NOT_STARTED ou FAILED
+      - Producao completa de todos os deliverables de uma oferta
+      - Re-producao apos mudanca significativa no briefing
+
+    when_not_to_use:
+      - Briefing gate nao passou ainda
+      - Mecanismo nao esta APPROVED
+      - Apenas producao de um deliverable especifico (use task direta)
+      - Apenas revisao de deliverables existentes (use review-pipeline)
+
+  handoff_prompts:
+    production_started: |
+      Producao iniciada em paralelo!
+      - echo: VSL
+      - forge: Landing Page
+      - scout: Criativos
+      - blade: Emails
+
+      Aguardando conclusao de todos os deliverables...
+
+    vsl_complete: |
+      VSL produzida!
+      Capitulos: {{chapter_count}}
+      Duracao estimada: {{estimated_duration}} min
+
+    lp_complete: |
+      Landing Page produzida!
+      Blocos: {{block_count}}
+
+    creatives_complete: |
+      Criativos produzidos!
+      Total: {{creative_count}} criativos em {{angle_count}} angulos
+
+    emails_complete: |
+      Emails produzidos!
+      Sequencias: {{sequence_count}}
+      Total emails: {{email_count}}
+
+    blind_critic_complete: |
+      Blind critic concluido!
+      VSL: {{vsl_score}}/10
+      LP: {{lp_score}}/10
+      Criativos: {{creative_score}}/10
+      Emails: {{email_score}}/10
+
+      {{#if has_fixes}}Fixes necessarios: {{fix_count}}{{/if}}
+
+    full_validation_complete: |
+      Full validation concluida!
+      Emotional Stress Test: {{est_result}}
+      Black Validation: {{bv_result}}
+      Compliance: {{compliance_result}}
+
+    gate_passed: |
+      Production Gate PASSED!
+
+      Todos os deliverables validados.
+      Proximo: *workflow review-pipeline
+
+    gate_failed: |
+      Production Gate FAILED.
+      Issues: {{issue_list}}
+
+      Retornando para corrigir deliverables...
+
+metadata:
+  author: Helix (@chief)
+  created_date: 2026-03-06
+  version: 1.0.0
+  tags:
+    - production
+    - vsl
+    - landing-page
+    - creatives
+    - emails
+    - pipeline
+    - copy-chief

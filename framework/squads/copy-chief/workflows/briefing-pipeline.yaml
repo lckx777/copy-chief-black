@@ -1,0 +1,394 @@
+workflow:
+  id: briefing-pipeline
+  name: Briefing Pipeline
+  version: "1.0"
+  description: >-
+    Pipeline de briefing HELIX completo. Executa as 10 fases do HELIX em sequencia,
+    com definicao e validacao do Mecanismo Unico (MUP + MUS) entre as fases 04 e 05.
+    Requer Research gate PASSED. Gate de Briefing bloqueia avanco para Production.
+  type: pipeline
+
+  metadata:
+    elicit: false
+    confirmation_required: false
+
+  execution_modes:
+    - mode: yolo
+      description: Execucao autonoma das 10 fases — ideal para ofertas com research robusto
+      prompts: 0
+    - mode: interactive
+      description: Checkpoints apos cada fase para validacao e ajustes
+      prompts: 10-15
+      default: true
+    - mode: preflight
+      description: Analise previa dos inputs de research antes de iniciar briefing
+      prompts: 3-5
+
+  phases:
+    - phase_1: HELIX Phases 01-04 (Foundation)
+    - phase_2: Mecanismo Unico (MUP + MUS)
+    - phase_3: Mecanismo Review
+    - phase_4: HELIX Phases 05-10 (Production Brief)
+    - phase_5: Briefing Gate Check
+
+  sequence:
+    # =========================================================================
+    #  PHASE 1: HELIX Phases 01-04 (Foundation)
+    # =========================================================================
+
+    - step: helix_foundation
+      id: helix_01_04
+      phase: 1
+      agent: atlas
+      action: HELIX fases 01 a 04 (Foundation)
+      requires: []
+      notes: |
+        Atlas (@briefer) executa as 4 primeiras fases do HELIX sequencialmente:
+
+        Fase 01 — Avatar Deep Dive:
+        - Perfil demografico e psicografico completo
+        - DRE escalada (5 niveis)
+        - Mapa de crencas e objeccoes
+
+        Fase 02 — Problema & Inimigo:
+        - Definicao do problema central
+        - Inimigo externo identificado
+        - Paradigm Shift rascunhado
+
+        Fase 03 — Promessa & Transformacao:
+        - Promessa unica da oferta
+        - Before/After state
+        - Prova social e autoridade
+
+        Fase 04 — Diferenciacao:
+        - Posicionamento vs concorrentes
+        - Angulo unico de entrada
+        - Reason Why
+
+        Task: briefing-helix-phase.md (phases: 01,02,03,04)
+
+        Pre-requisito: Research gate PASSED
+
+        Inputs:
+        - research/synthesis.md
+        - research/competitor-analysis.yaml
+        - CONTEXT.md
+
+        Criterios de sucesso:
+        - [ ] Fases 01-04 do briefings/phases/ preenchidas
+        - [ ] helix-state.yaml atualizado (4/10)
+        - [ ] DRE escalada documentada com evidencias
+        - [ ] Paradigm Shift rascunhado
+      outputs:
+        - briefings/phases/fase-01-avatar.md
+        - briefings/phases/fase-02-problema.md
+        - briefings/phases/fase-03-promessa.md
+        - briefings/phases/fase-04-diferenciacao.md
+        - helix-state.yaml (4/10)
+      next: mecanismo
+
+    # =========================================================================
+    #  PHASE 2: Mecanismo Unico (MUP + MUS)
+    # =========================================================================
+
+    - step: define_mecanismo
+      id: mecanismo
+      phase: 2
+      agent: atlas
+      action: Definicao do Mecanismo Unico (MUP + MUS)
+      requires:
+        - helix_01_04
+      notes: |
+        Atlas (@briefer) define o Mecanismo Unico da oferta:
+
+        MUP (Mecanismo Unico do Problema):
+        - Causa raiz nao-obvia do problema
+        - Paradigm Shift que reframe o problema
+        - Evidencia cientifica/autoridade
+
+        MUS (Mecanismo Unico da Solucao):
+        - Como a solucao ataca a causa raiz
+        - Gimmick Name memoravel
+        - Authority Hook (expert, estudo, instituicao)
+        - Ingredientes/componentes com papeis claros
+
+        Task: briefing-mecanismo.md
+
+        Inputs:
+        - briefings/phases/fase-01 a fase-04
+        - research/synthesis.md
+        - CONTEXT.md
+
+        Criterios de sucesso:
+        - [ ] mecanismo-unico.yaml completo
+        - [ ] MUP com paradigm shift claro
+        - [ ] MUS com gimmick name definido
+        - [ ] Authority hook documentado
+        - [ ] Ingredientes com papeis mapeados
+      outputs:
+        - mecanismo-unico.yaml
+      next: mecanismo_review
+
+    # =========================================================================
+    #  PHASE 3: Mecanismo Review (Blind Critic)
+    # =========================================================================
+
+    - step: review_mecanismo
+      id: mecanismo_review
+      phase: 3
+      agent: hawk
+      action: Review do Mecanismo Unico via blind critic
+      requires:
+        - mecanismo
+      notes: |
+        Hawk (@critic) executa blind critic no Mecanismo Unico:
+
+        Criterios de avaliacao:
+        - Originalidade do MUP (nao e generico?)
+        - Credibilidade do paradigm shift
+        - Memorabilidade do gimmick name
+        - Forca do authority hook
+        - Coerencia MUP → MUS (a solucao ataca a causa?)
+        - Potencial de diferenciacao vs concorrentes
+
+        Task: review-blind-critic.md (target: mecanismo)
+
+        Inputs:
+        - mecanismo-unico.yaml
+        - research/competitor-analysis.yaml (para comparacao)
+
+        Resultados possiveis:
+        - APPROVED → Avanca para HELIX 05-10
+        - NEEDS_REVISION → Retorna para atlas com feedback
+        - REJECTED → Redefine mecanismo do zero
+
+        Criterios de sucesso:
+        - [ ] Score >= 7/10 em cada criterio
+        - [ ] Sem overlap com mecanismos concorrentes
+        - [ ] MUP-MUS link logico validado
+      outputs:
+        - reviews/mecanismo-review.yaml
+      next: helix_05_10
+      on_failure: mecanismo
+
+    # =========================================================================
+    #  PHASE 4: HELIX Phases 05-10 (Production Brief)
+    # =========================================================================
+
+    - step: helix_production
+      id: helix_05_10
+      phase: 4
+      agent: atlas
+      action: HELIX fases 05 a 10 (Production Brief)
+      requires:
+        - mecanismo_review
+      notes: |
+        Atlas (@briefer) executa as fases 05-10 do HELIX sequencialmente:
+
+        Fase 05 — Lead & Hook Strategy:
+        - Tipo de lead definido (story, secret, proclamation, etc)
+        - Hook principal e variantes
+        - Microleads para criativos
+
+        Fase 06 — Estrutura VSL:
+        - Capitulos da VSL mapeados
+        - Arco narrativo definido
+        - Pontos de retencao planejados
+
+        Fase 07 — Prova & Autoridade:
+        - Stack de provas organizado
+        - Testemunhos selecionados
+        - Dados cientificos referenciados
+
+        Fase 08 — Oferta & Pricing:
+        - Estrutura da oferta (kits, bonus)
+        - Ancoragem de preco
+        - Garantia e risk reversal
+
+        Fase 09 — Urgencia & CTA:
+        - Gatilhos de urgencia
+        - CTAs por momento do funil
+        - Objection handling final
+
+        Fase 10 — Creative Brief:
+        - Angulos para criativos
+        - Formatos recomendados
+        - Hooks visuais e textuais
+
+        Task: briefing-helix-phase.md (phases: 05,06,07,08,09,10)
+
+        Inputs:
+        - briefings/phases/fase-01 a fase-04
+        - mecanismo-unico.yaml (APPROVED)
+        - research/synthesis.md
+
+        Criterios de sucesso:
+        - [ ] Fases 05-10 do briefings/phases/ preenchidas
+        - [ ] helix-state.yaml atualizado (10/10)
+        - [ ] Lead type e hooks definidos
+        - [ ] Estrutura VSL mapeada
+        - [ ] Creative brief com angulos
+      outputs:
+        - briefings/phases/fase-05-lead.md
+        - briefings/phases/fase-06-vsl.md
+        - briefings/phases/fase-07-prova.md
+        - briefings/phases/fase-08-oferta.md
+        - briefings/phases/fase-09-urgencia.md
+        - briefings/phases/fase-10-creative.md
+        - helix-state.yaml (10/10)
+      next: briefing_gate
+
+    # =========================================================================
+    #  PHASE 5: Briefing Gate Check
+    # =========================================================================
+
+    - step: briefing_gate
+      id: briefing_gate
+      phase: 5
+      agent: sentinel
+      action: Validacao do Briefing Gate
+      requires:
+        - helix_05_10
+      notes: |
+        Sentinel (@gatekeeper) valida o Briefing Gate:
+
+        Checklist:
+        - [ ] HELIX 10/10 completo
+        - [ ] Mecanismo Unico APPROVED
+        - [ ] DRE escalada com evidencias
+        - [ ] Lead type definido
+        - [ ] Estrutura VSL mapeada
+        - [ ] Creative brief com angulos
+        - [ ] Oferta e pricing definidos
+        - [ ] Nenhum gap critico aberto
+
+        Task: gate-check.md
+        Gate: Briefing
+
+        Resultado:
+        - PASSED → Avanca para Production Pipeline
+        - FAILED → Retorna lista de gaps para atlas
+        - BLOCKED → Escala para @chief
+      outputs:
+        - helix-state.yaml (Briefing gate status)
+        - gate-report.yaml
+      next: complete
+      on_failure: helix_01_04
+
+    # =========================================================================
+    #  WORKFLOW END
+    # =========================================================================
+
+    - workflow_end:
+        id: complete
+        action: briefing_complete
+        notes: |
+          Briefing Pipeline completo!
+
+          HELIX: 10/10
+          Mecanismo: APPROVED
+          Gate: Briefing PASSED
+
+          Artefatos:
+          - briefings/phases/ (10 fases)
+          - mecanismo-unico.yaml
+          - reviews/mecanismo-review.yaml
+
+          Proximo: Executar production-pipeline
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Briefing Pipeline] --> B[atlas: HELIX 01-04]
+        B --> C[atlas: Mecanismo Unico]
+        C --> D[hawk: Blind Critic - Mecanismo]
+
+        D --> E{Mecanismo OK?}
+        E -->|Nao| C
+        E -->|Sim| F[atlas: HELIX 05-10]
+
+        F --> G[sentinel: Briefing Gate]
+
+        G --> H{Gate PASSED?}
+        H -->|Sim| I[Briefing Complete]
+        H -->|Nao| J[Gap List]
+        J --> B
+
+        style I fill:#90EE90
+        style B fill:#FFE4B5
+        style C fill:#FFE4B5
+        style D fill:#DDA0DD
+        style F fill:#FFE4B5
+        style G fill:#DDA0DD
+        style J fill:#FFB6C1
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Apos Research gate PASSED
+      - Quando Briefing gate esta NOT_STARTED ou FAILED
+      - Quando mecanismo precisa ser definido ou redefinido
+      - Nova oferta com research completo
+
+    when_not_to_use:
+      - Research gate nao passou ainda
+      - Briefing gate ja PASSED e nao houve mudanca
+      - Apenas ajuste pontual em uma fase do HELIX
+
+  handoff_prompts:
+    helix_foundation_complete: |
+      HELIX fases 01-04 concluidas!
+      Avatar: {{avatar_summary}}
+      DRE: {{dre_primary}}
+      Paradigm Shift: {{paradigm_shift}}
+
+      Iniciando definicao do Mecanismo Unico...
+
+    mecanismo_defined: |
+      Mecanismo Unico definido!
+      MUP: {{mup_name}}
+      MUS: {{mus_name}}
+      Gimmick: {{gimmick_name}}
+
+      Enviando para blind critic...
+
+    mecanismo_approved: |
+      Mecanismo Unico APPROVED!
+      Score: {{mecanismo_score}}/10
+
+      Prosseguindo para HELIX fases 05-10...
+
+    mecanismo_rejected: |
+      Mecanismo Unico precisa de revisao.
+      Feedback: {{feedback_summary}}
+
+      Retornando para atlas redefinir...
+
+    helix_complete: |
+      HELIX 10/10 completo!
+      Fases preenchidas: 10/10
+
+      Iniciando validacao do Briefing Gate...
+
+    gate_passed: |
+      Briefing Gate PASSED!
+
+      Pipeline de Briefing concluido.
+      Proximo: *workflow production-pipeline
+
+    gate_failed: |
+      Briefing Gate FAILED.
+      Gaps encontrados: {{gap_list}}
+
+      Retornando para completar briefing...
+
+metadata:
+  author: Helix (@chief)
+  created_date: 2026-03-06
+  version: 1.0.0
+  tags:
+    - briefing
+    - helix
+    - mecanismo
+    - pipeline
+    - copy-chief

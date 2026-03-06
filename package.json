@@ -1,6 +1,6 @@
 {
   "name": "@lucapimenta/copy-chief-black",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Copy Chief BLACK — Direct Response Copywriting Framework for Claude Code",
   "bin": {
     "copy-chief-black": "bin/cli.js"
@@ -11,7 +11,7 @@
     "update-framework": "node bin/cli.js update",
     "verify": "node bin/cli.js verify",
     "doctor": "node bin/cli.js doctor",
-    "test": "node -e \"require('./lib/platform'); require('./lib/settings-builder'); require('./installer/transpile'); console.log('All modules OK')\""
+    "test": "node -e \"require('./lib/platform'); require('./lib/settings-builder'); console.log('All modules OK')\""
   },
   "engines": {
     "node": ">=18.0.0"
@@ -19,9 +19,6 @@
   "dependencies": {
     "commander": "^12.1.0",
     "js-yaml": "^4.1.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.5.0"
   },
   "files": [
     "bin/",
@@ -31,7 +28,6 @@
     "framework/*.md",
     "framework/*.yaml",
     "framework/.aios-core/",
-    "framework/agents/",
     "framework/checklists/",
     "framework/commands/",
     "framework/config/",
@@ -41,7 +37,6 @@
     "framework/dossiers/",
     "framework/experts/",
     "framework/gotchas/",
-    "framework/hooks/",
     "framework/ids/",
     "framework/knowledge/README.md",
     "framework/knowledge/universal/",
@@ -59,6 +54,7 @@
     "framework/schemas/",
     "framework/scripts/",
     "framework/skills/",
+    "framework/squads/",
     "framework/stories/",
     "framework/templates/",
     "framework/workflows/",
@@ -69,7 +65,7 @@
     "copywriting",
     "direct-response",
     "claude-code",
-    "hooks",
+    "aiox-squad",
     "framework"
   ],
   "author": "Luca Pimenta",

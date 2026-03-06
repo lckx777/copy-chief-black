@@ -1,0 +1,414 @@
+workflow:
+  id: review-pipeline
+  name: Review Pipeline
+  version: "1.0"
+  description: >-
+    Pipeline de revisao e validacao final de deliverables. Executa blind critic,
+    full validation e meta-analise de resultados. Loop de revisao com maximo de
+    3 iteracoes antes de escalar. Gate final de Review/Delivery bloqueia entrega.
+  type: pipeline
+
+  metadata:
+    elicit: false
+    confirmation_required: false
+
+  execution_modes:
+    - mode: yolo
+      description: Revisao autonoma com loop automatico de fixes
+      prompts: 0
+    - mode: interactive
+      description: Checkpoints apos cada review e decisao de fix vs accept
+      prompts: 4-8
+      default: true
+    - mode: preflight
+      description: Analise previa dos deliverables antes de iniciar review formal
+      prompts: 2-4
+
+  config:
+    max_review_iterations: 3
+    min_score_threshold: 7
+    escalation_on_max_iterations: true
+
+  phases:
+    - phase_1: Blind Critic (per deliverable)
+    - phase_2: Full Validation (per deliverable)
+    - phase_3: Meta-Analysis
+    - phase_4: Review / Delivery Gate
+
+  sequence:
+    # =========================================================================
+    #  PHASE 1: Blind Critic Review
+    # =========================================================================
+
+    - step: blind_critic_review
+      id: blind_critic
+      phase: 1
+      agent: hawk
+      action: Blind critic por deliverable
+      requires: []
+      notes: |
+        Hawk (@critic) executa blind critic individual em cada deliverable:
+
+        Deliverables avaliados:
+        1. VSL (production/vsl/)
+        2. Landing Page (production/landing-page/)
+        3. Criativos (production/creatives/)
+        4. Emails (production/emails/)
+
+        Criterios por deliverable:
+        - DRE Score (0-10)
+        - Mecanismo Score (0-10)
+        - Persuasion Flow (0-10)
+        - Anti-Homog Score (0-10)
+        - Hook Strength (0-10)
+        - CTA Clarity (0-10)
+
+        Task: review-blind-critic.md
+
+        Modo de avaliacao:
+        - Leitura SEM contexto do briefing (blind)
+        - Avalia se o copy funciona por si so
+        - Identifica pontos fracos e sugestoes especificas
+        - Gera fix list detalhada por deliverable
+
+        Iteracao: {{current_iteration}}/{{max_iterations}}
+
+        Criterios de sucesso:
+        - [ ] Cada deliverable avaliado individualmente
+        - [ ] Scores >= 7/10 em todos os criterios
+        - [ ] Fix list especifica quando score < 7
+        - [ ] Sugestoes acionaveis (nao genericas)
+      outputs:
+        - reviews/blind-critic-report.yaml
+        - reviews/fix-lists/vsl-fixes.yaml
+        - reviews/fix-lists/lp-fixes.yaml
+        - reviews/fix-lists/creative-fixes.yaml
+        - reviews/fix-lists/email-fixes.yaml
+      next: full_validation
+      on_failure: production_fix_loop
+
+    # =========================================================================
+    #  PHASE 1b: Production Fix Loop (conditional)
+    # =========================================================================
+
+    - step: fix_deliverables
+      id: production_fix_loop
+      phase: "1b"
+      agent: echo
+      action: Correcao de deliverables com base nos fixes
+      requires:
+        - blind_critic
+      notes: |
+        Agentes de producao corrigem deliverables baseado na fix list:
+
+        Routing por deliverable:
+        - VSL fixes → echo (@vsl)
+        - LP fixes → forge (@lp)
+        - Creative fixes → scout (@creative)
+        - Email fixes → blade (@producer)
+
+        Cada agent recebe:
+        - Deliverable original
+        - Fix list especifica
+        - Score atual vs threshold (7/10)
+
+        Regras:
+        - Aplicar APENAS os fixes listados
+        - Nao reescrever secoes que ja passaram
+        - Manter consistencia com outros deliverables
+        - Documentar mudancas feitas
+
+        Iteracao: {{current_iteration}}/{{max_iterations}}
+
+        Se iteracao >= max_iterations (3):
+        - ESCALAR para @chief com relatorio de gaps persistentes
+        - NAO continuar loop infinito
+
+        Criterios de sucesso:
+        - [ ] Todos os fixes da lista aplicados
+        - [ ] Scores devem melhorar na re-review
+        - [ ] Consistencia mantida entre deliverables
+      outputs:
+        - production/ (deliverables atualizados)
+        - reviews/fix-log.yaml
+      next: blind_critic
+      on_failure: escalate
+
+    # =========================================================================
+    #  PHASE 2: Full Validation
+    # =========================================================================
+
+    - step: full_validation_review
+      id: full_validation
+      phase: 2
+      agent: hawk
+      action: Full validation de todos os deliverables
+      requires:
+        - blind_critic
+      notes: |
+        Hawk (@critic) executa validacao completa:
+
+        Emotional Stress Test (EST):
+        - Simula jornada do avatar lendo o copy
+        - Mede intensidade emocional por secao
+        - Identifica pontos de drop-off e desengajamento
+        - Verifica que DRE escala progressivamente
+
+        Black Validation:
+        - Claims proibidos detectados?
+        - Promessas vs realidade calibradas?
+        - Linguagem de compliance adequada?
+        - Disclaimers necessarios presentes?
+
+        Cross-Deliverable Consistency:
+        - Mecanismo consistente entre VSL, LP, criativos, emails?
+        - Promessa principal igual em todos?
+        - Pricing e oferta coerentes?
+        - Gimmick name usado consistentemente?
+
+        Task: review-full-validation.md
+
+        Criterios de sucesso:
+        - [ ] EST score >= 7/10
+        - [ ] Black validation PASSED
+        - [ ] Sem compliance issues
+        - [ ] Consistencia cross-deliverable confirmada
+      outputs:
+        - reviews/full-validation-report.yaml
+        - reviews/est-report.yaml
+        - reviews/compliance-check.yaml
+        - reviews/consistency-check.yaml
+      next: meta_analysis
+      on_failure: blind_critic
+
+    # =========================================================================
+    #  PHASE 3: Meta-Analysis
+    # =========================================================================
+
+    - step: meta_analysis
+      id: meta_analysis
+      phase: 3
+      agent: reflection
+      action: Meta-analise dos resultados de review
+      requires:
+        - full_validation
+      notes: |
+        Reflection (@reflect) executa meta-analise:
+
+        Analise:
+        - Padroes de scores entre deliverables
+        - Areas sistematicamente fracas vs fortes
+        - Comparacao com ofertas anteriores (se existentes)
+        - Insights para melhoria do processo
+
+        Recomendacoes:
+        - Deliverables prontos para entrega
+        - Deliverables que precisam de polish final
+        - Licoes aprendidas para proxima oferta
+        - Sugestoes de otimizacao do pipeline
+
+        Output:
+        - Relatorio de meta-analise com scores consolidados
+        - Recomendacao de GO / NO-GO para entrega
+
+        Criterios de sucesso:
+        - [ ] Scores consolidados de todos os reviews
+        - [ ] Padroes identificados
+        - [ ] Recomendacao clara de GO ou NO-GO
+        - [ ] Licoes aprendidas documentadas
+      outputs:
+        - reviews/meta-analysis.yaml
+        - reviews/lessons-learned.yaml
+      next: delivery_gate
+
+    # =========================================================================
+    #  PHASE 4: Review / Delivery Gate
+    # =========================================================================
+
+    - step: delivery_gate
+      id: delivery_gate
+      phase: 4
+      agent: sentinel
+      action: Validacao do Delivery Gate
+      requires:
+        - meta_analysis
+      notes: |
+        Sentinel (@gatekeeper) valida o Delivery Gate final:
+
+        Checklist:
+        - [ ] Blind critic PASSED para todos os deliverables (score >= 7)
+        - [ ] Full validation PASSED (EST + Black)
+        - [ ] Sem compliance issues
+        - [ ] Consistencia cross-deliverable confirmada
+        - [ ] Meta-analise recomenda GO
+        - [ ] Nenhum gap critico aberto
+        - [ ] Iteracoes de review <= max_iterations
+
+        Task: gate-check.md
+        Gate: Delivery
+
+        Resultado:
+        - PASSED → Pronto para entrega via ops-sync
+        - FAILED → Retorna para blind critic com gaps
+        - BLOCKED → Escala para @chief (gaps criticos)
+      outputs:
+        - helix-state.yaml (Delivery gate status)
+        - gate-report.yaml
+      next: complete
+      on_failure: blind_critic
+
+    # =========================================================================
+    #  ESCALATION (max iterations reached)
+    # =========================================================================
+
+    - step: escalation
+      id: escalate
+      phase: 0
+      agent: helix
+      action: Escalacao por max iteracoes atingido
+      notes: |
+        Helix (@chief) recebe escalacao quando:
+        - Max review iterations (3) atingido sem resolucao
+        - Gaps persistentes que nao melhoram entre iteracoes
+        - Compliance issue que nao pode ser resolvido automaticamente
+
+        Decisoes possiveis:
+        - Override: aceitar deliverable com ressalvas
+        - Rework: voltar para briefing e repensar abordagem
+        - Abort: cancelar deliverable e priorizar outros
+        - Delegate: enviar para revisao humana
+      outputs:
+        - escalation-report.yaml
+      next: complete
+
+    # =========================================================================
+    #  WORKFLOW END
+    # =========================================================================
+
+    - workflow_end:
+        id: complete
+        action: review_complete
+        notes: |
+          Review Pipeline completo!
+
+          Resultado:
+          - Blind Critic: PASSED
+          - Full Validation: PASSED
+          - Meta-Analysis: GO
+          - Delivery Gate: PASSED
+
+          Iteracoes de review: {{iterations_count}}/3
+
+          Proximo: ops-sync para entrega final
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Review Pipeline] --> B[hawk: Blind Critic]
+
+        B --> C{All >= 7/10?}
+        C -->|Nao| D[Fix Deliverables]
+        D --> E{Iteration < 3?}
+        E -->|Sim| B
+        E -->|Nao| F[helix: Escalation]
+
+        C -->|Sim| G[hawk: Full Validation]
+
+        G --> H{Validation OK?}
+        H -->|Nao| B
+        H -->|Sim| I[reflection: Meta-Analysis]
+
+        I --> J[sentinel: Delivery Gate]
+
+        J --> K{Gate PASSED?}
+        K -->|Sim| L[Review Complete]
+        K -->|Nao| B
+
+        F --> M[Chief Decision]
+
+        style L fill:#90EE90
+        style B fill:#DDA0DD
+        style G fill:#DDA0DD
+        style I fill:#87CEEB
+        style J fill:#DDA0DD
+        style D fill:#FFB6C1
+        style F fill:#FF6347
+        style M fill:#FFE4B5
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Apos Production Pipeline completo
+      - Quando deliverables precisam de review formal antes da entrega
+      - Re-review apos correcoes significativas
+      - Validacao final antes de lancar oferta
+
+    when_not_to_use:
+      - Deliverables ainda em producao (use production-pipeline)
+      - Apenas review rapido de um deliverable (use task review-blind-critic direta)
+      - Research ou Briefing em andamento
+
+  handoff_prompts:
+    blind_critic_complete: |
+      Blind critic concluido (iteracao {{iteration}}/3)!
+      VSL: {{vsl_score}}/10
+      LP: {{lp_score}}/10
+      Criativos: {{creative_score}}/10
+      Emails: {{email_score}}/10
+
+      {{#if all_pass}}Todos passaram! Iniciando full validation...
+      {{else}}Fixes necessarios. Enviando para producao...{{/if}}
+
+    fixes_applied: |
+      Fixes aplicados (iteracao {{iteration}}/3)!
+      Deliverables corrigidos: {{fixed_count}}
+      Mudancas: {{change_count}}
+
+      Re-iniciando blind critic...
+
+    full_validation_complete: |
+      Full validation concluida!
+      EST: {{est_score}}/10
+      Black Validation: {{bv_result}}
+      Compliance: {{compliance_status}}
+      Consistencia: {{consistency_status}}
+
+      Iniciando meta-analise...
+
+    meta_analysis_complete: |
+      Meta-analise concluida!
+      Recomendacao: {{recommendation}}
+      Score consolidado: {{consolidated_score}}/10
+
+      Iniciando validacao do Delivery Gate...
+
+    gate_passed: |
+      Delivery Gate PASSED!
+
+      Todos os deliverables validados e prontos para entrega.
+      Proximo: *workflow full-pipeline (fase 5: ops-sync)
+
+    gate_failed: |
+      Delivery Gate FAILED.
+      Gaps: {{gap_list}}
+
+      Retornando para review...
+
+    escalated: |
+      Review escalado para @chief!
+      Motivo: Max iteracoes (3) atingido
+      Gaps persistentes: {{persistent_gaps}}
+
+      Aguardando decisao do Chief...
+
+metadata:
+  author: Helix (@chief)
+  created_date: 2026-03-06
+  version: 1.0.0
+  tags:
+    - review
+    - validation
+    - blind-critic
+    - delivery
+    - pipeline
+    - copy-chief

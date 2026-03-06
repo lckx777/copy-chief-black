@@ -1,0 +1,462 @@
+workflow:
+  id: full-pipeline
+  name: Full Pipeline - Offer Lifecycle
+  version: "1.0"
+  description: >-
+    Pipeline end-to-end que orquestra o ciclo completo de uma oferta: Research,
+    Briefing, Production, Review e Delivery. Cada fase e um sub-workflow com seu
+    proprio gate checkpoint via sentinel. Orquestrado por helix (@chief).
+    Do zero a entrega final.
+  type: orchestration
+
+  metadata:
+    elicit: true
+    confirmation_required: true
+
+  execution_modes:
+    - mode: yolo
+      description: Execucao autonoma do pipeline completo — ofertas com swipes robustos
+      prompts: 0-2
+    - mode: interactive
+      description: Checkpoints entre fases para validacao e decisao
+      prompts: 8-15
+      default: true
+    - mode: preflight
+      description: Analise completa de todos os pre-requisitos antes de iniciar
+      prompts: 5-8
+
+  config:
+    orchestrator: helix
+    gate_agent: sentinel
+    resume_enabled: true
+    state_file: "{offer_path}/.aios/pipeline-state.yaml"
+
+  phases:
+    - phase_1: Research Pipeline
+    - phase_2: Briefing Pipeline
+    - phase_3: Production Pipeline
+    - phase_4: Review Pipeline
+    - phase_5: Final Delivery Sync
+
+  sequence:
+    # =========================================================================
+    #  PHASE 0: Pipeline Initialization
+    # =========================================================================
+
+    - step: initialize_pipeline
+      id: init
+      phase: 0
+      agent: helix
+      action: Inicializacao do pipeline e validacao de pre-requisitos
+      requires: []
+      notes: |
+        Helix (@chief) inicializa o pipeline completo:
+
+        Pre-requisitos:
+        - [ ] Oferta existe em {niche}/{offer}/
+        - [ ] CONTEXT.md preenchido com informacoes basicas
+        - [ ] project_state.yaml existe
+        - [ ] helix-state.yaml existe (pode estar vazio)
+
+        Inicializacao:
+        - Detectar estado atual da oferta (resume se parcial)
+        - Verificar qual fase ja foi concluida
+        - Determinar ponto de inicio (primeira fase incompleta)
+        - Configurar pipeline-state.yaml
+
+        Se oferta em andamento:
+        - Ler pipeline-state.yaml e retomar de onde parou
+        - Validar que artefatos anteriores ainda sao validos
+      outputs:
+        - "{offer_path}/.aios/pipeline-state.yaml"
+      next: research
+
+    # =========================================================================
+    #  PHASE 1: Research Pipeline (sub-workflow)
+    # =========================================================================
+
+    - step: execute_research
+      id: research
+      phase: 1
+      agent: helix
+      action: Orquestrar Research Pipeline
+      requires:
+        - init
+      notes: |
+        Helix (@chief) orquestra o sub-workflow research-pipeline.yaml:
+
+        Sub-workflow: research-pipeline.yaml
+        Agentes envolvidos: vox (@researcher), cipher (@miner), sentinel (@gatekeeper)
+
+        Execucao:
+        1. Disparar vox e cipher em paralelo
+        2. Aguardar conclusao de ambos
+        3. Sentinel valida Research gate
+
+        Skip se:
+        - Research gate ja PASSED e contexto nao mudou
+        - helix-state.yaml mostra Research: PASSED
+
+        Gate checkpoint:
+        - Research gate MUST be PASSED para avancar
+        - Se FAILED, loop dentro do sub-workflow
+        - Se BLOCKED, escalar para decisao do chief
+
+        Criterios de sucesso:
+        - [ ] synthesis.md com confianca >= 80%
+        - [ ] competitor-analysis.yaml com >= 5 concorrentes
+        - [ ] Research gate: PASSED
+      outputs:
+        - research/synthesis.md
+        - research/competitor-analysis.yaml
+        - helix-state.yaml (Research: PASSED)
+      next: briefing
+      on_failure: research
+      skip_if: "helix_state.gates.research === 'PASSED'"
+
+    # =========================================================================
+    #  PHASE 2: Briefing Pipeline (sub-workflow)
+    # =========================================================================
+
+    - step: execute_briefing
+      id: briefing
+      phase: 2
+      agent: helix
+      action: Orquestrar Briefing Pipeline
+      requires:
+        - research
+      notes: |
+        Helix (@chief) orquestra o sub-workflow briefing-pipeline.yaml:
+
+        Sub-workflow: briefing-pipeline.yaml
+        Agentes envolvidos: atlas (@briefer), hawk (@critic), sentinel (@gatekeeper)
+
+        Execucao:
+        1. Atlas executa HELIX fases 01-04
+        2. Atlas define Mecanismo Unico
+        3. Hawk faz blind critic do mecanismo
+        4. Atlas executa HELIX fases 05-10
+        5. Sentinel valida Briefing gate
+
+        Pre-requisito: Research gate PASSED
+
+        Skip se:
+        - Briefing gate ja PASSED e mecanismo APPROVED
+        - helix-state.yaml mostra Briefing: PASSED
+
+        Gate checkpoint:
+        - Briefing gate MUST be PASSED para avancar
+        - Mecanismo MUST be APPROVED
+        - Se FAILED, loop dentro do sub-workflow
+
+        Criterios de sucesso:
+        - [ ] HELIX 10/10 completo
+        - [ ] Mecanismo Unico APPROVED
+        - [ ] Briefing gate: PASSED
+      outputs:
+        - briefings/phases/ (10 fases)
+        - mecanismo-unico.yaml (APPROVED)
+        - helix-state.yaml (Briefing: PASSED)
+      next: production
+      on_failure: briefing
+      skip_if: "helix_state.gates.briefing === 'PASSED'"
+
+    # =========================================================================
+    #  PHASE 3: Production Pipeline (sub-workflow)
+    # =========================================================================
+
+    - step: execute_production
+      id: production
+      phase: 3
+      agent: helix
+      action: Orquestrar Production Pipeline
+      requires:
+        - briefing
+      notes: |
+        Helix (@chief) orquestra o sub-workflow production-pipeline.yaml:
+
+        Sub-workflow: production-pipeline.yaml
+        Agentes envolvidos: echo (@vsl), forge (@lp), scout (@creative),
+                           blade (@producer), hawk (@critic), sentinel (@gatekeeper)
+
+        Execucao:
+        1. Disparar echo, forge, scout, blade em paralelo
+        2. Aguardar conclusao de todos
+        3. Hawk executa blind critic + full validation
+        4. Sentinel valida Production gate
+
+        Pre-requisitos:
+        - Briefing gate PASSED
+        - Mecanismo APPROVED
+
+        Skip se:
+        - Production gate ja PASSED
+        - helix-state.yaml mostra Production: PASSED
+
+        Gate checkpoint:
+        - Production gate MUST be PASSED para avancar
+        - Se FAILED, loop dentro do sub-workflow
+
+        Criterios de sucesso:
+        - [ ] VSL, LP, Criativos, Emails produzidos
+        - [ ] Blind critic PASSED para todos
+        - [ ] Full validation PASSED
+        - [ ] Production gate: PASSED
+      outputs:
+        - production/vsl/
+        - production/landing-page/
+        - production/creatives/
+        - production/emails/
+        - helix-state.yaml (Production: PASSED)
+      next: review
+      on_failure: production
+      skip_if: "helix_state.gates.production === 'PASSED'"
+
+    # =========================================================================
+    #  PHASE 4: Review Pipeline (sub-workflow)
+    # =========================================================================
+
+    - step: execute_review
+      id: review
+      phase: 4
+      agent: helix
+      action: Orquestrar Review Pipeline
+      requires:
+        - production
+      notes: |
+        Helix (@chief) orquestra o sub-workflow review-pipeline.yaml:
+
+        Sub-workflow: review-pipeline.yaml
+        Agentes envolvidos: hawk (@critic), reflection (@reflect), sentinel (@gatekeeper)
+
+        Execucao:
+        1. Hawk executa blind critic por deliverable
+        2. Loop de fixes se necessario (max 3 iteracoes)
+        3. Hawk executa full validation
+        4. Reflection faz meta-analise
+        5. Sentinel valida Delivery gate
+
+        Pre-requisito: Production gate PASSED
+
+        Skip se:
+        - Delivery gate ja PASSED
+        - helix-state.yaml mostra Delivery: PASSED
+
+        Gate checkpoint:
+        - Delivery gate MUST be PASSED para avancar
+        - Se max iteracoes atingido, escalar para chief
+        - Se BLOCKED, abortar ou rework
+
+        Criterios de sucesso:
+        - [ ] Todos os deliverables score >= 7/10
+        - [ ] Full validation PASSED
+        - [ ] Meta-analise recomenda GO
+        - [ ] Delivery gate: PASSED
+      outputs:
+        - reviews/blind-critic-report.yaml
+        - reviews/full-validation-report.yaml
+        - reviews/meta-analysis.yaml
+        - helix-state.yaml (Delivery: PASSED)
+      next: delivery
+      on_failure: review
+      skip_if: "helix_state.gates.delivery === 'PASSED'"
+
+    # =========================================================================
+    #  PHASE 5: Final Delivery Sync
+    # =========================================================================
+
+    - step: final_delivery
+      id: delivery
+      phase: 5
+      agent: ops
+      action: Sync final e entrega
+      requires:
+        - review
+      notes: |
+        Ops (@ops) executa sync final e prepara entrega:
+
+        Task: ops-sync.md
+
+        Acoes:
+        - [ ] Organizar todos os deliverables em estrutura final
+        - [ ] Verificar integridade de todos os arquivos
+        - [ ] Atualizar project_state.yaml com status DELIVERED
+        - [ ] Atualizar helix-state.yaml com todos os gates PASSED
+        - [ ] Git commit com tag de versao
+        - [ ] Gerar relatorio final de entrega
+
+        Estrutura final:
+        {offer}/
+          production/
+            vsl/          → VSL final
+            landing-page/ → LP final
+            creatives/    → Batch de criativos final
+            emails/       → Sequencias de email finais
+          reviews/        → Todos os relatorios de review
+          briefings/      → HELIX completo
+          research/       → Research completo
+          delivery/       → Relatorio de entrega
+
+        Criterios de sucesso:
+        - [ ] Todos os deliverables na estrutura correta
+        - [ ] project_state.yaml: DELIVERED
+        - [ ] Git commit com tag
+        - [ ] Relatorio de entrega gerado
+      outputs:
+        - delivery/delivery-report.yaml
+        - project_state.yaml (status: DELIVERED)
+        - helix-state.yaml (all gates: PASSED)
+      next: complete
+
+    # =========================================================================
+    #  WORKFLOW END
+    # =========================================================================
+
+    - workflow_end:
+        id: complete
+        action: offer_delivered
+        notes: |
+          Full Pipeline COMPLETO!
+
+          Oferta: {{offer_name}}
+          Nicho: {{niche}}
+
+          Gates:
+          - Research: PASSED
+          - Briefing: PASSED
+          - Production: PASSED
+          - Delivery: PASSED
+
+          Deliverables:
+          - VSL: DELIVERED
+          - Landing Page: DELIVERED
+          - Criativos: DELIVERED
+          - Emails: DELIVERED
+
+          Status: DELIVERED
+
+          Oferta pronta para lancamento.
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Full Pipeline] --> B[helix: Initialize]
+        B --> C[Phase 1: Research Pipeline]
+
+        C --> D[sentinel: Research Gate]
+        D --> E{PASSED?}
+        E -->|Nao| C
+        E -->|Sim| F[Phase 2: Briefing Pipeline]
+
+        F --> G[sentinel: Briefing Gate]
+        G --> H{PASSED?}
+        H -->|Nao| F
+        H -->|Sim| I[Phase 3: Production Pipeline]
+
+        I --> J[sentinel: Production Gate]
+        J --> K{PASSED?}
+        K -->|Nao| I
+        K -->|Sim| L[Phase 4: Review Pipeline]
+
+        L --> M[sentinel: Delivery Gate]
+        M --> N{PASSED?}
+        N -->|Nao| L
+        N -->|Sim| O[Phase 5: ops-sync]
+
+        O --> P[OFFER DELIVERED]
+
+        style P fill:#90EE90
+        style C fill:#87CEEB
+        style F fill:#FFE4B5
+        style I fill:#98FB98
+        style L fill:#DDA0DD
+        style O fill:#FFD700
+        style D fill:#DDA0DD
+        style G fill:#DDA0DD
+        style J fill:#DDA0DD
+        style M fill:#DDA0DD
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Oferta nova do zero (research ate delivery)
+      - Retomar oferta parcialmente completa (resume automatico)
+      - Reprocessar oferta completa apos mudanca estrategica
+
+    when_not_to_use:
+      - Apenas uma fase especifica (use sub-workflow direto)
+      - Ajuste pontual em um deliverable
+      - Apenas review de material existente
+      - Oferta ja DELIVERED sem mudancas
+
+  handoff_prompts:
+    pipeline_initialized: |
+      Full Pipeline inicializado!
+      Oferta: {{offer_name}}
+      Nicho: {{niche}}
+      Estado atual: {{current_state}}
+      Iniciando em: Phase {{start_phase}}
+
+    research_complete: |
+      Phase 1: Research COMPLETO!
+      Research Gate: PASSED
+      Confianca: {{confidence}}%
+
+      Avancando para Phase 2: Briefing...
+
+    briefing_complete: |
+      Phase 2: Briefing COMPLETO!
+      HELIX: 10/10
+      Mecanismo: APPROVED
+      Briefing Gate: PASSED
+
+      Avancando para Phase 3: Production...
+
+    production_complete: |
+      Phase 3: Production COMPLETO!
+      Deliverables: VSL, LP, Criativos, Emails
+      Production Gate: PASSED
+
+      Avancando para Phase 4: Review...
+
+    review_complete: |
+      Phase 4: Review COMPLETO!
+      Blind Critic: PASSED
+      Full Validation: PASSED
+      Meta-Analysis: GO
+      Delivery Gate: PASSED
+
+      Avancando para Phase 5: Delivery...
+
+    delivery_complete: |
+      Phase 5: Delivery COMPLETO!
+
+      OFERTA {{offer_name}} ENTREGUE!
+      Todos os gates: PASSED
+      Status: DELIVERED
+
+      Pipeline concluido com sucesso.
+
+    phase_failed: |
+      Phase {{phase_number}} FAILED!
+      Fase: {{phase_name}}
+      Gaps: {{gap_list}}
+
+      Retornando para resolver gaps...
+
+    pipeline_resumed: |
+      Pipeline retomado!
+      Oferta: {{offer_name}}
+      Ultimo estado: Phase {{last_phase}} - {{last_status}}
+      Retomando em: Phase {{resume_phase}}
+
+metadata:
+  author: Helix (@chief)
+  created_date: 2026-03-06
+  version: 1.0.0
+  tags:
+    - full-pipeline
+    - orchestration
+    - offer-lifecycle
+    - end-to-end
+    - copy-chief

@@ -1,0 +1,238 @@
+workflow:
+  id: research-pipeline
+  name: Research Pipeline
+  version: "1.0"
+  description: >-
+    Pipeline de pesquisa para ofertas de copy. Executa em paralelo a pesquisa de VOC
+    (Voice of Customer) e a mineracao de concorrentes. Gate de Research bloqueia avanco
+    para Briefing se a pesquisa estiver incompleta ou insuficiente.
+  type: pipeline
+
+  metadata:
+    elicit: false
+    confirmation_required: false
+
+  execution_modes:
+    - mode: yolo
+      description: Execucao autonoma sem interacao — ideal para ofertas com swipes disponiveis
+      prompts: 0
+    - mode: interactive
+      description: Checkpoints para validacao de fontes e direcao da pesquisa
+      prompts: 2-4
+      default: true
+    - mode: preflight
+      description: Analise previa de fontes disponiveis antes de iniciar pesquisa
+      prompts: 3-5
+
+  phases:
+    - phase_1: Parallel Research (VOC + Competitors)
+    - phase_2: Research Gate Check
+
+  sequence:
+    # =========================================================================
+    #  PHASE 1a: VOC Research (parallel with 1b)
+    # =========================================================================
+
+    - step: research_voc
+      id: voc
+      phase: 1
+      agent: vox
+      action: Pesquisa de Voice of Customer
+      notes: |
+        Vox (@researcher) executa pesquisa de VOC para a oferta:
+        - Coleta depoimentos reais (reviews, foruns, redes sociais)
+        - Identifica linguagem do avatar (palavras, expressoes, dores)
+        - Mapeia DRE primaria e secundaria com evidencias
+        - Documenta nivel de consciencia do avatar
+        - Identifica objeccoes e crencas limitantes
+
+        Task: research-voc.md
+
+        Inputs:
+        - CONTEXT.md da oferta
+        - Swipes disponiveis em swipes/
+
+        Criterios de sucesso:
+        - [ ] Minimo 20 verbatims coletados
+        - [ ] DRE primaria e secundaria identificadas
+        - [ ] Linguagem do avatar documentada
+        - [ ] Objeccoes mapeadas (minimo 5)
+        - [ ] synthesis.md escrito com confianca >= 80%
+      outputs:
+        - research/synthesis.md
+        - research/voc-raw.yaml
+        - research/avatar-language.yaml
+      next: gate
+
+    # =========================================================================
+    #  PHASE 1b: Competitor Research (parallel with 1a)
+    # =========================================================================
+
+    - step: research_competitors
+      id: competitors
+      phase: 1
+      agent: cipher
+      action: Mineracao de concorrentes e padroes
+      notes: |
+        Cipher (@miner) executa mineracao de concorrentes:
+        - Identifica top 5-10 concorrentes diretos
+        - Analisa angulos, leads, mecanismos usados
+        - Calcula Scale Score por concorrente
+        - Mapeia gaps e oportunidades de diferenciacao
+        - Documenta padroes de copy que funcionam no nicho
+
+        Task: research-competitors.md
+
+        Inputs:
+        - CONTEXT.md da oferta
+        - Swipes disponiveis em swipes/
+        - Facebook Ad Library (via MCP)
+
+        Criterios de sucesso:
+        - [ ] Minimo 5 concorrentes analisados
+        - [ ] Scale Score calculado para cada
+        - [ ] Padroes de copy documentados
+        - [ ] Gaps identificados para diferenciacao
+        - [ ] competitor-analysis.yaml escrito
+      outputs:
+        - research/competitor-analysis.yaml
+        - research/scale-scores.yaml
+        - research/patterns.yaml
+      next: gate
+
+    # =========================================================================
+    #  PHASE 2: Research Gate Check
+    # =========================================================================
+
+    - step: research_gate
+      id: gate
+      phase: 2
+      agent: sentinel
+      action: Validacao do Research Gate
+      requires:
+        - voc
+        - competitors
+      notes: |
+        Sentinel (@gatekeeper) valida o Research Gate:
+        - Verifica completude de synthesis.md
+        - Verifica completude de competitor-analysis.yaml
+        - Valida confianca da pesquisa (threshold: 80%)
+        - Verifica que DRE esta identificada com evidencias
+        - Verifica que avatar esta documentado
+
+        Task: gate-check.md
+        Gate: Research
+
+        Criterios de aprovacao:
+        - [ ] synthesis.md existe e tem confianca >= 80%
+        - [ ] competitor-analysis.yaml existe com >= 5 concorrentes
+        - [ ] DRE primaria identificada com evidencias
+        - [ ] Avatar documentado com linguagem propria
+        - [ ] Nenhum gap critico aberto
+
+        Resultado:
+        - PASSED -> Avanca para Briefing Pipeline
+        - FAILED -> Retorna lista de gaps para resolver
+        - BLOCKED -> Escala para @chief com justificativa
+      outputs:
+        - helix-state.yaml (Research gate status)
+        - gate-report.yaml
+      next: complete
+      on_failure: voc
+
+    # =========================================================================
+    #  WORKFLOW END
+    # =========================================================================
+
+    - workflow_end:
+        id: complete
+        action: research_complete
+        notes: |
+          Research Pipeline completo!
+
+          Artefatos gerados:
+          - research/synthesis.md (VOC)
+          - research/voc-raw.yaml
+          - research/avatar-language.yaml
+          - research/competitor-analysis.yaml
+          - research/scale-scores.yaml
+          - research/patterns.yaml
+
+          Gate: Research PASSED
+
+          Proximo: Executar briefing-pipeline
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: Research Pipeline] --> B[vox: Research VOC]
+        A --> C[cipher: Research Competitors]
+
+        B --> D[sentinel: Research Gate]
+        C --> D
+
+        D --> E{Gate PASSED?}
+        E -->|Sim| F[Research Complete]
+        E -->|Nao| G[Gap List]
+        G --> B
+        G --> C
+
+        style F fill:#90EE90
+        style B fill:#87CEEB
+        style C fill:#87CEEB
+        style D fill:#DDA0DD
+        style G fill:#FFB6C1
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Inicio de qualquer oferta nova
+      - Quando Research gate esta NOT_STARTED ou FAILED
+      - Quando contexto da oferta mudou significativamente
+      - Apos mudanca de avatar ou nicho
+
+    when_not_to_use:
+      - Research gate ja PASSED e contexto nao mudou
+      - Oferta em fase de Production ou Review
+      - Apenas atualizacao pontual de um dado
+
+  handoff_prompts:
+    voc_complete: |
+      Pesquisa de VOC concluida!
+      Verbatims coletados: {{verbatim_count}}
+      DRE identificada: {{dre_primary}}
+      Confianca: {{confidence}}%
+
+      Aguardando conclusao da mineracao de concorrentes...
+
+    competitors_complete: |
+      Mineracao de concorrentes concluida!
+      Concorrentes analisados: {{competitor_count}}
+      Scale Score medio: {{avg_scale_score}}
+      Gaps identificados: {{gap_count}}
+
+      Iniciando validacao do Research Gate...
+
+    gate_passed: |
+      Research Gate PASSED!
+      Confianca geral: {{confidence}}%
+
+      Pipeline de Research concluido.
+      Proximo: *workflow briefing-pipeline
+
+    gate_failed: |
+      Research Gate FAILED.
+      Gaps encontrados: {{gap_list}}
+
+      Retornando para completar pesquisa...
+
+metadata:
+  author: Helix (@chief)
+  created_date: 2026-03-06
+  version: 1.0.0
+  tags:
+    - research
+    - voc
+    - competitors
+    - pipeline
+    - copy-chief

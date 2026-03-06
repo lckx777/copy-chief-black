@@ -1,0 +1,92 @@
+name: copy-chief
+version: 1.0.0
+short-title: Copy Chief BLACK
+description: >
+  Direct Response copywriting squad with 13 specialized agents.
+  Orchestrates the full pipeline: Research -> Briefing -> Production -> Review -> Delivery.
+  DRE-first, HELIX-based, Synapse-powered.
+author: Luca Pimenta
+license: UNLICENSED
+slashPrefix: copy
+
+aiox:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - helix.md
+    - vox.md
+    - cipher.md
+    - atlas.md
+    - echo.md
+    - forge.md
+    - scout.md
+    - blade.md
+    - hawk.md
+    - sentinel.md
+    - ops.md
+    - strategist.md
+    - reflection.md
+  tasks:
+    - research-voc.md
+    - research-competitors.md
+    - briefing-helix-phase.md
+    - briefing-mecanismo.md
+    - production-vsl.md
+    - production-lp.md
+    - production-creatives.md
+    - production-emails.md
+    - review-blind-critic.md
+    - review-full-validation.md
+    - gate-check.md
+    - ops-sync.md
+    - ops-health.md
+    - strategy-portfolio.md
+  workflows:
+    - research-pipeline.yaml
+    - briefing-pipeline.yaml
+    - production-pipeline.yaml
+    - review-pipeline.yaml
+    - full-pipeline.yaml
+  checklists:
+    - production-preflight.md
+    - copy-quality-gate.md
+    - delivery-checklist.md
+  templates:
+    - vsl-chapter.md
+    - creative-batch.md
+    - lp-block.md
+    - review-report.md
+  tools: []
+  scripts: []
+
+config:
+  extends: none
+
+dependencies:
+  node:
+    - js-yaml
+  python: []
+  squads: []
+
+tags:
+  - copywriting
+  - direct-response
+  - dtc
+  - health
+  - production
+
+synapse:
+  engine: true
+  domains:
+    - constitution
+    - dre
+    - helix
+    - mecanismo
+    - quality-gates
+    - anti-homog
+    - tool-matrix
+    - craft
+  agent-triggers: true
+  workflow-triggers: true

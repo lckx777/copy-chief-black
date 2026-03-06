@@ -14,7 +14,7 @@ const REQUIRED_NODE_VERSION = 18;
 const FRAMEWORK_DIR = path.join(__dirname, '..', 'framework');
 
 async function install(opts = {}) {
-  console.log('Copy Chief BLACK — Installer v1.0\n');
+  console.log('Copy Chief BLACK — Installer v2.0 (Squad Native)\n');
 
   // Step 1: Check prerequisites
   console.log('[1/9] Checking prerequisites...');
@@ -37,9 +37,9 @@ async function install(opts = {}) {
   console.log('[4/9] Installing dependencies...');
   installDeps(claudeHome);
 
-  // Step 5: Transpile TypeScript hooks
-  console.log('[5/9] Transpiling TypeScript hooks...');
-  transpileHooks(claudeHome);
+  // Step 5: Copy squad to ecosystem (v2.0.0)
+  console.log('[5/9] Installing Copy Chief Squad...');
+  installSquad(claudeHome, ecoRoot);
 
   // Step 6: Generate settings.json + mcp.json
   console.log('[6/10] Generating settings.json...');
@@ -111,12 +111,14 @@ function copyFramework(claudeHome, force) {
     return;
   }
 
-  // ALL framework directories — nothing missing
+  // ALL framework directories — v2.0.0 squad-native (no hooks, no legacy agents)
   const items = [
-    // Core engine
-    '.aios-core', 'hooks', 'scripts',
-    // Agents & squad
-    'agents', 'copy-squad',
+    // Core engine (Synapse only)
+    '.aios-core', 'scripts',
+    // Copy Squad experts
+    'copy-squad',
+    // AIOX Squad (v11.0 native)
+    'squads',
     // Plugins & schemas
     'plugins', 'schemas',
     // Skills & commands
@@ -206,9 +208,22 @@ function installDeps(claudeHome) {
   }
 }
 
-function transpileHooks(claudeHome) {
-  const { transpileAll } = require('./transpile');
-  return transpileAll({ force: false });
+function installSquad(claudeHome, ecoRoot) {
+  const squadSrc = path.join(FRAMEWORK_DIR, 'squads', 'copy-chief');
+  const squadDest = path.join(ecoRoot, 'squads', 'copy-chief');
+
+  if (!fs.existsSync(squadSrc)) {
+    console.log('   Squad source not found — skipping (dev mode)');
+    return;
+  }
+
+  if (fs.existsSync(squadDest)) {
+    copyNewFiles(squadSrc, squadDest);
+    console.log('   Merged squad into ecosystem');
+  } else {
+    fs.cpSync(squadSrc, squadDest, { recursive: true });
+    console.log('   Installed squad to ecosystem');
+  }
 }
 
 function scaffoldEcosystem(ecoRoot) {
