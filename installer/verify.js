@@ -1,6 +1,6 @@
 /**
  * Copy Chief BLACK — Verification
- * Checks installation integrity
+ * Checks installation integrity (v2.0 — squad-native)
  */
 'use strict';
 
@@ -17,12 +17,11 @@ async function verify(opts = {}) {
 
   if (!quiet) console.log('Copy Chief BLACK — Verification\n');
 
-  // 1. Check directories exist
+  // 1. Check core directories
   const requiredDirs = [
     { path: platform.claudeHome(), label: 'Claude Home' },
     { path: platform.aiosCoreDir(), label: 'AIOS Core' },
     { path: platform.copyChiefDir(), label: 'Copy Chief modules' },
-    { path: platform.hooksDir(), label: 'Hooks directory' },
   ];
 
   for (const dir of requiredDirs) {
@@ -59,7 +58,7 @@ async function verify(opts = {}) {
     if (!quiet) console.log('  ✗ js-yaml NOT available');
   }
 
-  // 4. Check core modules
+  // 4. Check core modules (copy-chief OS layer)
   const coreModules = [
     'index.js',
     'orchestration/helix-orchestrator.js',
@@ -82,35 +81,68 @@ async function verify(opts = {}) {
     console.log(`  ✓ Core modules: ${moduleOk}/${coreModules.length}`);
   }
 
-  // 5. Check hooks exist (sample check)
-  const criticalHooks = [
-    'synapse-engine.cjs',
-    'helix-orchestrator-boot.cjs',
-    'agent-activation-hook.cjs',
-    'pipeline-intent-detector.cjs',
-    'handoff-validator-hook.cjs',
-  ];
+  // 5. Check Synapse engine hook (only surviving hook in v2.0)
+  const hooksDir = platform.hooksDir();
+  const synapseHook = path.join(hooksDir, 'synapse-engine.cjs');
+  if (fs.existsSync(synapseHook)) {
+    if (!quiet) console.log('  ✓ Synapse engine hook present');
+  } else {
+    issues++;
+    if (!quiet) console.log('  ✗ Missing: hooks/synapse-engine.cjs (only required hook)');
+  }
 
-  const hDir = platform.hooksDir();
-  let hookOk = 0;
-  for (const hook of criticalHooks) {
-    if (fs.existsSync(path.join(hDir, hook))) {
-      hookOk++;
+  // 6. Check squad in ecosystem
+  const ecoRoot = platform.ecosystemRoot();
+  const squadDir = path.join(ecoRoot, 'squads', 'copy-chief');
+  if (fs.existsSync(squadDir)) {
+    const squadYaml = path.join(squadDir, 'squad.yaml');
+    if (fs.existsSync(squadYaml)) {
+      if (!quiet) console.log(`  ✓ Copy Chief Squad: ${squadDir}`);
     } else {
       issues++;
-      if (!quiet) console.log(`  ✗ Missing critical hook: ${hook}`);
+      if (!quiet) console.log(`  ✗ Squad directory exists but missing squad.yaml: ${squadDir}`);
     }
-  }
-  if (!quiet && hookOk === criticalHooks.length) {
-    console.log(`  ✓ Critical hooks: ${hookOk}/${criticalHooks.length}`);
+
+    // Count squad agents
+    const agentsDir = path.join(squadDir, 'agents');
+    if (fs.existsSync(agentsDir)) {
+      const agents = fs.readdirSync(agentsDir).filter(f => f.endsWith('.md'));
+      if (!quiet) console.log(`  ✓ Squad agents: ${agents.length}`);
+    }
+  } else {
+    issues++;
+    if (!quiet) console.log(`  ✗ Copy Chief Squad MISSING: ${squadDir}`);
   }
 
-  // 6. Count total hooks
-  if (fs.existsSync(hDir)) {
-    const allHooks = fs.readdirSync(hDir).filter(f =>
-      f.endsWith('.cjs') || f.endsWith('.js') || f.endsWith('.ts')
-    );
-    if (!quiet) console.log(`  ✓ Total hooks: ${allHooks.length}`);
+  // 7. Check ecosystem structure
+  if (!quiet) {
+    if (fs.existsSync(ecoRoot)) {
+      console.log(`  ✓ Ecosystem: ${ecoRoot}`);
+    } else {
+      console.log(`  ✗ Ecosystem directory MISSING: ${ecoRoot}`);
+      issues++;
+    }
+
+    if (fs.existsSync(path.join(ecoRoot, '.synapse'))) {
+      console.log('  ✓ .synapse/ exists');
+    } else {
+      console.log('  ✗ .synapse/ MISSING');
+      issues++;
+    }
+  }
+
+  // 8. Check version tracking
+  const versionFile = path.join(platform.claudeHome(), '.copy-chief-version.json');
+  if (fs.existsSync(versionFile)) {
+    try {
+      const info = JSON.parse(fs.readFileSync(versionFile, 'utf8'));
+      if (!quiet) console.log(`  ✓ Version tracking: v${info.version} (installed ${info.installedAt || 'unknown'})`);
+    } catch {
+      issues++;
+      if (!quiet) console.log('  ✗ Version tracking file corrupt');
+    }
+  } else {
+    if (!quiet) console.log('  - Version tracking not initialized (run: copy-chief-black update --init-tracking)');
   }
 
   // Summary

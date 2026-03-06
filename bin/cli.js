@@ -6,7 +6,6 @@
 'use strict';
 
 const { Command } = require('commander');
-const path = require('path');
 const pkg = require('../package.json');
 
 const program = new Command();
@@ -30,8 +29,25 @@ program
 program
   .command('update')
   .description('Update framework preserving customizations')
+  .option('--check', 'Only check if update is available (exit code 1 = update available)')
+  .option('--dry-run', 'Preview what would be updated without applying')
   .option('--force', 'Force update even if versions match')
+  .option('--verbose', 'Show detailed update log')
+  .option('--ecosystem <path>', 'Custom ecosystem root path')
+  .option('--init-tracking', 'Initialize version tracking for existing installation')
   .action(async (opts) => {
+    // --init-tracking: generate version.json for existing install
+    if (opts.initTracking) {
+      const { CopyChiefUpdater } = require('../installer/updater');
+      const updater = new CopyChiefUpdater({ verbose: true, ecosystemRoot: opts.ecosystem });
+      const installed = await updater.getInstalledVersion();
+      const version = installed?.version || pkg.version;
+      const info = updater.writeVersionInfo(version);
+      console.log(`Version tracking initialized: v${version}`);
+      console.log(`  File hashes: ${Object.keys(info.fileHashes).length} files tracked`);
+      return;
+    }
+
     const { update } = require('../installer/update');
     await update(opts);
   });

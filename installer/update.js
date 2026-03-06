@@ -1,57 +1,42 @@
 /**
- * Copy Chief BLACK — Update
- * Merges new framework version preserving customizations
+ * Copy Chief BLACK — Update Command
+ * Uses CopyChiefUpdater for intelligent updates with rollback
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const platform = require('../lib/platform');
-const settingsBuilder = require('../lib/settings-builder');
+const { CopyChiefUpdater, formatCheckResult, formatUpdateResult } = require('./updater');
 
 async function update(opts = {}) {
   console.log('Copy Chief BLACK — Update\n');
 
-  const claudeHome = platform.claudeHome();
-  if (!fs.existsSync(claudeHome)) {
-    console.error('❌ No installation found. Run: copy-chief-black install');
+  const updater = new CopyChiefUpdater({
+    verbose: opts.verbose || false,
+    force: opts.force || false,
+    ecosystemRoot: opts.ecosystem,
+  });
+
+  // --check mode: just check, don't update
+  if (opts.check) {
+    const checkResult = await updater.checkForUpdates();
+    console.log(formatCheckResult(checkResult));
+    // Exit with code 1 if update available (useful for CI)
+    if (checkResult.hasUpdate) process.exit(1);
+    return;
+  }
+
+  // Full update flow
+  const result = await updater.update({
+    dryRun: opts.dryRun || false,
+    onProgress: (phase, message) => {
+      if (!opts.quiet) console.log(`  [${phase}] ${message}`);
+    },
+  });
+
+  console.log(formatUpdateResult(result));
+
+  if (!result.success && result.error !== 'Already up to date') {
     process.exit(1);
   }
-
-  // Backup before update
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  const backupDir = `${claudeHome}-pre-update-${timestamp}`;
-  fs.cpSync(claudeHome, backupDir, { recursive: true });
-  console.log(`  Backup: ${backupDir}`);
-
-  // Update framework files
-  const frameworkDir = path.join(__dirname, '..', 'framework');
-  if (fs.existsSync(frameworkDir)) {
-    const items = ['.aios-core', 'hooks', 'agents', 'plugins', 'schemas'];
-    for (const item of items) {
-      const src = path.join(frameworkDir, item);
-      const dest = path.join(claudeHome, item);
-      if (!fs.existsSync(src)) continue;
-      fs.cpSync(src, dest, { recursive: true, force: opts.force || false });
-      console.log(`  Updated: ${item}/`);
-    }
-  }
-
-  // Regenerate settings.json (merge mode)
-  settingsBuilder.writeSettings({ force: false });
-  console.log('  Merged: settings.json');
-
-  // Reinstall deps
-  const aiosCore = platform.aiosCoreDir();
-  const { execSync } = require('child_process');
-  try {
-    execSync('npm install --production', { cwd: aiosCore, stdio: 'pipe' });
-    console.log('  Dependencies updated ✓');
-  } catch (e) {
-    console.error(`  ⚠️  npm install: ${e.message}`);
-  }
-
-  console.log('\n✅ Update complete.');
 }
 
 module.exports = { update };
