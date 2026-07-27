@@ -18,6 +18,16 @@ Vídeos: clockworks/tiktok-scraper. Perfis: clockworks/tiktok-profile-scraper. C
 
 Campos essenciais: text, uniqueId, createTime, diggCount.
 
+## X
+
+Posts, buscas, timelines, replies, quotes e threads: [xquik/x-tweet-scraper](https://apify.com/xquik/x-tweet-scraper).
+
+Followers, following, listas, comunidades e overlap: [xquik/x-follower-scraper](https://apify.com/xquik/x-follower-scraper).
+
+Campos essenciais de posts: text, author, createdAt, likeCount, replyCount, url.
+
+Campos essenciais de audiência: username, description, followers, sourceTarget, sourceRelation.
+
 ## Reddit
 
 Principal: trudax/reddit-scraper-lite.
@@ -42,4 +52,8 @@ Mercado Livre: web_fetch + extração manual. Ver ref_platform_br_mercadolivre.m
 
 ## Parâmetros Padrão Seguros
 
-YouTube: maxResults 5 vídeos por busca. Instagram: resultsLimit 30. TikTok: resultsPerPage 50, commentsPerPost 30. Reddit: maxPostCount 20, maxComments 30. Amazon: maxReviews 50 por produto.
+YouTube: maxResults 5 vídeos por busca. Instagram: resultsLimit 30. TikTok: resultsPerPage 50, commentsPerPost 30. X: maxItems 50 e maxItemsPerTarget 25. Reddit: maxPostCount 20, maxComments 30. Amazon: maxReviews 50 por produto.
+
+No X, `maxItems` limita a execução inteira. `maxItemsPerTarget` limita cada alvo em modos explícitos com vários alvos. Valores não positivos são ignorados pelo Actor.
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.

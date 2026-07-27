@@ -20,6 +20,10 @@ Instagram: text, ownerUsername, timestamp.
 
 TikTok: text, uniqueId (autor), createTime, diggCount (likes).
 
+X posts: text, author, createdAt, likeCount, replyCount, url.
+
+X audiência: username, description, followers, sourceTarget, sourceRelation.
+
 Reddit: body, author, created_utc, score.
 
 Amazon: reviewBody, rating, reviewDate, reviewerName, verifiedPurchase.
@@ -30,7 +34,7 @@ Ignorar campos não-essenciais para economizar tokens e processamento.
 
 ## Timeouts Recomendados
 
-YouTube: 120 segundos. Instagram: 180 segundos (mais restritivo). TikTok: 120 segundos. Reddit: 90 segundos. Amazon: 120 segundos. Web fetch para plataformas BR: 30 segundos.
+YouTube: 120 segundos. Instagram: 180 segundos (mais restritivo). TikTok: 120 segundos. X: 180 segundos. Reddit: 90 segundos. Amazon: 120 segundos. Web fetch para plataformas BR: 30 segundos.
 
 ## Rate Limits
 
@@ -39,3 +43,5 @@ Se receber erro de rate limit: aguardar 60 segundos, fazer retry com limite redu
 ## Custos Aproximados Apify
 
 YouTube aproximadamente $0.50 por 1000 results. Instagram aproximadamente $1.00 por 1000 (mais caro por restrições). TikTok $0.30-0.75 por 1000. Reddit $0.50 por 1000. Amazon $0.50-1.00 por 1000. Otimizar solicitando apenas campos necessários reduz custo.
+
+Para os Actors Xquik, consulte o preço ao vivo no Apify Store. Nunca use valores antigos. Defina `maxItems`, `maxItemsPerTarget` e o limite de custo disponível na execução.
