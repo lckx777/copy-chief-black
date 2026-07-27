@@ -23,7 +23,7 @@
     "fastembed": "^1.0.0",
     "glob": "^10.0.0",
     "gray-matter": "^4.0.3",
-    "js-yaml": "^4.1.1",
+    "js-yaml": "^4.3.0",
     "sqlite-vec": "^0.1.0",
     "zod": "^3.23.0"
   },

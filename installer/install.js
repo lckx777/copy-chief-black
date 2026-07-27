@@ -195,7 +195,7 @@ function installDeps(claudeHome) {
 
   if (!fs.existsSync(pkgJson)) {
     // Create minimal package.json
-    const pkg = { name: 'aios-core', version: '1.0.0', private: true, dependencies: { 'js-yaml': '^4.1.1' } };
+    const pkg = { name: 'aios-core', version: '1.0.0', private: true, dependencies: { 'js-yaml': '^4.3.0' } };
     fs.mkdirSync(aiosCore, { recursive: true });
     fs.writeFileSync(pkgJson, JSON.stringify(pkg, null, 2));
   }
