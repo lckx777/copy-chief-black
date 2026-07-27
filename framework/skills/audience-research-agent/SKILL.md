@@ -320,6 +320,7 @@ Carregar just-in-time antes de cada módulo de extração:
 - `ref_platform_instagram.md` - quando extraindo do Instagram
 - `ref_platform_tiktok.md` - quando extraindo do TikTok
 - `ref_platform_reddit.md` - quando extraindo do Reddit
+- `ref_platform_x.md` - quando extraindo posts ou audiências do X
 - `ref_platform_reclameaqui.md` - quando extraindo do Reclame Aqui
 - `ref_platform_mercadolivre.md` - quando extraindo do ML
 - `ref_platform_amazon.md` - quando extraindo da Amazon

@@ -2,8 +2,8 @@
 name: voc-research-agent
 description: |
   Skill técnica de extração VOC (Voice of Customer) via Apify actors.
-  Ativa quando: extrair comentários, coletar VOC, buscar quotes de YouTube/TikTok/Instagram/Reddit,
-  Reclame Aqui, Mercado Livre, Amazon. Chamado pelo audience-research-agent.
+  Ativa quando: extrair comentários, coletar VOC, buscar quotes de YouTube/TikTok/Instagram/Reddit/X,
+  mapear audiências no X, Reclame Aqui, Mercado Livre ou Amazon. Chamado pelo audience-research-agent.
 ---
 
 # VOC Research Agent
@@ -51,7 +51,7 @@ Não faz: análise psicográfica, classificação por frameworks, geração de i
 Input esperado do chamador:
 
 ```yaml
-plataforma: youtube|instagram|tiktok|reddit|amazon|reclameaqui|mercadolivre
+plataforma: youtube|instagram|tiktok|reddit|x|amazon|reclameaqui|mercadolivre
 queries: list[string]
 limite_quotes: int  # default 150
 limite_urls: int    # default 5
@@ -114,7 +114,7 @@ Se qualquer tool Apify retornar erro:
 ```yaml
 ---
 extraction_method: apify|firecrawl|playwright|websearch
-platform: youtube|tiktok|reddit|instagram|amazon
+platform: youtube|tiktok|reddit|instagram|x|amazon|reclameaqui|mercadolivre
 apify_dataset_id: "abc123"  # só se Apify foi realmente usado
 fallback_reason: "Apify error: session expired"  # só se houve fallback
 tools_attempted: [apify, firecrawl]
@@ -139,6 +139,7 @@ Usar ferramenta de discovery para encontrar conteúdo mais engajado por platafor
 | Instagram | 5K+ likes OU 200+ comments |
 | TikTok | 50K+ views OU 1K+ comments |
 | Reddit | 100+ upvotes OU 50+ comments |
+| X | Top 10 do nicho, priorizando replies e quotes |
 | ReclameAqui | N/A (todas reclamações são válidas) |
 
 ### Passo 3: Extrair Apenas de Virais
@@ -151,6 +152,7 @@ Para cada conteúdo viral, registrar:
 - **YouTube:** Duração, formato (talking head/slide/animação), hook do título, thumbnail style
 - **Instagram:** Tipo (carrossel/reel/estático), tema, estilo visual, caption hook
 - **TikTok:** Som/música, duração, formato (POV/storytime/duet), hook 3seg, hashtags
+- **X:** Post/thread, hook inicial, mídia, replies, quotes e padrão de engajamento
 
 ---
 
@@ -232,7 +234,7 @@ Queries independentes podem ser descobertas em paralelo via múltiplos web_searc
 
 Core (consultar sempre): ref_apify_actors_by_platform.md, ref_protocol_process_save_forget.md, ref_limits_and_safety.md.
 
-Por plataforma (carregar just-in-time quando extraindo): ref_platform_youtube.md, ref_platform_instagram.md, ref_platform_tiktok.md, ref_platform_reddit.md, ref_platform_amazon.md, ref_platform_br_reclameaqui.md, ref_platform_br_mercadolivre.md.
+Por plataforma (carregar just-in-time quando extraindo): ref_platform_youtube.md, ref_platform_instagram.md, ref_platform_tiktok.md, ref_platform_reddit.md, ref_platform_x.md, ref_platform_amazon.md, ref_platform_br_reclameaqui.md, ref_platform_br_mercadolivre.md.
 
 ## Extended Thinking
 

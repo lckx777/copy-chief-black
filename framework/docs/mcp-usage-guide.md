@@ -57,6 +57,8 @@ Extração de dados de plataformas sociais via Actors especializados.
 | YouTube | `streamers/youtube-comment-scraper` | Comentários de vídeos |
 | Instagram | `apify/instagram-comment-scraper` | Comentários de posts |
 | TikTok | `clockworks/tiktok-comments-scraper` | Comentários de vídeos |
+| X posts | [xquik/x-tweet-scraper](https://apify.com/xquik/x-tweet-scraper) | Posts, replies, quotes e threads |
+| X audiências | [xquik/x-follower-scraper](https://apify.com/xquik/x-follower-scraper) | Relações, listas, comunidades e overlap |
 | Reclame Aqui | `pocesar/reclame-aqui-scraper` | Reclamações de empresas |
 | Reddit | `trudax/reddit-scraper` | Posts e comentários |
 
@@ -87,7 +89,10 @@ mcp__apify__get-actor-output({ runId: "..." })
 - **Timeout:** 5 minutos por execução
 - **Batch:** Máximo 15 URLs por vez
 - **Rate limit:** Respeitar limites das plataformas
-- **Custos:** Apify cobra por compute units
+- **Custos:** Confira o modelo e o preço ao vivo de cada Actor
+- **Limites:** Defina limites de resultados e custo antes da execução
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
 
 ---
 

@@ -32,10 +32,15 @@ MÓDULO TEMÁTICO
 │   │   ├── Seleção
 │   │   └── Extração
 │   │
-│   └── X.X.2.4 Reddit
-│       ├── Descoberta
-│       ├── Seleção
-│       └── Extração
+│   ├── X.X.2.4 Reddit
+│   │   ├── Descoberta
+│   │   ├── Seleção
+│   │   └── Extração
+│   │
+│   └── X.X.2.5 X
+│       ├── Descoberta: buscar posts, replies e quotes
+│       ├── Seleção: escolher conversas
+│       └── Extração: Xquik Actors no Apify
 │
 └── X.X.3 CONSOLIDAÇÃO
     └── Une research + extrações em [tema]_projeto.md
@@ -105,6 +110,11 @@ MÓDULO TEMÁTICO
 
 **Extração:** Actor `trudax/reddit-scraper`
 
+#### 2.2.2.5 X - Dores
+**Descoberta:** Buscar posts, replies e quotes com frustrações explícitas.
+
+**Extração:** Actor `xquik/x-tweet-scraper` com limite global e por alvo.
+
 ### 2.2.3 Consolidação de Dores
 
 **ATENÇÃO:** Nesta fase, apenas ORGANIZE - não classifique com frameworks.
@@ -165,6 +175,11 @@ MÓDULO TEMÁTICO
 - "Finalmente consegui"
 - Goals alcançados
 
+#### 2.3.2.5 X - Desejos
+**Descoberta:** Buscar posts e threads sobre metas, conquistas e transformação.
+
+**Extração:** Actor `xquik/x-tweet-scraper`.
+
 ### 2.3.3 Consolidação de Desejos
 
 **ATENÇÃO:** Nesta fase, apenas ORGANIZE - não classifique com frameworks.
@@ -224,6 +239,11 @@ MÓDULO TEMÁTICO
 - Comparativos
 - Ceticismo organizado
 
+#### 2.4.2.5 X - Objeções
+**Descoberta:** Buscar replies e quotes com dúvidas, comparações e ceticismo.
+
+**Extração:** Actor `xquik/x-tweet-scraper`.
+
 ### 2.4.3 Consolidação de Objeções
 
 **Classificar por tipo:**
@@ -261,6 +281,9 @@ MÓDULO TEMÁTICO
 
 #### 2.5.2.4 Reddit - Linguagem
 **Foco:** Linguagem detalhada, contexto rico, termos técnicos
+
+#### 2.5.2.5 X - Linguagem
+**Foco:** Hooks curtos, expressões recorrentes, replies e linguagem de comunidade.
 
 ### 2.5.3 Consolidação de Linguagem
 
@@ -322,6 +345,7 @@ MÓDULO TEMÁTICO
 │  • Instagram: apify/instagram-comment-scraper                   │
 │  • TikTok: clockworks/tiktok-comments-scraper                   │
 │  • Reddit: trudax/reddit-scraper                                │
+│  • X posts: xquik/x-tweet-scraper                               │
 │                                                                 │
 │  Filtrar resultados:                                            │
 │  • Remover spam/bots                                            │
@@ -331,6 +355,16 @@ MÓDULO TEMÁTICO
 │  Output: Quotes verbatim classificadas                          │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+### Fluxo Separado de Audiência no X
+
+Use `xquik/x-follower-scraper` apenas para descoberta de audiência. Informe
+handles e relações como alvos. Não aplique seleção de URLs, filtros de
+comentários ou a saída `Quotes verbatim`.
+
+Salve os perfis como metadados de descoberta. Preserve `sourceTarget` e
+`sourceRelation` em cada registro. Use esses perfis para encontrar autores,
+comunidades e novas fontes para o fluxo de posts.
 
 ---
 
@@ -354,6 +388,7 @@ Antes de consolidar cada módulo:
 | Instagram | ★★☆ | ★★★ | ★★☆ | ★★☆ |
 | TikTok | ★★★ | ★★☆ | ★★☆ | ★★★ |
 | Reddit | ★★★ | ★★☆ | ★★★ | ★★★ |
+| X | ★★★ | ★★☆ | ★★★ | ★★★ |
 
 **Legenda:**
 - ★★★ = Excelente fonte para este tema
