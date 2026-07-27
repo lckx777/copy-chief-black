@@ -101,8 +101,8 @@ mcp__apify__call-actor({
   input: {
     twitterHandles: ["<concorrente_1>", "<concorrente_2>"],
     relation: "followers",
-    maxItems: 200,
-    maxItemsPerTarget: 100,
+    maxItems: 50,
+    maxItemsPerTarget: 25,
     outputMode: "full",
     includeTargetMetadata: true,
     dedupeMode: "merge",

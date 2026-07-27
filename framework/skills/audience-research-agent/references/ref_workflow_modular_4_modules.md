@@ -346,7 +346,6 @@ MÓDULO TEMÁTICO
 │  • TikTok: clockworks/tiktok-comments-scraper                   │
 │  • Reddit: trudax/reddit-scraper                                │
 │  • X posts: xquik/x-tweet-scraper                               │
-│  • X audiência: xquik/x-follower-scraper                        │
 │                                                                 │
 │  Filtrar resultados:                                            │
 │  • Remover spam/bots                                            │
@@ -356,6 +355,16 @@ MÓDULO TEMÁTICO
 │  Output: Quotes verbatim classificadas                          │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+### Fluxo Separado de Audiência no X
+
+Use `xquik/x-follower-scraper` apenas para descoberta de audiência. Informe
+handles e relações como alvos. Não aplique seleção de URLs, filtros de
+comentários ou a saída `Quotes verbatim`.
+
+Salve os perfis como metadados de descoberta. Preserve `sourceTarget` e
+`sourceRelation` em cada registro. Use esses perfis para encontrar autores,
+comunidades e novas fontes para o fluxo de posts.
 
 ---
 

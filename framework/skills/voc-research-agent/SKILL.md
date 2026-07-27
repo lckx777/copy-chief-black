@@ -114,7 +114,7 @@ Se qualquer tool Apify retornar erro:
 ```yaml
 ---
 extraction_method: apify|firecrawl|playwright|websearch
-platform: youtube|tiktok|reddit|instagram|x|amazon
+platform: youtube|tiktok|reddit|instagram|x|amazon|reclameaqui|mercadolivre
 apify_dataset_id: "abc123"  # só se Apify foi realmente usado
 fallback_reason: "Apify error: session expired"  # só se houve fallback
 tools_attempted: [apify, firecrawl]
